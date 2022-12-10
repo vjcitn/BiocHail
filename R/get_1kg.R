@@ -23,7 +23,7 @@ get_1kg = function(hl, retrieve_web=FALSE, folder=tempdir()) {
        hl$import_vcf(paste0(folder, '/1kg.vcf.bgz'))$write(paste0(folder, '/1kg.mt'), overwrite=TRUE)
        }
      else {
-       zf = system.file("extdata/1kg.zip", package="biochail")
+       zf = system.file("extdata/1kg.zip", package="BiocHail")
        unzip(zf, exdir=folder)
        }
      mt = hl$read_matrix_table(paste0(folder, '/1kg.mt'))
