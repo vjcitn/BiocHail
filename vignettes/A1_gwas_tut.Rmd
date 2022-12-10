@@ -1,0 +1,74 @@
+---
+title: "A1 BiocHail -- GWAS tutorial"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{A1 BiocHail -- GWAS tutorial}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Introduction
+
+This document explores using Hail 0.2 with R
+via basilisk.
+
+The computations follow the
+[GWAS tutorial](https://hail.is/docs/0.2/tutorials/01-genome-wide-association-study.html) 
+in the hail documentation.
+
+# Acquire a slice of the 1000 genomes genotypes and annotations
+
+This chunk takes care of importing the 1000 genomes VCF slice
+distributed by the hail project.  `hail_init` uses basilisk,
+which ensures that a specific version of hail and
+its dependencies are available in an isolated virtual environment.
+```{r getlib,message=FALSE}
+library(BiocHail)
+```
+
+## Initialization, data acquisition, rendering
+
+Here is a curiosity of R-hail interaction.  Note that
+the following chunk computes `mt`, a MatrixTable
+representation of 1000 genomes data, but our
+attempt to print it in markdown fails.
+```{r get1}
+hl = hail_init()
+mt = get_1kg(hl)
+mt
+print(mt$rows()$select()$show(5L)) # limited info
+```
+
+We can use the python syntax in a `python` R markdown
+chunk to see what we want.  We use prefix `r.` to
+find references defined in our R session (compiling
+the vignette).
+```{python abc}
+r.mt.rows().select().show(5)
+```
+
+The sample IDs:
+```{python ch2}
+r.mt.s.show(5)
+```
+
+## Acquiring `column fields`
+
+```{r domo}
+annopath = path_1kg_annotations()
+tab = hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+```
+```{python ch3}
+r.tab.describe()
+r.tab.show(width=100)
+```
+
+
+

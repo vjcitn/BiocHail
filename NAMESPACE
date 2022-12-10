@@ -3,3 +3,4 @@
 export(get_1kg)
 export(hail_init)
 export(hail_stop)
+export(path_1kg_annotations)

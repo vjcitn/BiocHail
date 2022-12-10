@@ -9,6 +9,10 @@
 #' mt <- get_1kg(hl)
 #' mt
 #' mt$rows()$select()$show(5L) # must use integer
+#' annopath = path_1kg_annotations()
+#' tab = hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+#' tab$describe()
+#' tab$show(width=100L)
 #' @export
 get_1kg = function(hl, retrieve_web=FALSE, folder=tempdir()) {
  proc = basilisk::basiliskStart(bsklenv, testload="hail") # avoid package-specific import
@@ -25,4 +29,10 @@ get_1kg = function(hl, retrieve_web=FALSE, folder=tempdir()) {
      mt = hl$read_matrix_table(paste0(folder, '/1kg.mt'))
      mt
    }, hl=hl, folder=folder)
+}
+
+#' generate path to installed annotations file
+#' @export
+path_1kg_annotations = function() {
+  system.file("extdata/1kg_annotations.txt", package="BiocHail")
 }
