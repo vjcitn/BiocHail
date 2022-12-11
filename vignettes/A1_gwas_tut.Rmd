@@ -212,7 +212,19 @@ fraction_filtered = r.mt.aggregate_entries(r.hl.agg.fraction(~filter_condition_a
 print(f'Filtering {fraction_filtered * 100:.2f}% entries out of downstream analysis.')
 r.mt = r.mt.filter_entries(filter_condition_ab)
 ```
+Note that filtering _entries_ does not change MatrixTable shape.
 
 ```{r after}
 dim(mt)
+```
+
+### Variant characteristics
+
+Allele frequencies, Hardy-Weinberg equilibrium test results
+and other summaries are obtained using the `variant_qc` function.
+```{r addvarqc}
+mt = hl$variant_qc(mt)
+```
+```{python lkvarqc}
+r.mt.row.describe()  #! python
 ```
