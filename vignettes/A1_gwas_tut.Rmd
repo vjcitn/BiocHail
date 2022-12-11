@@ -59,6 +59,32 @@ The sample IDs:
 r.mt.s.show(5)
 ```
 
+## Helper functions
+
+Some methods return data
+immediately useful in R.
+```{r getdim}
+mt$count()
+```
+We can thus define a function `dim` to behave with
+hail MatrixTable instances
+in a familiar way, along with some others.
+```{r dodim}
+dim.hail.matrixtable.MatrixTable = function(x) { 
+  tmp = x$count()
+  c(tmp[[1]], tmp[[2]]) 
+}
+dim(mt)
+ncol.hail.matrixtable.MatrixTable = function(x) { 
+ dim(x)[2]
+}
+nrow.hail.matrixtable.MatrixTable = function(x) { 
+ dim(x)[1]
+}
+nrow(mt)
+```
+These can be useful on their own, or when calling python methods.
+
 ## Acquiring `column fields`
 
 ```{r domo}
@@ -70,5 +96,37 @@ r.tab.describe()
 r.tab.show(width=100)
 ```
 
+## Adding the sample annotation to the MatrixTable; aggregation
 
+We combine the `tab` defined above, with the MatrixTable instance,
+usiny python code reaching to R via `r.`.
+```{python ch4}
+r.mt = r.mt.annotate_cols(pheno = r.tab[r.mt.s])
+r.mt.col.describe()
+```
+
+Aggregation methods can be used to obtain contingency tables or descriptive statistics.
+
+First, we get the frequencies of superpopulation membership:
+```{r getsup}
+mt$aggregate_cols(hl$agg$counter(mt$pheno$SuperPopulation))
+```
+
+Then statistics on caffeine consumption:
+```{r lkcaf}
+uu = mt$aggregate_cols(hl$agg$stats(mt$pheno$CaffeineConsumption))
+names(uu)
+uu$mean
+uu$stdev
+```
+
+The significance of these aggregation functions is that the computations
+are performed by Spark, on potentially huge distributed data structures.
+
+Now we aggregate over rows (SNPs).  We'll use python directly:
+```{python ch5}
+from pprint import pprint
+snp_counts = r.mt.aggregate_rows(r.hl.agg.counter(r.hl.Struct(ref=r.mt.alleles[0], alt=r.mt.alleles[1])))
+pprint(snp_counts)
+```
 
