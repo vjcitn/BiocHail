@@ -27,6 +27,14 @@ interfacing.  We'll note that the actual computations on
 large data are done in Spark, but we don't interact directly
 with Spark at all in this document.
 
+Most of the computations are done via reticulate
+calls to python; the access to the hail environment
+is through basilisk.  We also take advantage of
+R markdown's capacity to execute python code directly.
+If an R chunk computes `x`, a python chunk can refer
+to it as `r.x`.  If a python chunk computes `r.x`,
+an R chunk can refer to this value as `x`.
+
 # Acquire a slice of the 1000 genomes genotypes and annotations
 
 This chunk takes care of importing the 1000 genomes VCF slice
@@ -165,6 +173,8 @@ Note also all the aggregators available:
 names(hl$expr$aggregators)
 ```
 
+We'd also note that hail has a [direct interface to ggplot2](https://hail.is/docs/0.2/tutorials/09-ggplot.html).
+
 ## Quality summaries
 
 A high-level function adds quality metrics to the MatrixTable.
@@ -296,4 +306,67 @@ displayTrack(igv, gt)
 
 ## Evaluating population stratification
 
+An approach to assessing population stratification
+is provided as `hwe_normalized_pca`.  See
+the hail [methods docs](https://hail.is/docs/0.2/methods/genetics.html#hail.methods.hwe_normalized_pca)
+for details.
 
+We are avoiding a tuple assignment in the tutorial document.
+```{python dopca}
+r.pcastuff = r.hl.hwe_normalized_pca(r.mt.GT)
+r.mt = r.mt.annotate_cols(scores=r.pcastuff[1][r.mt.s].scores)
+```
+
+We'll collect the key information and plot.
+```{r lkpcs}
+sc <- pcastuff[[2]]$scores$collect()
+pc1 = sapply(sc, "[", 1)
+pc2 = sapply(sc, "[", 2)
+fac = mt$pheno$SuperPopulation$collect()
+myd = data.frame(pc1, pc2, pop=fac)
+library(ggplot2)
+ggplot(myd, aes(x=pc1, y=pc2, colour=factor(pop))) + geom_point()
+```
+
+Now repeat the association test with adjustments for
+population of origin and gender.
+
+```{python redog}
+r.gwas2 = r.hl.linear_regression_rows(
+    y=r.mt.pheno.CaffeineConsumption,
+    x=r.mt.GT.n_alt_alleles(),
+    covariates=[1.0,r.mt.pheno.isFemale,r.mt.scores[0],
+        r.mt.scores[1], r.mt.scores[2]])
+```
+New value of $\lambda_{GC}$:
+
+```{r dolam2}
+pv = gwas2$p_value$collect()
+x2 = qchisq(1-pv,1)
+lam = median(x2, na.rm=TRUE)/qchisq(.5,1)
+lam
+```
+A manhattan plot for chr8:
+```{r doman}
+locs <- gwas2$locus$collect()
+conts <- sapply(locs, function(x) x$contig)
+pos <- sapply(locs, function(x) x$position)
+mytab <- data.frame(chr=as.character(conts), pos=pos, pval=pv)
+ggplot(mytab[mytab$chr=="8",], aes(x=pos, y=-log10(pval))) + geom_point()
+```
+
+# Conclusions
+
+The tutorial document proceeds with some illustrations of
+arbitrary aggregations.  We will skip these for now.
+
+Additional vignettes will address
+
+- A more realistic higher-volume VCF
+- Working with UKBB Summary statistics in GCP
+    - https://pan.ukbb.broadinstitute.org/docs/hail-format/index.html
+- Representing linkage disequilibrium
+    - https://pan-dev.ukbb.broadinstitute.org/docs/ld/index.html
+- Simulating variant collections using Balding-Nichols
+- Simulating variant collections using Pritchard-Stephens-Donnelly
+- Connecting genotypes with phenotype data in FHIR
