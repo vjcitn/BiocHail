@@ -13,7 +13,7 @@ Description: use hail via basilisk
 License: Artistic-2.0
 Encoding: UTF-8
 Depends: R (>= 3.6), dplyr, basilisk
-Suggests: knitr, testthat
+Suggests: knitr, testthat, BiocStyle
 VignetteBuilder: knitr
 biocViews: Infrastructure
 RoxygenNote: 7.2.2
