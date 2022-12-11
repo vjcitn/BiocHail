@@ -21,7 +21,11 @@ via basilisk.
 
 The computations follow the
 [GWAS tutorial](https://hail.is/docs/0.2/tutorials/01-genome-wide-association-study.html) 
-in the hail documentation.
+in the hail documentation.  We won't do all the computations
+there, and we add some material dealing with R-python
+interfacing.  We'll note that the actual computations on
+large data are done in Spark, but we don't interact directly
+with Spark at all in this document.
 
 # Acquire a slice of the 1000 genomes genotypes and annotations
 
@@ -31,6 +35,7 @@ which ensures that a specific version of hail and
 its dependencies are available in an isolated virtual environment.
 ```{r getlib,message=FALSE}
 library(BiocHail)
+library(ggplot2)
 ```
 
 ## Initialization, data acquisition, rendering
@@ -40,8 +45,8 @@ the following chunk computes `mt`, a MatrixTable
 representation of 1000 genomes data, but our
 attempt to print it in markdown fails.
 ```{r get1}
-hl = hail_init()
-mt = get_1kg(hl)
+hl <- hail_init()
+mt <- get_1kg(hl)
 mt
 print(mt$rows()$select()$show(5L)) # limited info
 ```
@@ -51,12 +56,12 @@ chunk to see what we want.  We use prefix `r.` to
 find references defined in our R session (compiling
 the vignette).
 ```{python abc}
-r.mt.rows().select().show(5)
+r.mt.rows().select().show(5) # python chunk!
 ```
 
 The sample IDs:
 ```{python ch2}
-r.mt.s.show(5)
+r.mt.s.show(5)  # python chunk!
 ```
 
 ## Helper functions
@@ -70,15 +75,15 @@ We can thus define a function `dim` to behave with
 hail MatrixTable instances
 in a familiar way, along with some others.
 ```{r dodim}
-dim.hail.matrixtable.MatrixTable = function(x) { 
-  tmp = x$count()
+dim.hail.matrixtable.MatrixTable <- function(x) { 
+  tmp <- x$count()
   c(tmp[[1]], tmp[[2]]) 
 }
 dim(mt)
-ncol.hail.matrixtable.MatrixTable = function(x) { 
+ncol.hail.matrixtable.MatrixTable <- function(x) { 
  dim(x)[2]
 }
-nrow.hail.matrixtable.MatrixTable = function(x) { 
+nrow.hail.matrixtable.MatrixTable <- function(x) { 
  dim(x)[1]
 }
 nrow(mt)
@@ -88,11 +93,11 @@ These can be useful on their own, or when calling python methods.
 ## Acquiring `column fields`
 
 ```{r domo}
-annopath = path_1kg_annotations()
-tab = hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+annopath <- path_1kg_annotations()
+tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
 ```
 ```{python ch3}
-r.tab.describe()
+r.tab.describe()# python chunk!
 r.tab.show(width=100)
 ```
 
@@ -101,7 +106,7 @@ r.tab.show(width=100)
 We combine the `tab` defined above, with the MatrixTable instance,
 usiny python code reaching to R via `r.`.
 ```{python ch4}
-r.mt = r.mt.annotate_cols(pheno = r.tab[r.mt.s])
+r.mt = r.mt.annotate_cols(pheno = r.tab[r.mt.s])   # python chunk! 
 r.mt.col.describe()
 ```
 
@@ -114,19 +119,100 @@ mt$aggregate_cols(hl$agg$counter(mt$pheno$SuperPopulation))
 
 Then statistics on caffeine consumption:
 ```{r lkcaf}
-uu = mt$aggregate_cols(hl$agg$stats(mt$pheno$CaffeineConsumption))
+uu <- mt$aggregate_cols(hl$agg$stats(mt$pheno$CaffeineConsumption))
 names(uu)
 uu$mean
 uu$stdev
 ```
 
-The significance of these aggregation functions is that the computations
+# Working with variants; quality assessment
+
+The significance of the aggregation functions is that the computations
 are performed by Spark, on potentially huge distributed data structures.
 
 Now we aggregate over rows (SNPs).  We'll use python directly:
 ```{python ch5}
-from pprint import pprint
+from pprint import pprint  # python chunk!
 snp_counts = r.mt.aggregate_rows(r.hl.agg.counter(r.hl.Struct(ref=r.mt.alleles[0], alt=r.mt.alleles[1])))
 pprint(snp_counts)
 ```
 
+## A histogram of read depths
+
+Hail uses the concept of 'entries' for matrix elements, and each 'entry'
+is a 'struct' with potentially many fields.
+
+Here we'll use R to compute a histogram of sequencing depths
+over all samples and variants.
+
+```{r dohist}
+p_hist <- mt$aggregate_entries(
+     hl$expr$aggregators$hist(mt$DP, 0L, 30L, 30L))
+names(p_hist)
+length(p_hist$bin_edges)
+length(p_hist$bin_freq)
+midpts <- function(x) diff(x)/2+x[-length(x)]
+dpdf <- data.frame(x=midpts(p_hist$bin_edges), y=p_hist$bin_freq)
+ggplot(dpdf, aes(x=x,y=y)) + geom_col() + ggtitle("DP") + ylab("Frequency")
+```
+
+An exercise: produce a function `mt_hist` that produces
+a histogram of measures from any of the relevant
+VCF components of a MatrixTable instance.
+
+Note also all the aggregators available:
+```{r lkagg}
+names(hl$expr$aggregators)
+```
+
+## Quality summaries
+
+A high-level function adds quality metrics to the MatrixTable.
+
+```{r update}
+mt <- hl$sample_qc(mt)
+```{python ch6}
+r.mt.col.describe()  # python!
+```
+
+The call rate histogram is given by:
+```{r lkcr}
+callrate <- mt$sample_qc$call_rate$collect()
+hist(callrate)
+```
+
+## Filtering
+
+### Sample quality
+
+We'll use the python code given for filtering, in which per-sample
+mean read depth and call rate are must exceed (arbitrarily chosen) thresholds.
+
+```{python dofilt}
+# python chunk!
+r.mt = r.mt.filter_cols((r.mt.sample_qc.dp_stats.mean >= 4) & (r.mt.sample_qc.call_rate >= 0.97))
+print('After filter, %d/284 samples remain.' % r.mt.count_cols())
+```
+
+### Genotype quality
+
+Again we use the python code for filtering according to
+
+- relative purity of reads underlying homozygous reference or alt calls
+- good balance of ref/alt counts for het calls
+
+```{python gtfilt}
+ab = r.mt.AD[1] / r.hl.sum(r.mt.AD)
+
+filter_condition_ab = ((r.mt.GT.is_hom_ref() & (ab <= 0.1)) |
+                        (r.mt.GT.is_het() & (ab >= 0.25) & (ab <= 0.75)) |
+                        (r.mt.GT.is_hom_var() & (ab >= 0.9)))
+
+fraction_filtered = r.mt.aggregate_entries(r.hl.agg.fraction(~filter_condition_ab))
+print(f'Filtering {fraction_filtered * 100:.2f}% entries out of downstream analysis.')
+r.mt = r.mt.filter_entries(filter_condition_ab)
+```
+
+```{r after}
+dim(mt)
+```
