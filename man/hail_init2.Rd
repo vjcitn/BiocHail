@@ -14,11 +14,26 @@ hail_init2(
   gcs_requester_pays_configuration = NULL
 )
 }
+\arguments{
+\item{quiet}{logical(1) defaults to FALSE}
+
+\item{min_block_size}{integer(1) defaults to 0L}
+
+\item{branching_factor}{integer(1) defaults to 50L}
+
+\item{default_reference}{character(1) defaults to "GRCh38",}
+
+\item{global_seed}{integer(1) defaults to 1234L}
+
+\item{spark_conf}{list, defaults to NULL}
+
+\item{gcs_requester_pays_configuration}{list, defaults to NULL}
+}
 \description{
 initialize hail, using more options
 }
 \note{
-hail object may be passed around
+hail object may be passed around.  See hail documentation for details on all args.
 }
 \examples{
 proj = Sys.getenv("GOOGLE_PROJECT")

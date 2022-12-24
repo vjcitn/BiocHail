@@ -7,7 +7,7 @@
 hail_stop(hl)
 }
 \arguments{
-\item{a}{hail object produced by hail_init()}
+\item{hl}{a hail object produced by hail_init()}
 }
 \description{
 stop hail

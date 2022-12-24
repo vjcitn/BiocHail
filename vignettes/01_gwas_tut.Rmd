@@ -37,13 +37,11 @@ an R chunk can refer to this value as `x`.
 
 # Acquire a slice of the 1000 genomes genotypes and annotations
 
-This chunk takes care of importing the 1000 genomes VCF slice
+In this section we import the 1000 genomes VCF slice
 distributed by the hail project.  `hail_init` uses basilisk,
 which ensures that a specific version of hail and
 its dependencies are available in an isolated virtual environment.
-```{r setup}
-ISNT_PKGDOWN=FALSE # to TRUE if out of pkgdown
-```
+
 ```{r getlib,message=FALSE}
 library(BiocHail)
 library(ggplot2)
@@ -55,7 +53,7 @@ Here is a curiosity of R-hail interaction.  Note that
 the following chunk computes `mt`, a MatrixTable
 representation of 1000 genomes data, but our
 attempt to print it in markdown fails.
-```{r get1, eval=ISNT_PKGDOWN}
+```{r get1, eval=TRUE}
 hl <- hail_init()
 mt <- get_1kg(hl)
 mt
@@ -66,12 +64,12 @@ We can use the python syntax in a `python` R markdown
 chunk to see what we want.  We use prefix `r.` to
 find references defined in our R session (compiling
 the vignette).
-```{python abc, eval=ISNT_PKGDOWN}
+```{python abc, eval=TRUE}
 r.mt.rows().select().show(5) # python chunk!
 ```
 
 The sample IDs:
-```{python ch2, eval=ISNT_PKGDOWN}
+```{python ch2, eval=TRUE}
 r.mt.s.show(5)  # python chunk!
 ```
 
@@ -79,13 +77,13 @@ r.mt.s.show(5)  # python chunk!
 
 Some methods return data
 immediately useful in R.
-```{r getdim, eval=ISNT_PKGDOWN}
+```{r getdim, eval=TRUE}
 mt$count()
 ```
 We can thus define a function `dim` to behave with
 hail MatrixTable instances
 in a familiar way, along with some others.
-```{r dodim, eval=ISNT_PKGDOWN}
+```{r dodim, eval=TRUE}
 dim.hail.matrixtable.MatrixTable <- function(x) { 
   tmp <- x$count()
   c(tmp[[1]], tmp[[2]]) 
@@ -103,11 +101,11 @@ These can be useful on their own, or when calling python methods.
 
 ## Acquiring `column fields`
 
-```{r domo, eval=ISNT_PKGDOWN}
+```{r domo, eval=TRUE}
 annopath <- path_1kg_annotations()
 tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
 ```
-```{python ch3, eval=ISNT_PKGDOWN}
+```{python ch3, eval=TRUE}
 r.tab.describe()# python chunk!
 r.tab.show(width=100)
 ```
@@ -116,7 +114,7 @@ r.tab.show(width=100)
 
 We combine the `tab` defined above, with the MatrixTable instance,
 usiny python code reaching to R via `r.`.
-```{python ch4, eval=ISNT_PKGDOWN}
+```{python ch4, eval=TRUE}
 r.mt = r.mt.annotate_cols(pheno = r.tab[r.mt.s])   # python chunk! 
 r.mt.col.describe()
 ```
@@ -124,12 +122,12 @@ r.mt.col.describe()
 Aggregation methods can be used to obtain contingency tables or descriptive statistics.
 
 First, we get the frequencies of superpopulation membership:
-```{r getsup, eval=ISNT_PKGDOWN}
+```{r getsup, eval=TRUE}
 mt$aggregate_cols(hl$agg$counter(mt$pheno$SuperPopulation))
 ```
 
 Then statistics on caffeine consumption:
-```{r lkcaf, eval=ISNT_PKGDOWN}
+```{r lkcaf, eval=TRUE}
 uu <- mt$aggregate_cols(hl$agg$stats(mt$pheno$CaffeineConsumption))
 names(uu)
 uu$mean
@@ -142,7 +140,7 @@ The significance of the aggregation functions is that the computations
 are performed by Spark, on potentially huge distributed data structures.
 
 Now we aggregate over rows (SNPs).  We'll use python directly:
-```{python ch5, eval=ISNT_PKGDOWN}
+```{python ch5, eval=TRUE}
 from pprint import pprint  # python chunk!
 snp_counts = r.mt.aggregate_rows(r.hl.agg.counter(r.hl.Struct(ref=r.mt.alleles[0], alt=r.mt.alleles[1])))
 pprint(snp_counts)
@@ -156,7 +154,7 @@ is a 'struct' with potentially many fields.
 Here we'll use R to compute a histogram of sequencing depths
 over all samples and variants.
 
-```{r dohist, eval=ISNT_PKGDOWN}
+```{r dohist, eval=TRUE}
 p_hist <- mt$aggregate_entries(
      hl$expr$aggregators$hist(mt$DP, 0L, 30L, 30L))
 names(p_hist)
@@ -172,7 +170,7 @@ a histogram of measures from any of the relevant
 VCF components of a MatrixTable instance.
 
 Note also all the aggregators available:
-```{r lkagg, eval=ISNT_PKGDOWN}
+```{r lkagg, eval=TRUE}
 names(hl$expr$aggregators)
 ```
 
@@ -182,14 +180,14 @@ We'd also note that hail has a [direct interface to ggplot2](https://hail.is/doc
 
 A high-level function adds quality metrics to the MatrixTable.
 
-```{r update, eval=ISNT_PKGDOWN}
+```{r update, eval=TRUE}
 mt <- hl$sample_qc(mt)
-```{python ch6, eval=ISNT_PKGDOWN}
+```{python ch6, eval=TRUE}
 r.mt.col.describe()  # python!
 ```
 
 The call rate histogram is given by:
-```{r lkcr, eval=ISNT_PKGDOWN}
+```{r lkcr, eval=TRUE}
 callrate <- mt$sample_qc$call_rate$collect()
 hist(callrate)
 ```
@@ -201,7 +199,7 @@ hist(callrate)
 We'll use the python code given for filtering, in which per-sample
 mean read depth and call rate are must exceed (arbitrarily chosen) thresholds.
 
-```{python dofilt, eval=ISNT_PKGDOWN}
+```{python dofilt, eval=TRUE}
 # python chunk!
 r.mt = r.mt.filter_cols((r.mt.sample_qc.dp_stats.mean >= 4) & (r.mt.sample_qc.call_rate >= 0.97))
 print('After filter, %d/284 samples remain.' % r.mt.count_cols())
@@ -214,7 +212,7 @@ Again we use the python code for filtering according to
 - relative purity of reads underlying homozygous reference or alt calls
 - good balance of ref/alt counts for het calls
 
-```{python gtfilt, eval=ISNT_PKGDOWN}
+```{python gtfilt, eval=TRUE}
 ab = r.mt.AD[1] / r.hl.sum(r.mt.AD)
 
 filter_condition_ab = ((r.mt.GT.is_hom_ref() & (ab <= 0.1)) |
@@ -227,7 +225,7 @@ r.mt = r.mt.filter_entries(filter_condition_ab)
 ```
 Note that filtering _entries_ does not change MatrixTable shape.
 
-```{r after, eval=ISNT_PKGDOWN}
+```{r after, eval=TRUE}
 dim(mt)
 ```
 
@@ -235,10 +233,10 @@ dim(mt)
 
 Allele frequencies, Hardy-Weinberg equilibrium test results
 and other summaries are obtained using the `variant_qc` function.
-```{r addvarqc, eval=ISNT_PKGDOWN}
+```{r addvarqc, eval=TRUE}
 mt = hl$variant_qc(mt)
 ```
-```{python lkvarqc, eval=ISNT_PKGDOWN}
+```{python lkvarqc, eval=TRUE}
 r.mt.row.describe()  #! python
 ```
 
@@ -252,7 +250,7 @@ The following commands eliminate variants with minor allele frequency
 less than 0.01, along with those with small $p$-values in
 tests of Hardy-Weinberg equilibrium.
 
-```{python dofilts, eval=ISNT_PKGDOWN}
+```{python dofilts, eval=TRUE}
 r.mt = r.mt.filter_rows(r.mt.variant_qc.AF[1] > 0.01)
 r.mt = r.mt.filter_rows(r.mt.variant_qc.p_value_hwe > 1e-6)
 r.mt.count()
@@ -265,7 +263,7 @@ plot generated by hail can be displayed for interaction
 using bokeh.  We comment this out for now; it should
 be possible to embed the bokeh display in this document but the details
 are not ready-to-hand.
-```{python naivet, eval=ISNT_PKGDOWN}
+```{python naivet, eval=TRUE}
 r.gwas = r.hl.linear_regression_rows(y=r.mt.pheno.CaffeineConsumption,
                                  x=r.mt.GT.n_alt_alleles(),
                                  covariates=[1.0])
@@ -278,14 +276,14 @@ can be formed using `hl.plot.qq` for very large applications;
 here we collect the results for plotting in R.
 
 First we estimate $\lambda_{GC}$
-```{r dolam, eval=ISNT_PKGDOWN}
+```{r dolam, eval=TRUE}
 pv = gwas$p_value$collect()
 x2 = qchisq(1-pv,1)
 lam = median(x2, na.rm=TRUE)/qchisq(.5,1)
 lam
 ```
 And the qqplot:
-```{r doqq, eval=ISNT_PKGDOWN}
+```{r doqq, eval=TRUE}
 qqplot(-log10(ppoints(length(pv))), -log10(pv), xlim=c(0,8), ylim=c(0,8),
   ylab="-log10 p", xlab="expected")
 abline(0,1)
@@ -315,13 +313,13 @@ the hail [methods docs](https://hail.is/docs/0.2/methods/genetics.html#hail.meth
 for details.
 
 We are avoiding a tuple assignment in the tutorial document.
-```{python dopca, eval=ISNT_PKGDOWN}
+```{python dopca, eval=TRUE}
 r.pcastuff = r.hl.hwe_normalized_pca(r.mt.GT)
 r.mt = r.mt.annotate_cols(scores=r.pcastuff[1][r.mt.s].scores)
 ```
 
 We'll collect the key information and plot.
-```{r lkpcs, eval=ISNT_PKGDOWN}
+```{r lkpcs, eval=TRUE}
 sc <- pcastuff[[2]]$scores$collect()
 pc1 = sapply(sc, "[", 1)
 pc2 = sapply(sc, "[", 2)
@@ -334,7 +332,7 @@ ggplot(myd, aes(x=pc1, y=pc2, colour=factor(pop))) + geom_point()
 Now repeat the association test with adjustments for
 population of origin and gender.
 
-```{python redog, eval=ISNT_PKGDOWN}
+```{python redog, eval=TRUE}
 r.gwas2 = r.hl.linear_regression_rows(
     y=r.mt.pheno.CaffeineConsumption,
     x=r.mt.GT.n_alt_alleles(),
@@ -343,14 +341,14 @@ r.gwas2 = r.hl.linear_regression_rows(
 ```
 New value of $\lambda_{GC}$:
 
-```{r dolam2, eval=ISNT_PKGDOWN}
+```{r dolam2, eval=TRUE}
 pv = gwas2$p_value$collect()
 x2 = qchisq(1-pv,1)
 lam = median(x2, na.rm=TRUE)/qchisq(.5,1)
 lam
 ```
 A manhattan plot for chr8:
-```{r doman, eval=ISNT_PKGDOWN}
+```{r doman, eval=TRUE}
 locs <- gwas2$locus$collect()
 conts <- sapply(locs, function(x) x$contig)
 pos <- sapply(locs, function(x) x$position)

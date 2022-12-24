@@ -59,16 +59,17 @@ are working on making this available for general downloads.
 ```{r doini,message=FALSE}
 library(BiocHail)
 ```
-```{r setup,echo=FALSE,message=FALSE}
-ISNT_PKGDOWN=FALSE # to true if out of pkgdown
-```{r do17, eval=ISNT_PKGDOWN}
+```{r do17, eval=TRUE}
 hl <- hail_init()
 # NB the following two commands are now encapsulated in the rg_update function
 nn <- hl$get_reference('GRCh38')
 nn <- nn$read(system.file("json/t2tAnVIL.json", package="BiocHail"))
 # updates the hail reference genome
-mt17 <- hl$read_matrix_table(Sys.getenv("HAIL_T2T_CHR17"))
-mt17$count()
+bigloc = Sys.getenv("HAIL_T2T_CHR17")
+if (nchar(bigloc)>0) {
+  mt17 <- hl$read_matrix_table(Sys.getenv("HAIL_T2T_CHR17"))
+  mt17$count()
+}
 ```
 
 # Population stratification assessment via PCA
@@ -84,7 +85,7 @@ takes 40 minutes.  Hail's code seems good at utilizing all the cores.
 We saved the PC scores for PCA based on 38k randomly sampled loci,
 and 191k randomly sampled loci.  Here's a simple view of the latter.
 
-```{r lk191,eval=FALSE}
+```{r lk191,eval=TRUE}
 data(pcs_191k)
 pairs(pcs_191k[,1:5], pch=".")
 ```

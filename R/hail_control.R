@@ -1,4 +1,5 @@
 #' initialize hail
+#' @import basilisk
 #' @note hail object may be passed around
 #' @examples
 #' hc <- hail_init()
@@ -18,7 +19,7 @@ hail_init = function() {
 }
 
 #' stop hail
-#' @param a hail object produced by hail_init()
+#' @param hl a hail object produced by hail_init()
 #' @export
 hail_stop = function(hl) hl$stop()
 
@@ -32,7 +33,14 @@ hail_stop = function(hl) hl$stop()
 
 
 #' initialize hail, using more options
-#' @note hail object may be passed around
+#' @param quiet logical(1) defaults to FALSE
+#' @param min_block_size integer(1) defaults to 0L 
+#' @param branching_factor integer(1) defaults to 50L
+#' @param default_reference character(1) defaults to "GRCh38",
+#' @param global_seed integer(1) defaults to 1234L 
+#' @param spark_conf list, defaults to NULL
+#' @param gcs_requester_pays_configuration list, defaults to NULL
+#' @note hail object may be passed around.  See hail documentation for details on all args.
 #' @examples
 #' proj = Sys.getenv("GOOGLE_PROJECT")
 #' buck = Sys.getenv("GCS_BUCKET")
