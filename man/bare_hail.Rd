@@ -22,5 +22,11 @@ if (nchar(Sys.getenv("WORKSPACE_NAMESPACE"))>0) {
       'spark.hadoop.fs.gs.requester.pays.buckets'= 'ukb-diverse-pops-public',
       'spark.hadoop.fs.gs.requester.pays.project.id'= Sys.getenv("GOOGLE_PROJECT")))
   hl$read_matrix_table('gs://ukb-diverse-pops-public/sumstats_release/results_full.mt')$describe()
+  \dontrun{
+  # this is supposed to get us some LD data but xx.shape fails, issue filed
+    hli = reticulate::import("hail.linalg")
+    upa = reticulate::import("ukbb_pan_ancestry")
+    xx = hli$BlockMatrix$read(upa$get_ld_matrix_path('AFR'))
+   }
   }
 }
