@@ -13,7 +13,10 @@ Description: use hail via basilisk
 License: Artistic-2.0
 Encoding: UTF-8
 Depends: R (>= 3.6), dplyr, basilisk
+Imports: utils, reticulate
 Suggests: knitr, testthat, BiocStyle
 VignetteBuilder: knitr
 biocViews: Infrastructure
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
+URL: https://github.com/vjcitn/BiocHail
+BugReports: https://github.com/vjcitn/BiocHail/issues

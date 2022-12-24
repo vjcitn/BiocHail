@@ -1,4 +1,5 @@
 #' interface to 1kg import
+#' @import utils
 #' @param hl hail object 
 #' @param retrieve_web logical(1) if TRUE, use hl.utils.get_1kg to retrieve data, otherwise use installed zip
 #' @param folder character(1) destination of 1kg.mt as retrieved using hl.utils.get_1kg, import_vcf, write
@@ -24,7 +25,7 @@ get_1kg = function(hl, retrieve_web=FALSE, folder=tempdir()) {
        }
      else {
        zf = system.file("extdata/1kg.zip", package="BiocHail")
-       unzip(zf, exdir=folder)
+       utils::unzip(zf, exdir=folder)
        }
      mt = hl$read_matrix_table(paste0(folder, '/1kg.mt'))
      mt
