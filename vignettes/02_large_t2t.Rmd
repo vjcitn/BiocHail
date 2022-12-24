@@ -1,5 +1,5 @@
 ---
-title: "Working with larger VCF: T2T by chromosome"
+title: "02 Working with larger VCF: T2T by chromosome"
 author: "Vincent J. Carey, stvjc at channing.harvard.edu"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 vignette: >
@@ -50,13 +50,62 @@ LOGGING: writing to /home/rstudio/hail-20221213-1558-0.2.105-acd89e80c345.log
 This operation seems to take a long time even with 64 cores.  We
 could not get exact timing owing to some connectivity problems.
 
+Here we'll work with the genotype data for T2T chr17.  We assume
+that the MatrixTable is located at the path given by the environment
+variable `HAIL_T2T_CHR17`.  As of 20 Dec 2022 we do not have a global
+distribution point for this MatrixTable, which zips to 45 GB.  We
+are working on making this available for general downloads.
+
 ```{r doini,message=FALSE}
 library(BiocHail)
 ```
-```{r do22}
+```{r setup,echo=FALSE,message=FALSE}
+ISNT_PKGDOWN=FALSE # to true if out of pkgdown
+```{r do17, eval=ISNT_PKGDOWN}
 hl <- hail_init()
+# NB the following two commands are now encapsulated in the rg_update function
 nn <- hl$get_reference('GRCh38')
 nn <- nn$read(system.file("json/t2tAnVIL.json", package="BiocHail"))
-mt22 <- hl$read_matrix_table("t2t22.mt")
-mt22$count()
+# updates the hail reference genome
+mt17 <- hl$read_matrix_table(Sys.getenv("HAIL_T2T_CHR17"))
+mt17$count()
 ```
+
+# Population stratification assessment via PCA
+
+The following command would compute PCs based on all SNP.
+```
+pcastuff = hl$hwe_normalized_pca(mt17$GT)
+```
+This seems impractical.  We have found that with a 64 core machine
+at terra.bio, PCA on samples of 1-5% of the 3.8 million loci on T2T chr17
+takes 40 minutes.  Hail's code seems good at utilizing all the cores.
+
+We saved the PC scores for PCA based on 38k randomly sampled loci,
+and 191k randomly sampled loci.  Here's a simple view of the latter.
+
+```{r lk191,eval=FALSE}
+data(pcs_191k)
+pairs(pcs_191k[,1:5], pch=".")
+```
+
+# Exercises
+
+1. Comment on the gain in information about geographic origin
+achieved by using a 5% sample of loci instead of a 1% sample.
+
+2. Find the geographic origins of donors of the 1000 genomes genotypes
+and bind them to `mt17` using the methods given in vignette `01_gwas_tut`.
+Use these codes to color the points in the PCA plot.
+
+3. Produce an artificial "phenotype" for these donors via `rnorm(3202,0,1)`,
+bind it to the genotype data, and perform a naive GWAS.  What are the
+loci most strongly associated with the artificial phenotype?
+
+4. Produce a new artificial phenotype which has some association with
+geographic origin of donor, but no association with genotype.
+Produce a new naive GWAS, and a third using some of the PCA scores
+as covariates.  What are the effects of this covariate adjustment on
+reasoning about genetic association with the artificial phenotype?
+
+
