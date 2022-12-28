@@ -1,0 +1,23 @@
+annopath <- path_1kg_annotations()
+tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+```
+```{python ch3, eval=TRUE}
+r.tab.describe()# python chunk!
+r.tab.show(width=100)
+```
+
+## Adding the sample annotation to the MatrixTable; aggregation
+
+We combine the `tab` defined above, with the MatrixTable instance,
+usiny python code reaching to R via `r.`.
+```{python ch4, eval=TRUE}
+r.mt = r.mt.annotate_cols(pheno = r.tab[r.mt.s])   # python chunk!
+r.mt.col.describe()
+```
+
+Aggregation methods can be used to obtain contingency tables or descriptive statistics.
+
+First, we get the frequencies of superpopulation membership:
+```{r getsup, eval=TRUE}
+mt$aggregate_cols(hl$agg$counter(mt$pheno$SuperPopulation))
+

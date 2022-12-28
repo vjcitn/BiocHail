@@ -1,0 +1,58 @@
+
+```{r getann}
+annopath <- path_1kg_annotations()
+tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+```
+```{python ch3, eval=TRUE}
+r.tab.describe()# python chunk!
+r.tab.show(width=100)
+```
+
+## Adding the sample annotation to the MatrixTable; aggregation
+
+We combine the `tab` defined above, with the MatrixTable instance,
+usiny python code reaching to R via `r.`.
+```{python ch4, eval=TRUE}
+r.mt17 = r.mt17.annotate_cols(pheno = r.tab[r.mt17.s])   # python chunk!
+r.mt17.col.describe()
+```
+
+Aggregation methods can be used to obtain contingency tables or descriptive statistics.
+
+First, we get the frequencies of superpopulation membership:
+```{r getsup, eval=TRUE}
+mt17$aggregate_cols(hl$agg$counter(mt17$pheno$SuperPopulation))
+```
+
+Then statistics on caffeine consumption:
+```{r lkcaf, eval=TRUE}
+uu <- mt17$aggregate_cols(hl$agg$stats(mt17$pheno$CaffeineConsumption))
+names(uu)
+uu$mean
+uu$stdev
+```
+
+## Evaluating population stratification
+
+An approach to assessing population stratification
+is provided as `hwe_normalized_pca`.  See
+the hail [methods docs](https://hail.is/docs/0.2/methods/genetics.html#hail.methods.hwe_normalized_pca)
+for details.
+
+We are avoiding a tuple assignment in the tutorial document.
+```{python dopca, eval=TRUE}
+r.pcastuff = r.hl.hwe_normalized_pca(r.mt17.GT)
+r.mt17 = r.mt17.annotate_cols(scores=r.pcastuff[1][r.mt17.s].scores)
+```
+
+We'll collect the key information and plot.
+```{r lkpcs, eval=TRUE}
+sc <- pcastuff[[2]]$scores$collect()
+pc1 = sapply(sc, "[", 1)
+pc2 = sapply(sc, "[", 2)
+fac = mt17$pheno$SuperPopulation$collect()
+myd = data.frame(pc1, pc2, pop=fac)
+library(ggplot2)
+ggplot(myd, aes(x=pc1, y=pc2, colour=factor(pop))) + geom_point()
+```
+

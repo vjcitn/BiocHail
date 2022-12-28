@@ -1,0 +1,110 @@
+library(SummarizedExperiment)
+utils::library
+tools::library
+base::library
+base::library(CHAMP)
+base::library("ChAMP")
+library(GEOquery)
+ls(2)
+help.start()
+gds <- getGEO("GDS507")
+gds
+gse2553 <- getGEO('GSE2553',GSEMatrix=TRUE)
+gse2553
+pData(gse2553)[1:2,]
+phenoData(gse2553)[1:2,]
+gse2553
+pData(gse2553[[1]])[1:2,]
+pd1 = gse2553[[1]]
+pd1
+table(pd1$source_name_ch1)
+load(file.path(system.file(package = "Bioc2020Anno", "extdata"), "eset.Rdata"))
+version
+library(RCST)
+library(RCSL)
+ls(2)
+library(ggplot2)
+example(PlotMST)
+library(ggplotly)
+library(plotly)
+hh = .Last.value$value
+hh
+nn = PlotMST(res_SimS$drData,res_BDSM$y,TrueLabel)
+ggplotly(nn)
+BiocManager::version()
+q()
+library(AnvBiocFHIR)
+R.home()
+q()
+version
+version
+"\U2665"
+"\U2666"
+library("ggplot2")
+ggplot(iris, aes(x = factor(Species), y = Sepal.Length, fill = Species)) +
+geom_boxplot(alpha = 0.4)
+options()$bitmapType
+options(bitmapType="cairo")
+library("ggplot2")
+ggplot(iris, aes(x = factor(Species), y = Sepal.Length, fill = Species)) +
+geom_boxplot(alpha = 0.4)
+q()
+library("ggplot2")
+ggplot(iris, aes(x = factor(Species), y = Sepal.Length, fill = Species)) +
+geom_boxplot(alpha = 0.4)
+R.homw()
+R.home()
+getwd()
+q()
+getwd)
+getwd()
+setwd("SPARK_METHODS/BiocHail/vignettes/")
+dir()
+render("A1_gwas_tut.Rmd")
+dir()
+library(knitr)
+purl("02_large_t2t.Rmd")
+source("02_large_t2t.R", echo=TRUE)
+annopath <- path_1kg_annotations()
+tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+tab$describe()
+mt17$describe()
+mt17$s
+mt17$s$collect(2)
+mt17$s$collect(2L)
+my17$s$collect -> jj
+mt17$s$collect() -> jj
+length(jj)
+jj[1:4]
+class(tab)
+tt = tab[mt$s]
+tt = tab[mt17$s]
+tt
+ttt = tt$collect()
+dim(ttt)
+ttt
+mt17$annotate_cols(pheno = tab[mt17$s]
+)
+mt17$describe()
+mt17$col$describe()
+render("pop.Rmd", html_document())
+render("pop.Rmd", html_document())
+render("pop.Rmd", html_document())
+mt17
+mt17$col
+mt17$col$describe()
+mt17$col$pheno
+mt17$col$pheno$SuperPopulation
+mt17$col$pheno$SuperPopulation$collect() -> sup
+table(sup)
+sup[1:4]
+table(unlist(sup))
+data(package="BiocHail")
+data(pcs_191k)
+dim(pcs_191k)
+pairs(pcs_191k, col=factor(unlist(sup)))
+pairs(pcs_191k[,2:4], col=factor(unlist(sup)))
+pairs(pcs_191k[,2:5], col=factor(unlist(sup)))
+mt17$col$pheno$Population$collect() -> pop
+pairs(pcs_191k[,2:5], col=factor(unlist(pop)))
+savehistory(file="popcolhist.txt")

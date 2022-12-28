@@ -47,7 +47,7 @@ get_ukbb_sumstat_10kloci_mt = function(hl, folder=tempdir(), cache=BiocFileCache
 #
        qout = bfcquery(cache, "ukbb_sumst_10kloc.zip")
        if (nrow(qout)==0) {  # download and populate cache
-          dl = try(bfcadd(cache, fpath=osn_ukbb_sumst_path(),
+          dl = try(bfcadd(cache, fpath=osn_ukbb_sumst10k_path(),
                     rname="ukbb_sumst_10kloc.zip", rtype="web", action="copy",
                     download=TRUE))
           if (inherits(dl, "try-error")) stop("no ukbb_sumst in cache and cannot populate with download, try another method.")
