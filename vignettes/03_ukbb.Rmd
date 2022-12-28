@@ -1,0 +1,62 @@
+---
+title: "03 Working with UK Biobank summary statistics"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{03 Working with UK Biobank summary statistics}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Overview
+
+In this document we illustrate some approaches to
+working with UK Biobank summary statistics.
+Be sure that that the python module `ukbb_pan_ancestry`
+has been installed where reticulate can find it.
+(We don't use basilisk as of 12/24/2022 because of
+issues in the terra spark cluster.)
+
+```{r setup,message=FALSE}
+library(BiocHail)
+```
+
+## Initialization and description
+
+### Standalone
+
+We have produced a representation of summary
+statistics for a sample of 9888 loci.  This 5GB resource
+can be retrieved and cached with the following code:
+```{r getukbb}
+hl = hail_init()
+ss = get_ukbb_sumstat_10kloci_mt(hl) # can take about a minute to unzip 5GB
+ss$count()   # but if a persistent MatrixTable is at the location given
+             # by env var HAIL_UKBB_SUMSTAT_10K_PATH it goes quickly
+```
+To get a description of available content, we need a python chunk:
+```{python lkdesc}
+r.ss.describe()
+```
+
+### Terra
+Here's a basic description of the summary stats table, with code that
+works in terra.bio:
+```{r lkba, eval=FALSE}
+hl = bare_hail()
+hl$init(idempotent=TRUE, spark_conf=list(
+  'spark.hadoop.fs.gs.requester.pays.mode'= 'CUSTOM',
+  'spark.hadoop.fs.gs.requester.pays.buckets'= 'ukb-diverse-pops-public',
+  'spark.hadoop.fs.gs.requester.pays.project.id'= Sys.getenv("GOOGLE_PROJECT")))
+```
+We need to use a python chunk to get the output, using gs:// storage references.
+```{python lkrhl, eval=FALSE}
+r.hl.read_matrix_table('gs://ukb-diverse-pops-public/sumstats_release/results_full.mt').describe()
+```
+

@@ -4,14 +4,25 @@
 \alias{get_1kg}
 \title{interface to 1kg import}
 \usage{
-get_1kg(hl, retrieve_web = FALSE, folder = tempdir())
+get_1kg(
+  hl,
+  retrieve_import_write = FALSE,
+  path_1kg_zip = osn_1kg_path(),
+  folder = tempdir(),
+  cache = BiocFileCache::BiocFileCache()
+)
 }
 \arguments{
 \item{hl}{hail object}
 
-\item{retrieve_web}{logical(1) if TRUE, use hl.utils.get_1kg to retrieve data, otherwise use installed zip}
+\item{retrieve_import_write}{logical(1) if TRUE, use hl.utils.get_1kg to retrieve data, otherwise acquire
+a previously written zip file, either from a cache, or, if no file found in cache, from web, followed by caching}
+
+\item{path_1kg_zip}{character(1) path to zip of MatrixTable, defaults to `osn_1kg_path()`.}
 
 \item{folder}{character(1) destination of 1kg.mt as retrieved using hl.utils.get_1kg, import_vcf, write}
+
+\item{cache}{a BiocFileCache-type cache}
 }
 \value{
 "hail.matrixtable.MatrixTable" instance

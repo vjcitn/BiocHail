@@ -14,6 +14,7 @@ hail_init = function() {
      if (inherits(lk, "try-error")) {
         message("could not initialize ... already initialized?")
         }
+     if (length(names(hl))==0) stop("invalid hail module, you may need to reboot...")
      hl
    })
 }
