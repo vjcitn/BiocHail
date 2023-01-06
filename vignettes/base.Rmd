@@ -1,0 +1,58 @@
+---
+title: "GH Pages support for BiocHail"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{GH Pages support for BiocHail}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Purpose
+
+We'd like a nice website for BiocHail with pkgdown but there are
+issues in the R-python-java interfacing that are interfering.  So
+we'll use basic GitHub pages. 
+
+The plan for this package is
+
+- Reproduce the Hail.id GWAS tutorial for R users
+- Show how to produce and work with a higher-volume data resource, in this case the 1000
+genomes genotypes for chr17 based on the Telomere-to-telomere reference
+- Show how to work with UKBB Summary statistics in GCP
+    - https://pan.ukbb.broadinstitute.org/docs/hail-format/index.html
+- Explore representations of linkage disequilibrium
+    - https://pan-dev.ukbb.broadinstitute.org/docs/ld/index.html
+- Simulate variant collections using Balding-Nichols
+- Simulate variant collections using Pritchard-Stephens-Donnelly
+- Connect genotypes with phenotype data in FHIR
+
+As of January 2023 the first two aims are met.
+
+# Installation
+
+- A Java Development Kit must be available.
+- R 4.2 or above
+- If using terra, ensure that PIP_USER is set to a false value before starting R to install
+- ensure that the BiocManager and remotes packages are installed
+- BiocManager::install("vjcitn/BiocHail") will get all the necessary software and
+demonstration data
+- The code sequence
+```
+library(BiocHail)
+example(get_1kg)
+```
+will trigger a one-time installation of all necessary python infrastructure, which can
+take upwards of 15 minutes.  But after this you can run all the code in the vignettes
+linked below.
+
+# [GWAS tutorial vignette](01_gwas_tut.html)
+ 
+# [1000 genomes samples: chr17 with T2T reference](02_large_t2t.html)
+

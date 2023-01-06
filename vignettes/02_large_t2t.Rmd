@@ -52,9 +52,11 @@ could not get exact timing owing to some connectivity problems.
 
 Here we'll work with the genotype data for T2T chr17.  We assume
 that the MatrixTable is located at the path given by the environment
-variable `HAIL_T2T_CHR17`.  As of 20 Dec 2022 we do not have a global
-distribution point for this MatrixTable, which zips to 45 GB.  We
-are working on making this available for general downloads.
+variable `HAIL_T2T_CHR17`.  This MatrixTable is available
+in the Open Storage Network at osn:/bir190004-bucket01/Bioc1KGt2t/t17.zip.
+This is a 45 GB file.  It should be unzipped at the location pointed to
+by `HAIL_T2T_CHR17`.  Instructions for using rclone to acquire the zip file
+are given in the appendix.
 
 ```{r doini,message=FALSE}
 library(BiocHail)
@@ -110,3 +112,40 @@ as covariates.  What are the effects of this covariate adjustment on
 reasoning about genetic association with the artificial phenotype?
 
 
+# Appendix: using rclone with docker to get the chr17 data
+
+It can be painful to install and configure rclone.  We use
+a docker container.  Let RC_DATADIR be an environment variable
+evaluating to an available folder.  
+
+Also, place the text file with contents
+```
+[osn]
+type = s3
+provider = AWS
+endpoint = https://mghp.osn.xsede.org
+acl = public
+no_check_bucket = true
+```
+in a file `rclone.conf` in a folder pointed to by the environment
+variable `RC_CONFDIR`.
+
+
+Then the following
+
+```
+docker run -v $RC_DATADIR:/data -v $RC_CONFDIR:/config/rclone -t rclone/rclone:latest ls osn:/bir190004-bucket01/Bioc1KGt2t
+```
+
+will list the files with 1KG samples genotyped against the T2T reference.
+
+
+
+Use the rclone `copyto` command to obtain a local copy of the zip file `t17.zip`
+in the folder pointed to by `$RC_DATADIR`:
+
+```
+docker run -v $RC_DATADIR:/data -v $RC_CONFDIR:/config/rclone -t rclone/rclone:latest copyto osn:/bir190004-bucket01/Bioc1KGt2t/t17.zip ./t17.zip
+```
+This file should be unzipped in a folder to which the environment variable `HAIL_T2T_CHR17` will
+point.
