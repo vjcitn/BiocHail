@@ -59,7 +59,7 @@ tutorial [presented in python at hail.is](https://hail.is/docs/0.2/tutorials/01-
  
 # Larger data example 
 
-This vignette examines genotypes fromchromosome 17 in
+This vignette examines genotypes from chromosome 17 in
 [1000 genomes samples that were genotyped with T2T reference](02_large_t2t.html).
 
 # Exploring UK Biobank summary statistics
