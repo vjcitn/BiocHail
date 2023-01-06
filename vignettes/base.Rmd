@@ -52,7 +52,21 @@ will trigger a one-time installation of all necessary python infrastructure, whi
 take upwards of 15 minutes.  But after this you can run all the code in the vignettes
 linked below.
 
-# [GWAS tutorial vignette](01_gwas_tut.html)
+# GWAS tutorial vignette
  
-# [1000 genomes samples: chr17 with T2T reference](02_large_t2t.html)
+This [GWAS tutorial vignette](01_gwas_tut.html) mimics a great deal of the
+tutorial [presented in python at hail.is](https://hail.is/docs/0.2/tutorials/01-genome-wide-association-study.html).
+ 
+# Larger data example 
 
+This vignette examines genotypes fromchromosome 17 in
+[1000 genomes samples that were genotyped with T2T reference](02_large_t2t.html).
+
+# Exploring UK Biobank summary statistics
+
+This very [preliminary vignette](03_ukbb.html)
+deals with a small chunk (around 10000 loci) drawn
+from the pan ancestry summary statistics collection.
+
+This vignette will be expanded as the R-based tooling for
+working with loci and phenotypes is produced.
