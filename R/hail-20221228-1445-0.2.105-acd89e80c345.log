@@ -1,9 +1,0 @@
-2022-12-28 14:45:49.206 Hail: INFO: Running Hail version 0.2.105-acd89e80c345
-2022-12-28 14:45:49.773 SparkContext: WARN: Using an existing SparkContext; some configuration may not take effect.
-2022-12-28 14:45:50.407 root: INFO: RegionPool: initialized for thread 19: Thread-4
-2022-12-28 14:45:50.617 MemoryStore: INFO: Block broadcast_0 stored as values in memory (estimated size 34.3 KiB, free 434.4 MiB)
-2022-12-28 14:45:50.978 MemoryStore: INFO: Block broadcast_0_piece0 stored as bytes in memory (estimated size 3.2 KiB, free 434.4 MiB)
-2022-12-28 14:45:50.981 BlockManagerInfo: INFO: Added broadcast_0_piece0 in memory on stvjc-xps-13-9300.partners.org:44873 (size: 3.2 KiB, free: 434.4 MiB)
-2022-12-28 14:45:50.988 SparkContext: INFO: Created broadcast 0 from broadcast at SparkBackend.scala:342
-2022-12-28 14:45:51.763 root: INFO: RegionPool: FREE: 64.0K allocated (64.0K blocks / 0 chunks), regions.size = 1, 0 current java objects, thread 19: Thread-4
-2022-12-28 14:45:51.763 root: INFO: timing SparkBackend.parse_matrix_ir total 1.359s self 1.359s children 0.000ms %children 0.00%

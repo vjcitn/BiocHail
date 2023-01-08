@@ -70,3 +70,7 @@ from the pan ancestry summary statistics collection.
 
 This vignette will be expanded as the R-based tooling for
 working with loci and phenotypes is produced.
+
+# Questions?
+
+File an issue at the [source repo](https://github.com/vjcitn/BiocHail/issues)

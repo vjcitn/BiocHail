@@ -60,3 +60,88 @@ We need to use a python chunk to get the output, using gs:// storage references.
 r.hl.read_matrix_table('gs://ukb-diverse-pops-public/sumstats_release/results_full.mt').describe()
 ```
 
+## Exploring the subset
+
+### Metadata on study phenotypes
+
+We'll collect the column metadata to start to understand details
+of annotation of phenotypes.
+```{r lkss}
+sscol = ss$cols()$collect() # OK because we are just working over column metadata
+ss1 = sscol[[1]]
+names(ss1)
+ss1$get("phenocode")
+ss1$get("description")
+```
+
+We've introduced a function that extracts selected fields for a given
+phenotype, that accommodates availability of results for specific populations.
+
+```{r lkmul}
+multipop_df(ss1)
+```
+This can be iterated over all the elements of `sscol` to produce
+a comprehensive searchable table.  Here's a small illustration:
+```{r dodt, message=FALSE}
+library(DT)
+ndf = do.call(rbind, lapply(sscol[1:10], multipop_df))
+datatable(ndf)
+```
+
+### Metadata on loci
+
+We'll trim the material to be worked with by sampling both rows and columns.
+(2023.01.08: In future revisions we will be able to control the seed for random sampling.)
+
+```{r dotrim}
+sss = ss$sample_rows(.01)$sample_cols(.01)
+sss$count()
+```
+
+Row metadata are simple to collect:
+```{r getrm}
+rss = sss$rows()$collect()
+rss1 = rss[[1]]
+names(rss1)
+names(rss1$locus)
+rss1$locus$contig
+sapply(c("contig", "position"), function(x) rss1$locus[[x]])
+```
+
+### Summary statistics
+
+The summary statistics themselves reside in entries of the MatrixTable.  This
+can be expensive to collect and so filtering methods beyond random sampling
+must be mastered.  But here is a basic view.
+
+```{r getent}
+sse = sss$entries()$collect()
+length(sse)
+names(sse[[1]])
+sse1 = sse[[1]]
+```
+
+The `summary_stats` component has the association p-values -- log10 transformed?
+```{r lkss11}
+length(sse1$summary_stats)
+names(sse1$summary_stats[[1]])
+sse1$summary_stats[[1]]$Pvalue
+```
+
+# Exercises
+
+## Infrastructure
+
+- Define an interface to this subset of 10k loci that supports queries like
+    - has disease x been studied in UK Biobank?
+    - how many phenotypes have been studied in K populations, K=2, 3, ...?
+    - how consistent is the annotation -- are numbers of controls and cases always
+recorded?
+- Do the UK Biobank portals produce information to resolve these questions?
+    - if so, what are the API calls to obtain answers?
+    - if not, what is missing from the portals to allow answers to be obtained?
+
+## Substantive
+
+- List the genes that are near the loci collected in the 10k random sample 
+- (Hard) What is the most significant finding (position, phenotype, population) in the 10k subset?
