@@ -52,6 +52,10 @@ will trigger a one-time installation of all necessary python infrastructure, whi
 take upwards of 15 minutes.  But after this you can run all the code in the vignettes
 linked below.
 
+# Function reference
+
+All functions available in the package are listed [here](reference/index.html)
+
 # GWAS tutorial vignette
  
 This [GWAS tutorial vignette](01_gwas_tut.html) mimics a great deal of the

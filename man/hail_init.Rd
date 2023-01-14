@@ -2,17 +2,45 @@
 % Please edit documentation in R/hail_control.R
 \name{hail_init}
 \alias{hail_init}
-\title{initialize hail}
+\title{initialize hail, using more options}
 \usage{
-hail_init()
+hail_init(
+  quiet = FALSE,
+  min_block_size = 0L,
+  branching_factor = 50L,
+  default_reference = "GRCh37",
+  global_seed = 1234L,
+  spark_conf = NULL,
+  gcs_requester_pays_configuration = NULL
+)
+}
+\arguments{
+\item{quiet}{logical(1) defaults to FALSE}
+
+\item{min_block_size}{integer(1) defaults to 0L}
+
+\item{branching_factor}{integer(1) defaults to 50L}
+
+\item{default_reference}{character(1) defaults to "GRCh37", for compatibility with earlier `hail_init`}
+
+\item{global_seed}{integer(1) defaults to 1234L}
+
+\item{spark_conf}{list, defaults to NULL}
+
+\item{gcs_requester_pays_configuration}{list, defaults to NULL}
 }
 \description{
-initialize hail
+initialize hail, using more options
 }
 \note{
-hail object may be passed around
+hail object may be passed around.  See hail documentation for details on all args.
 }
 \examples{
-hc <- hail_init()
-hc
+proj = Sys.getenv("GOOGLE_PROJECT")
+buck = Sys.getenv("GCS_BUCKET")
+if (nchar(buck)>0) {
+  # conf = list(proj, c(buck)) doesn't seem to generate tuple[str,Sequence[str]]
+  hl <- hail_init()   #gcs_requester_pays_configuration=conf)
+  hl$default_reference()
+}  
 }

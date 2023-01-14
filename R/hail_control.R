@@ -2,10 +2,10 @@
 #' @import basilisk
 #' @note hail object may be passed around
 #' @examples
-#' hc <- hail_init()
+#' hc <- hail_init_simple()
 #' hc
 #' @export
-hail_init = function() {
+hail_init_simple = function() {
  proc = basilisk::basiliskStart(bsklenv, testload="hail") # avoid package-specific import
  #on.exit(basilisk::basiliskStop(proc))
  basilisk::basiliskRun(proc, function() {
@@ -37,7 +37,7 @@ hail_stop = function(hl) hl$stop()
 #' @param quiet logical(1) defaults to FALSE
 #' @param min_block_size integer(1) defaults to 0L 
 #' @param branching_factor integer(1) defaults to 50L
-#' @param default_reference character(1) defaults to "GRCh38",
+#' @param default_reference character(1) defaults to "GRCh37", for compatibility with earlier `hail_init`
 #' @param global_seed integer(1) defaults to 1234L 
 #' @param spark_conf list, defaults to NULL
 #' @param gcs_requester_pays_configuration list, defaults to NULL
@@ -46,12 +46,13 @@ hail_stop = function(hl) hl$stop()
 #' proj = Sys.getenv("GOOGLE_PROJECT")
 #' buck = Sys.getenv("GCS_BUCKET")
 #' if (nchar(buck)>0) {
-#'   conf = list(proj, c(buck))
-#'   hl <- hail_init2(gcs_requester_pays_configuration=conf)
+#'   # conf = list(proj, c(buck)) doesn't seem to generate tuple[str,Sequence[str]]
+#'   hl <- hail_init()   #gcs_requester_pays_configuration=conf)
+#'   hl$default_reference()
 #' }  
 #' @export
-hail_init2 = function(quiet=FALSE, min_block_size=0L, branching_factor=50L,
-   default_reference="GRCh38", global_seed=1234L, spark_conf=NULL,
+hail_init = function(quiet=FALSE, min_block_size=0L, branching_factor=50L,
+   default_reference="GRCh37", global_seed=1234L, spark_conf=NULL,
    gcs_requester_pays_configuration = NULL) {
  proc = basilisk::basiliskStart(bsklenv, testload="hail") # avoid package-specific import
  #on.exit(basilisk::basiliskStop(proc))
