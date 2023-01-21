@@ -1,0 +1,287 @@
+# Overview
+The purpose of this workspace is to illustrate interoperation of Bioconductor, R, and Spark in AnVIL.  We used
+a startup script to install R in a single spark node.  See the Appendix 1 to this description for the startup script, which uses a debian packaging of R 4.2.2, thanks to Dirk Eddelbuettel.
+
+# What to do
+
+## Improve extensibility
+
+The infrastructure is relatively primitive -- we have a version of R 4.2.2 but no associated binary repository.  It should be possible to use the r2u package management system to get CRAN packages without compilation but this has not been attempted as of 20 Jan 2023.
+
+## Use BiocHail
+
+### Basic setup
+
+We can use `install.packages(c("BiocManager", "remotes"))` and then `BiocManager::install("vjcitn/BiocHail")` to get everything needed to use Hail with Bioconductor under the basilisk discipline, with all python dependencies specified.
+
+**Crucial step before using `hail_init`: ensure that environment variable PIP_USER is set to false** and that this is known to the R session in which `hail_init` is first called.  If this is done, all dependencies will be consistently installed under `$HOME/.cache/R/basilisk` at the time `hail_init()` is run.  This step generates a persistent installation that will not need to be revised unless a new version of basilisk or BiocHail are installed in R.
+
+### Work with the hail.is extract of 1000 genomes data in GRCh37 reference
+
+We don't see a way to add an R kernel to jupyter in this cloud environment, although perhaps the startup script could be emended to deal with that.  We'll have to work in the terminal.
+
+Here's how we acquire and inspect the 1000 genomes subset from hail.is for the GWAS tutorial.  This creates
+a persistent cache where the `get_1kg()` function can find the resource when requested in future sessions.
+
+```
+> library(BiocHail)
+> hl = hail_init()
+> my = get_1kg(hl)
+/home/jupyter/.cache/R/BiocFileCache
+  does not exist, create directory? (yes/no): yes
+  |======================================================================| 100%
+
+> my
+<hail.matrixtable.MatrixTable object at 0x7f76c2e7e4f0>
+> my$rows()$select()$show(5L)
++---------------+------------+                                                                                              (0 + 2) / 2]
+| locus         | alleles    |
++---------------+------------+
+| locus<GRCh37> | array<str> |
++---------------+------------+
+| 1:904165      | ["G","A"]  |
+| 1:909917      | ["G","A"]  |
+| 1:986963      | ["C","T"]  |
+| 1:1563691     | ["T","G"]  |
+| 1:1707740     | ["T","G"]  |
++---------------+------------+
+showing top 5 rows
+```
+We can annotate the `my` MatrixTable instance, getting a new object `mt`.  First
+acquire the annotation table for the tutorial:
+```
+annopath <- path_1kg_annotations()
+tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+```
+Then add to the genotype table:
+
+```
+mt = my$annotate_cols(pheno = tab[my$s])
+```
+This works nicely --
+```
+> mt$col$describe()
+--------------------------------------------------------
+Type:
+        struct {
+        s: str,
+        pheno: struct {
+            Population: str,
+            SuperPopulation: str,
+            isFemale: bool,
+            PurpleHair: bool,
+            CaffeineConsumption: int32
+        }
+    }
+--------------------------------------------------------
+Source:
+    <hail.matrixtable.MatrixTable object at 0x7f76c2493250>
+Index:
+    ['column']
+--------------------------------------------------------
+> mt$aggregate_cols(hl$agg$counter(mt$pheno$SuperPopulation))
+$AFR
+[1] 76
+
+$AMR
+[1] 34
+
+$EAS
+[1] 72
+
+$EUR
+[1] 47
+
+$SAS
+[1] 55
+```
+
+At this point it should be clear how to carry out all the steps of the [tutorial in R](https://vjcitn.github.io/BiocHail/01_gwas_tut.html).  It will be much nicer when we have an R kernel in jupyter with Spark/Hail.
+
+### Work with 1000 genomes data called with the Telomere-to-telomere reference
+
+
+We used
+```
+wget https://mghp.osn.xsede.org/bir190004-bucket01/Bioc1KGt2t/t17.zip
+```
+to acquire a 45GB zip file from Bioconductor's Open Storage Network allocation.  This zip
+file was generated from the VCF file for chr17 of the T2T genotype calls; see Appendix 2 for details.
+
+```
+> Sys.setenv(HAIL_T2T_CHR17="/home/jupyter/t2t17.mt")
+> hl <- hail_init()
+> # NB the following two commands are now encapsulated in the rg_update function
+> nn <- hl$get_reference('GRCh38')
+> nn <- nn$read(system.file("json/t2tAnVIL.json", package="BiocHail"))
+> # updates the hail reference genome
+> bigloc = Sys.getenv("HAIL_T2T_CHR17")
+> if (nchar(bigloc)>0) {
++   mt17 <- hl$read_matrix_table(Sys.getenv("HAIL_T2T_CHR17"))
++   mt17$count()
++ }
+[[1]]
+[1] 3824434
+
+[[2]]
+[1] 3202
+```
+
+At this point one can follow the code in the [vignette on working with chr17 for the 3202
+1KG samples in T2T reference.](https://vjcitn.github.io/BiocHail/02_large_t2t.html).
+
+### Work with UKBB GWAS summary statistics for 7271 phenotype/population combinations
+
+Our objective here is to facilitate use of the whole set of UK Biobank GWAS summary statistics.  These are stored in Hail MatrixTable instances as described at the [pan-ancestry UKBB doc site](https://pan-dev.ukbb.broadinstitute.org/docs/hail-format#release-files).   These resources (all summary stats, metaanalysis results) consume over 12TB each.  They can be used directly in terra with Hail's gs:// support **only from a GCP dataproc cluster**. 
+
+We produced a randomly sampled collection of around 10000 loci for all 7271 in a 5GB zipped MatrixTable instance, available
+from Bioconductor's Open Storage Network allocation.  We did this because
+- we want to be able to examine the phenotype vocabulary and results representations in detail;
+- we do not want to require spark cluster access or even terra access to perform these examinations.
+Once the R tooling is in place to facilitate convenient interaction, we would work with these resources via gs:// references.
+
+Here is how we can work with the extract:
+
+```
+> library(BiocHail)
+> hl = hail_init()
+
+2023-01-21 12:05:59.920 WARN  NativeCodeLoader:60 - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Running on Apache Spark version 3.1.3
+SparkUI available at http://saturn-989f94f8-a72d-4f37-99fe-832f619f4650-m.c.terra-91608afb.internal:4040
+Welcome to
+     __  __     <>__
+    / /_/ /__  __/ /
+   / __  / _ `/ / /
+  /_/ /_/\_,_/_/_/   version 0.2.108-fc03e9d5dc08
+LOGGING: writing to /home/jupyter/hail-20230121-1205-0.2.108-fc03e9d5dc08.log
+> ss = get_ukbb_sumstat_10kloci_mt(hl) # can take about a minute to unzip 5GB
+  |======================================================================| 100%
+
+> ss$count()  
+[[1]]
+[1] 9888
+
+[[2]]
+[1] 7271
+```
+
+See Appendix 3 for information on how to avoid waiting 90 seconds or so to unzip the MatrixTable data by
+using persistent disk and an environment variable.
+
+```
+> ss$describe()
+----------------------------------------
+Global fields:
+    None
+----------------------------------------
+Column fields:
+    'trait_type': str
+    'phenocode': str
+    'pheno_sex': str
+    'coding': str
+    'modifier': str
+    'pheno_data': array<struct {
+        n_cases: int32,
+        n_controls: int32,
+        heritability: float64,
+        saige_version: str,
+        inv_normalized: bool,
+        pop: str
+    }>
+    'description': str
+    'description_more': str
+    'coding_description': str
+    'category': str
+    'n_cases_full_cohort_both_sexes': int64
+    'n_cases_full_cohort_females': int64
+    'n_cases_full_cohort_males': int64
+		...
+```
+At this point the [very preliminary vignette](https://vjcitn.github.io/BiocHail/03_ukbb.html) can be followed.
+
+# Appendix 1 -- establishing R in a terra dataproc cluster
+```
+!/usr/bin/env bash
+
+# 12/27/2022 will produce R 4.2.2 in docker ubuntu:22.04 in 2 minutes
+
+# added
+apt update
+apt install --yes ca-certificates
+DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+
+apt install --yes --no-install-recommends wget          # to add the key
+wget -q -O- https://eddelbuettel.github.io/r2u/assets/dirk_eddelbuettel_key.asc \
+    | tee -a /etc/apt/trusted.gpg.d/cranapt_key.asc
+
+# USE FOCAL
+
+#echo "deb [arch=amd64] https://dirk.eddelbuettel.com/cranapt focal main" \
+#    > /etc/apt/sources.list.d/cranapt.list
+#apt update
+# or use the mirror at the University of Illinois Urbana-Champaign:
+
+echo "deb [arch=amd64] https://r2u.stat.illinois.edu/ubuntu focal main" \
+    > /etc/apt/sources.list.d/cranapt.list
+apt update
+
+# (In either example, replace focal with focal for use with Ubuntu 22.04.)
+
+#Third, and optionally, if you do not yet have the current R version, run these two lines (or use the standard CRAN repo setup)
+#
+
+wget -q -O- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc \
+    | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+echo "deb [arch=amd64] https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/" \
+    > /etc/apt/sources.list.d/cran-ubuntu.list
+apt update
+apt install -y r-base-core
+```
+
+# Appendix 2 - producing a MatrixTable with 1000 Genomes data genotyped to the T2T reference
+We localized the raw genotypes to an AnVIL workspace disk:
+```
+AnVIL::gsutil_cp("gs://fc-47de7dae-e8e6-429c-b760-b4ba49136eee/1KGP/joint_genotyping/joint_vcfs/raw/chr17.genotyped.vcf.gz", ".")
+```
+
+We created a JSON file with the chromosome lengths of the T2T reference in t2tAnVIL.json.
+We then used python in a large Hail/Spark cluster in AnVIL:
+```
+>>> import hail as h
+>>> rg = h.get_reference('GRCh38')
+Initializing Hail with default parameters...
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Running on Apache Spark version 3.1.3
+SparkUI available at http://756809c79837:4040
+Welcome to
+     __  __     <>__
+    / /_/ /__  __/ /
+   / __  / _ `/ / /
+  /_/ /_/\_,_/_/_/   version 0.2.105-acd89e80c345
+LOGGING: writing to /home/rstudio/hail-20221213-1558-0.2.105-acd89e80c345.log
+>>> nn = rg.read("t2tAnVIL.json")
+>>> h.import_vcf("chr17.genotyped.vcf.gz", force_bgz=True, reference_genome=nn).write("t2t17.mt")
+```
+This operation seems to take a long time even with 64 cores.  We
+could not get exact timing owing to some connectivity problems.
+
+This t2t17.mt was then zipped up and copied to Bioconductor's Open Storage Network allocation.  In principle this file could be placed in Zenodo for long term access.
+
+# Appendix 3 - BiocFileCache of UKBB summary stats extract
+
+After the `get_ukbb_sumstat_10kloci_mt` function is properly run, we have
+```
+> library(BiocFileCache)
+> ca = BiocFileCache::BiocFileCache()
+> lku = bfcquery(ca, "ukbb_sumst")
+> lku$rpath
+[1] "/home/jupyter/.cache/R/BiocFileCache/881ba5e09d_ukbb_sumst_10kloc.zip"
+```
+This zip file can be unzipped in a persistent location and the resulting `.mt` folder
+pointed to by the environment variable `HAIL_UKBB_SUMSTAT_10K_PATH`.  Then
+the `get_ukbb...` function will rapidly return an appropriate MatrixTable reference.
+
