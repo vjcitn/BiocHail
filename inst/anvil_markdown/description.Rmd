@@ -1,0 +1,139 @@
+# Overview
+The purpose of this workspace is to illustrate interoperation of Bioconductor, R, and Spark in AnVIL.  We used
+a startup script to install R in a single spark node.  See the appendix to this description for the startup script, which uses a debian packaging of R 4.2.2, thanks to Dirk Eddelbuettel.
+
+# What to do
+
+## Improve extensibility
+
+The infrastructure is relatively primitive -- we have a version of R 4.2.2 but no associated binary repository.  It should be possible to use the r2u package management system to get CRAN packages without compilation but this has not been attempted as of 20 Jan 2023.
+
+## Use BiocHail
+
+### Basic setup
+
+We can use `install.packages(c("BiocManager", "remotes"))` and then `BiocManager::install("vjcitn/BiocHail")` to get everything needed to use Hail with Bioconductor under the basilisk discipline, with all python dependencies specified.
+
+**Crucial step before using `hail_init`: ensure that environment variable PIP_USER is set to false** and that this is known to the R session in which `hail_init` is first called.  If this is done, all dependencies will be consistently installed under `$HOME/.cache/R/basilisk` at the time `hail_init()` is run.  This step generates a persistent installation that will not need to be revised unless a new version of basilisk or BiocHail are installed in R.
+
+### Work with 1000 genomes data
+
+We don't see a way to add an R kernel to jupyter in this cloud environment, although perhaps the startup script could be emended to deal with that.  We'll have to work in the terminal.
+
+Here's how we acquire and inspect the 1000 genomes subset from hail.is for the GWAS tutorial.  This creates
+a persistent cache where the `get_1kg()` function can find the resource when requested in future sessions.
+
+```
+> library(BiocHail)
+> hl = hail_init()
+> my = get_1kg(hl)
+/home/jupyter/.cache/R/BiocFileCache
+  does not exist, create directory? (yes/no): yes
+  |======================================================================| 100%
+
+> my
+<hail.matrixtable.MatrixTable object at 0x7f76c2e7e4f0>
+> my$rows()$select()$show(5L)
++---------------+------------+                                                                                              (0 + 2) / 2]
+| locus         | alleles    |
++---------------+------------+
+| locus<GRCh37> | array<str> |
++---------------+------------+
+| 1:904165      | ["G","A"]  |
+| 1:909917      | ["G","A"]  |
+| 1:986963      | ["C","T"]  |
+| 1:1563691     | ["T","G"]  |
+| 1:1707740     | ["T","G"]  |
++---------------+------------+
+showing top 5 rows
+```
+We can annotate the `my` MatrixTable instance, getting a new object `mt`.  First
+acquire the annotation table for the tutorial:
+```
+annopath <- path_1kg_annotations()
+tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+```
+Then add to the genotype table:
+
+```
+mt = my$annotate_cols(pheno = tab[my$s])
+```
+This works nicely --
+```
+> mt$col$describe()
+--------------------------------------------------------
+Type:
+        struct {
+        s: str,
+        pheno: struct {
+            Population: str,
+            SuperPopulation: str,
+            isFemale: bool,
+            PurpleHair: bool,
+            CaffeineConsumption: int32
+        }
+    }
+--------------------------------------------------------
+Source:
+    <hail.matrixtable.MatrixTable object at 0x7f76c2493250>
+Index:
+    ['column']
+--------------------------------------------------------
+> mt$aggregate_cols(hl$agg$counter(mt$pheno$SuperPopulation))
+$AFR
+[1] 76
+
+$AMR
+[1] 34
+
+$EAS
+[1] 72
+
+$EUR
+[1] 47
+
+$SAS
+[1] 55
+```
+
+At this point it should be clear how to carry out all the steps of the [tutorial in R](https://vjcitn.github.io/BiocHail/01_gwas_tut.html).  It will be much nicer when we have an R kernel in jupyter with Spark/Hail.
+
+# Appendix
+```
+!/usr/bin/env bash
+
+# 12/27/2022 will produce R 4.2.2 in docker ubuntu:22.04 in 2 minutes
+
+# added
+apt update
+apt install --yes ca-certificates
+DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+
+apt install --yes --no-install-recommends wget          # to add the key
+wget -q -O- https://eddelbuettel.github.io/r2u/assets/dirk_eddelbuettel_key.asc \
+    | tee -a /etc/apt/trusted.gpg.d/cranapt_key.asc
+
+# USE FOCAL
+
+#echo "deb [arch=amd64] https://dirk.eddelbuettel.com/cranapt focal main" \
+#    > /etc/apt/sources.list.d/cranapt.list
+#apt update
+# or use the mirror at the University of Illinois Urbana-Champaign:
+
+echo "deb [arch=amd64] https://r2u.stat.illinois.edu/ubuntu focal main" \
+    > /etc/apt/sources.list.d/cranapt.list
+apt update
+
+# (In either example, replace focal with focal for use with Ubuntu 22.04.)
+
+#Third, and optionally, if you do not yet have the current R version, run these two lines (or use the standard CRAN repo setup)
+#
+
+wget -q -O- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc \
+    | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+echo "deb [arch=amd64] https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/" \
+    > /etc/apt/sources.list.d/cran-ubuntu.list
+apt update
+apt install -y r-base-core
+```
+
