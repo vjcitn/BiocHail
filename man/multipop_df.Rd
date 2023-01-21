@@ -14,6 +14,10 @@ multipop_df(
 }
 \arguments{
 \item{x}{Struct - a single element of the list returned by mt$cols()$collect()}
+
+\item{top2get}{character() vector of general fields to retrieve}
+
+\item{pheno2get}{character() vector of fields to be retrieved for each subpopulation}
 }
 \description{
 pheno_data component harvesting from columns of summary stats MatrixTable

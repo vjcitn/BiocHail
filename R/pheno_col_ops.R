@@ -12,18 +12,31 @@ top2df = function(x, toget=c("trait_type", "phenocode", "description", "modifier
 
 #' pheno_data component harvesting from columns of summary stats MatrixTable
 #' @param m Struct returned from mt$cols()$collect()
+#' @param section numeric(1) element of pheno_data list to be transformed to data.frame
 #' @param toget character() vector of field names to retrieve
+#' @param verbose logical(1) if TRUE (default) will message that there are multiple
+#' `pheno_data` components returned
 #' @note applies top2df to the pheno_data component of input
 #' @return 1 row data.frame
 pheno_data_sec_2df = function(m, section=1,
-     toget = c("n_cases", "n_controls", "heritability", "pop")) {
-  z = m$pheno_data[[section]]
+     toget = c("n_cases", "n_controls", "heritability", "pop"), verbose=TRUE) {
+  pd = m$pheno_data
+  npd = length(pd)
+  if (npd > 1) {
+     if (section > npd) stop("requested section number in excess of available pheno_data elements returned")
+     if (verbose) {
+         message(sprintf("there are %d pheno_data components, selecting component %d", npd, section))
+         }
+     }
+  z = pd[[section]]
   top2df(z, toget=toget)
 }
 
 #' pheno_data component harvesting from columns of summary stats MatrixTable
 #' allowing for info on multiple populations in the pheno_data component
 #' @param x Struct - a single element of the list returned by mt$cols()$collect()
+#' @param top2get character() vector of general fields to retrieve 
+#' @param pheno2get character() vector of fields to be retrieved for each subpopulation
 #' @examples
 #' if (nchar(Sys.getenv("HAIL_UKBB_SUMSTAT_10K_PATH"))>0) {
 #'   hl = hail_init()

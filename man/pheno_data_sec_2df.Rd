@@ -7,13 +7,19 @@
 pheno_data_sec_2df(
   m,
   section = 1,
-  toget = c("n_cases", "n_controls", "heritability", "pop")
+  toget = c("n_cases", "n_controls", "heritability", "pop"),
+  verbose = TRUE
 )
 }
 \arguments{
 \item{m}{Struct returned from mt$cols()$collect()}
 
+\item{section}{numeric(1) element of pheno_data list to be transformed to data.frame}
+
 \item{toget}{character() vector of field names to retrieve}
+
+\item{verbose}{logical(1) if TRUE (default) will message that there are multiple
+`pheno_data` components returned}
 }
 \value{
 1 row data.frame
