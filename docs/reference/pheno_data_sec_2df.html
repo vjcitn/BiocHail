@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.7</span>
       </span>
     </div>
 
@@ -39,9 +39,6 @@
     </li>
     <li>
       <a href="../articles/03_ukbb.html">03 Working with UK Biobank summary statistics</a>
-    </li>
-    <li>
-      <a href="../articles/index.html">GH Pages support for BiocHail</a>
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
@@ -72,7 +69,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pheno_data_sec_2df</span><span class="op">(</span></span>
 <span>  <span class="va">m</span>,</span>
 <span>  section <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  toget <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n_cases"</span>, <span class="st">"n_controls"</span>, <span class="st">"heritability"</span>, <span class="st">"pop"</span><span class="op">)</span></span>
+<span>  toget <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n_cases"</span>, <span class="st">"n_controls"</span>, <span class="st">"heritability"</span>, <span class="st">"pop"</span><span class="op">)</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -82,8 +80,17 @@
 <dd><p>Struct returned from mt$cols()$collect()</p></dd>
 
 
+<dt>section</dt>
+<dd><p>numeric(1) element of pheno_data list to be transformed to data.frame</p></dd>
+
+
 <dt>toget</dt>
 <dd><p>character() vector of field names to retrieve</p></dd>
+
+
+<dt>verbose</dt>
+<dd><p>logical(1) if TRUE (default) will message that there are multiple
+`pheno_data` components returned</p></dd>
 
 </dl></div>
     <div id="value">

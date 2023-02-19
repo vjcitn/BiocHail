@@ -189,7 +189,7 @@ r.mt.col.describe()  # python!
 The call rate histogram is given by:
 ```{r lkcr, eval=TRUE}
 callrate <- mt$sample_qc$call_rate$collect()
-hist(callrate)
+graphics::hist(callrate)
 ```
 
 ## Filtering
@@ -278,8 +278,8 @@ here we collect the results for plotting in R.
 First we estimate $\lambda_{GC}$
 ```{r dolam, eval=TRUE}
 pv = gwas$p_value$collect()
-x2 = qchisq(1-pv,1)
-lam = median(x2, na.rm=TRUE)/qchisq(.5,1)
+x2 = stats::qchisq(1-pv,1)
+lam = stats::median(x2, na.rm=TRUE)/stats::qchisq(.5,1)
 lam
 ```
 And the qqplot:
@@ -343,8 +343,8 @@ New value of $\lambda_{GC}$:
 
 ```{r dolam2, eval=TRUE}
 pv = gwas2$p_value$collect()
-x2 = qchisq(1-pv,1)
-lam = median(x2, na.rm=TRUE)/qchisq(.5,1)
+x2 = stats::qchisq(1-pv,1)
+lam = stats::median(x2, na.rm=TRUE)/stats::qchisq(.5,1)
 lam
 ```
 A manhattan plot for chr8:

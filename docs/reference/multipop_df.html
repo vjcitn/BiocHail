@@ -20,7 +20,7 @@ allowing for info on multiple populations in the pheno_data component"><!-- math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.7</span>
       </span>
     </div>
 
@@ -42,9 +42,6 @@ allowing for info on multiple populations in the pheno_data component"><!-- math
     </li>
     <li>
       <a href="../articles/03_ukbb.html">03 Working with UK Biobank summary statistics</a>
-    </li>
-    <li>
-      <a href="../articles/index.html">GH Pages support for BiocHail</a>
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
@@ -87,6 +84,14 @@ allowing for info on multiple populations in the pheno_data component</p>
     <dl><dt>x</dt>
 <dd><p>Struct - a single element of the list returned by mt$cols()$collect()</p></dd>
 
+
+<dt>top2get</dt>
+<dd><p>character() vector of general fields to retrieve</p></dd>
+
+
+<dt>pheno2get</dt>
+<dd><p>character() vector of fields to be retrieved for each subpopulation</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
@@ -99,6 +104,12 @@ allowing for info on multiple populations in the pheno_data component</p>
 <span class="r-in"><span>  <span class="fu">multipop_df</span><span class="op">(</span><span class="va">sscol</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 7271</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> there are 6 pheno_data components, selecting component 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> there are 6 pheno_data components, selecting component 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> there are 6 pheno_data components, selecting component 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> there are 6 pheno_data components, selecting component 4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> there are 6 pheno_data components, selecting component 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> there are 6 pheno_data components, selecting component 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   trait_type phenocode description modifier coding_description coding n_cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 biomarkers     30600     Albumin     irnt                 NA           5759</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 biomarkers     30600     Albumin     irnt                 NA            856</span>

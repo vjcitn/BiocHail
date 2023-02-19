@@ -10,6 +10,7 @@ hail_init(
   branching_factor = 50L,
   default_reference = "GRCh37",
   global_seed = 1234L,
+  log = tempfile(),
   spark_conf = NULL,
   gcs_requester_pays_configuration = NULL
 )
@@ -24,6 +25,8 @@ hail_init(
 \item{default_reference}{character(1) defaults to "GRCh37", for compatibility with earlier `hail_init`}
 
 \item{global_seed}{integer(1) defaults to 1234L}
+
+\item{log}{character(1) target folder for logging, defaults to tempfile()}
 
 \item{spark_conf}{list, defaults to NULL}
 

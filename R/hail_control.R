@@ -39,6 +39,7 @@ hail_stop = function(hl) hl$stop()
 #' @param branching_factor integer(1) defaults to 50L
 #' @param default_reference character(1) defaults to "GRCh37", for compatibility with earlier `hail_init`
 #' @param global_seed integer(1) defaults to 1234L 
+#' @param log character(1) target folder for logging, defaults to tempfile()
 #' @param spark_conf list, defaults to NULL
 #' @param gcs_requester_pays_configuration list, defaults to NULL
 #' @note hail object may be passed around.  See hail documentation for details on all args.
@@ -52,23 +53,23 @@ hail_stop = function(hl) hl$stop()
 #' }  
 #' @export
 hail_init = function(quiet=FALSE, min_block_size=0L, branching_factor=50L,
-   default_reference="GRCh37", global_seed=1234L, spark_conf=NULL,
+   default_reference="GRCh37", global_seed=1234L, log = tempfile(), spark_conf=NULL,
    gcs_requester_pays_configuration = NULL) {
  proc = basilisk::basiliskStart(bsklenv, testload="hail") # avoid package-specific import
  #on.exit(basilisk::basiliskStop(proc))
  basilisk::basiliskRun(proc, function(quiet, min_block_size, branching_factor,
-		default_reference, global_seed, spark_conf, gcs_requester_pays_configuration) {
+		default_reference, global_seed, log, spark_conf, gcs_requester_pays_configuration) {
      hl = reticulate::import("hail") 
      lk = try(hl$init(idempotent=TRUE, quiet=quiet, min_block_size=min_block_size,
                branching_factor=branching_factor, default_reference=default_reference,
-               global_seed=global_seed, gcs_requester_pays_configuration=
+               global_seed=global_seed, log=log, gcs_requester_pays_configuration=
                   gcs_requester_pays_configuration))
      if (inherits(lk, "try-error")) {
         message("could not initialize ... already initialized?")
         }
      hl
    }, quiet=quiet, min_block_size=min_block_size, branching_factor=branching_factor,
-        default_reference=default_reference, global_seed=global_seed, 
+        default_reference=default_reference, global_seed=global_seed, log=log,
          spark_conf=spark_conf, gcs_requester_pays_configuration=
          gcs_requester_pays_configuration  )
 }

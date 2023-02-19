@@ -88,8 +88,8 @@ We saved the PC scores for PCA based on 38k randomly sampled loci,
 and 191k randomly sampled loci.  Here's a simple view of the latter.
 
 ```{r lk191,eval=TRUE}
-data(pcs_191k)
-pairs(pcs_191k[,1:5], pch=".")
+utils::data(pcs_191k)
+graphics::pairs(pcs_191k[,1:5], pch=".")
 ```
 
 # Exercises

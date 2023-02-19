@@ -18,10 +18,19 @@ Along the way, we illustrate and adjust for population stratification:
 
 ![popstrat](https://github.com/vjcitn/BiocHail/raw/main/popstrat.png)
 
-## Larger data problem -- 1000 genomes data with T2T reference?
+## Larger data problem -- 1000 genomes data with T2T reference
+
+We have arranged a serialization of genotypes on chromosome 17
+for 3202 1000 genomes samples.
 
 ## Relevant LD resources ... in which cloud?
 
+Still to come.
+
 ## Simulating multipopulation genotype surveys
 
+Still to come.
+
 ## Binding phenotypes from FHIR to Hail
+
+Still to come.
