@@ -1,6 +1,7 @@
 #' initialize hail
 #' @import basilisk
 #' @note hail object may be passed around
+#' @return python reference to hail module
 #' @examples
 #' hc <- hail_init_simple()
 #' hc
@@ -21,6 +22,7 @@ hail_init_simple = function() {
 
 #' stop hail
 #' @param hl a hail object produced by hail_init()
+#' @return result of stop() method for Hail module
 #' @export
 hail_stop = function(hl) hl$stop()
 
@@ -43,6 +45,7 @@ hail_stop = function(hl) hl$stop()
 #' @param spark_conf list, defaults to NULL
 #' @param gcs_requester_pays_configuration list, defaults to NULL
 #' @note hail object may be passed around.  See hail documentation for details on all args.
+#' @return python reference to hail module
 #' @examples
 #' proj = Sys.getenv("GOOGLE_PROJECT")
 #' buck = Sys.getenv("GCS_BUCKET")
@@ -78,6 +81,7 @@ hail_init = function(quiet=FALSE, min_block_size=0L, branching_factor=50L,
 #' @importFrom reticulate import
 #' @note `/home/jupyter/.local/share/r-miniconda/envs/r-reticulate/bin/pip3 install...` is 
 #' used to ensure that reticulate's python ecosystem is what we want
+#' @return python reference to hail module
 #' @examples
 #' # assumes terra
 #' if (nchar(Sys.getenv("WORKSPACE_NAMESPACE"))>0) {

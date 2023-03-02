@@ -6,6 +6,12 @@
 \usage{
 osn_1kg_path()
 }
+\value{
+character(1) URL to zip
+}
 \description{
 Open Storage Network path to a zip of hail MatrixTable with some 1kg data for the Hail.is GWAS tutorial
+}
+\examples{
+osn_1kg_path()
 }

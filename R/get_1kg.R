@@ -1,4 +1,7 @@
 #' Open Storage Network path to a zip of hail MatrixTable with some 1kg data for the Hail.is GWAS tutorial
+#' @return character(1) URL to zip
+#' @examples
+#' osn_1kg_path()
 #' @export
 osn_1kg_path = function() "https://bir190004-bucket01.mghp.osn.xsede.org/BiocHailData/1kg.zip"
 
@@ -50,6 +53,9 @@ get_1kg = function(hl, retrieve_import_write=FALSE, path_1kg_zip=osn_1kg_path(),
 }
 
 #' generate path to installed annotations file
+#' @return character(1) path to annotations
+#' @examples
+#' path_1kg_annotations()
 #' @export
 path_1kg_annotations = function() {
   system.file("extdata/1kg_annotations.txt", package="BiocHail")

@@ -37,6 +37,7 @@ pheno_data_sec_2df = function(m, section=1,
 #' @param x Struct - a single element of the list returned by mt$cols()$collect()
 #' @param top2get character() vector of general fields to retrieve 
 #' @param pheno2get character() vector of fields to be retrieved for each subpopulation
+#' @return data.frame
 #' @examples
 #' if (nchar(Sys.getenv("HAIL_UKBB_SUMSTAT_10K_PATH"))>0) {
 #'   hl = hail_init()

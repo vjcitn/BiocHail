@@ -6,6 +6,9 @@
 \usage{
 bare_hail()
 }
+\value{
+python reference to hail module
+}
 \description{
 bare interface to hail using reticulate
 }

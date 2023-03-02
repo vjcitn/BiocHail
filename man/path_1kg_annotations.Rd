@@ -6,6 +6,12 @@
 \usage{
 path_1kg_annotations()
 }
+\value{
+character(1) path to annotations
+}
 \description{
 generate path to installed annotations file
+}
+\examples{
+path_1kg_annotations()
 }

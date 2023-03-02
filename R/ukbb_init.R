@@ -1,6 +1,7 @@
 #' initialize ukbb
 #' @import basilisk
 #' @note ukbb module may be passed around
+#' @return python module reference
 #' @examples
 #' ukbb <- ukbb_init()
 #' names(ukbb)

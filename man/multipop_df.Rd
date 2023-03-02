@@ -19,6 +19,9 @@ multipop_df(
 
 \item{pheno2get}{character() vector of fields to be retrieved for each subpopulation}
 }
+\value{
+data.frame
+}
 \description{
 pheno_data component harvesting from columns of summary stats MatrixTable
 allowing for info on multiple populations in the pheno_data component

@@ -6,6 +6,9 @@
 \usage{
 ukbb_init()
 }
+\value{
+python module reference
+}
 \description{
 initialize ukbb
 }

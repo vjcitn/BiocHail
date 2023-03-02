@@ -9,6 +9,9 @@ hail_stop(hl)
 \arguments{
 \item{hl}{a hail object produced by hail_init()}
 }
+\value{
+result of stop() method for Hail module
+}
 \description{
 stop hail
 }

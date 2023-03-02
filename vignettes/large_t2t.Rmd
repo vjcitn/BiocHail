@@ -4,7 +4,7 @@ author: "Vincent J. Carey, stvjc at channing.harvard.edu"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Working with larger VCF: T2T by chromosome}
+  %\VignetteIndexEntry{02 Working with larger VCF: T2T by chromosome}
   %\VignetteEncoding{UTF-8}
 output:
   BiocStyle::html_document:

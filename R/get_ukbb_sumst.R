@@ -1,5 +1,8 @@
 
 #' Open Storage Network path to a zip of hail MatrixTable with a small subset of UKBB summary statistics as of 12/25/2022
+#' @return character(1) path to zip
+#' @examples
+#' osn_ukbb_sumst10k_path()
 #' @export
 osn_ukbb_sumst10k_path = function() "https://bir190004-bucket01.mghp.osn.xsede.org/BiocUKBBData/ukbb_sumst_10kloc.zip"
 

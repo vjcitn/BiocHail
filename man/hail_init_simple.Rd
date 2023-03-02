@@ -6,6 +6,9 @@
 \usage{
 hail_init_simple()
 }
+\value{
+python reference to hail module
+}
 \description{
 initialize hail
 }

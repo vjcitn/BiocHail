@@ -32,6 +32,9 @@ hail_init(
 
 \item{gcs_requester_pays_configuration}{list, defaults to NULL}
 }
+\value{
+python reference to hail module
+}
 \description{
 initialize hail, using more options
 }
