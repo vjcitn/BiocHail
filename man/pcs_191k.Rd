@@ -9,7 +9,7 @@ telomere-to-telomere reference}
 data.frame
 }
 \usage{
-pcs_191k
+data('pcs_191k')
 }
 \description{
 HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the 
