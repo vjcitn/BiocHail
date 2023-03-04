@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.8</span>
       </span>
     </div>
 
@@ -52,13 +52,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/01_gwas_tut.html">01 BiocHail -- GWAS tutorial from hail.is</a>
+      <a href="articles/gwas_tut.html">01 BiocHail -- GWAS tutorial from hail.is</a>
     </li>
     <li>
-      <a href="articles/02_large_t2t.html">02 Working with larger VCF: T2T by chromosome</a>
+      <a href="articles/large_t2t.html">02 Working with larger VCF: T2T by chromosome</a>
     </li>
     <li>
-      <a href="articles/03_ukbb.html">03 Working with UK Biobank summary statistics</a>
+      <a href="articles/ukbb.html">03 Working with UK Biobank summary statistics</a>
     </li>
   </ul>
 </li>
@@ -85,14 +85,11 @@
 <div class="section level1">
 <div class="page-header"><h1 id="biochail">BiocHail<a class="anchor" aria-label="anchor" href="#biochail"></a>
 </h1></div>
-<p>This is a multi-step overview of Hail for genetic association studies</p>
+<p>This is a multi-step overview of Hail for genetic association studies. As of March 2023, there are three vignettes (articles), described in the following subsections.</p>
 <div class="section level2">
 <h2 id="tutorial-overview">Tutorial overview<a class="anchor" aria-label="anchor" href="#tutorial-overview"></a>
 </h2>
-<p>The basic layout, following the <a href="https://hail.is/docs/0.2/tutorials/01-genome-wide-association-study.html" class="external-link">Hail GWAS tutorial</a>:</p>
-<div class="figure">
-<img src="https://github.com/vjcitn/BiocHail/raw/main/toc1.png" alt="topics"><p class="caption">topics</p>
-</div>
+<p>The first vignette follows the <a href="https://hail.is/docs/0.2/tutorials/01-genome-wide-association-study.html" class="external-link">Hail 0.2 GWAS tutorial</a>.</p>
 <p>We’ll see how to use a very small excerpt from the 1000 genomes study to produce</p>
 <div class="figure">
 <img src="https://github.com/vjcitn/BiocHail/raw/main/litman.png" alt="litman"><p class="caption">litman</p>
@@ -105,7 +102,13 @@
 <div class="section level2">
 <h2 id="larger-data-problem--1000-genomes-data-with-t2t-reference">Larger data problem – 1000 genomes data with T2T reference<a class="anchor" aria-label="anchor" href="#larger-data-problem--1000-genomes-data-with-t2t-reference"></a>
 </h2>
-<p>We have arranged a serialization of genotypes on chromosome 17 for 3202 1000 genomes samples.</p>
+<p>We have arranged a serialization of genotypes on chromosome 17 for 3202 1000 genomes samples. Code is provided to explore population stratification with this richer set of genotypes. Exercises investigate sampling loci, manipulation of annotation, and exploratory GWAS.</p>
+</div>
+<div class="section level2">
+<h2 id="working-with-uk-biobank-summary-statistics">Working with UK Biobank summary statistics<a class="anchor" aria-label="anchor" href="#working-with-uk-biobank-summary-statistics"></a>
+</h2>
+<p>Some of the code of interest in this vignette needs to be run in Rstudio to take advantage of quarto-based mixing of R and python.</p>
+<p>Exercises address interface production to simplify querying of available phenotypes and extraction of findings based on strength of association.</p>
 </div>
 <div class="section level2">
 <h2 id="relevant-ld-resources--in-which-cloud">Relevant LD resources … in which cloud?<a class="anchor" aria-label="anchor" href="#relevant-ld-resources--in-which-cloud"></a>
