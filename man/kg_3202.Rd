@@ -8,7 +8,7 @@
 data.frame
 }
 \usage{
-kg_3202
+data("kg_3202")
 }
 \description{
 data.frame with metadata about 3202 samples genotyped against T2T reference
