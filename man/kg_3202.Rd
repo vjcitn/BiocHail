@@ -8,7 +8,11 @@
 data.frame
 }
 \usage{
+<<<<<<< HEAD
 data('kg_3202')
+=======
+data("kg_3202")
+>>>>>>> upstream/devel
 }
 \description{
 data.frame with metadata about 3202 samples genotyped against T2T reference
