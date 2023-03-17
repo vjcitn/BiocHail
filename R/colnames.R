@@ -10,6 +10,11 @@ colnames.default = function(...) base::colnames(...)
 #' @return character()
 #' @note writes one line of table to disk to retrieve field names
 #' @param x instance of hail.table.Table
+#' @examples
+#' hl = hail_init()
+#' annopath <- path_1kg_annotations()
+#' tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+#' colnames(tab)
 #' @export
 colnames.hail.table.Table = function(x, ...) {
  tf = tempfile()
