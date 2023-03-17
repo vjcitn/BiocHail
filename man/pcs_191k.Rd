@@ -9,7 +9,11 @@ telomere-to-telomere reference}
 data.frame
 }
 \usage{
+<<<<<<< HEAD
 data('pcs_191k')
+=======
+data("pcs_191k")
+>>>>>>> 49d1b74... adding colnames and get_key operations for hail.table.Table
 }
 \description{
 HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the 
