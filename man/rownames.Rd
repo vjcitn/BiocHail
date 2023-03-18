@@ -6,6 +6,13 @@
 \usage{
 rownames(x, do.NULL = TRUE, prefix = "row")
 }
+\arguments{
+\item{x}{array-like entity}
+
+\item{do.NULL}{logical}
+
+\item{prefix}{character}
+}
 \description{
 S3 support
 }
