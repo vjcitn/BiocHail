@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.14</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
                         <h4 data-toc-skip class="author">Vincent J.
 Carey, stvjc at channing.harvard.edu</h4>
             
-            <h4 data-toc-skip class="date">March 08, 2023</h4>
+            <h4 data-toc-skip class="date">March 18, 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vjcitn/BiocHail/blob/HEAD/vignettes/gwas_tut.Rmd" class="external-link"><code>vignettes/gwas_tut.Rmd</code></a></small>
       <div class="hidden name"><code>gwas_tut.Rmd</code></div>
@@ -130,7 +130,7 @@ genomes data, but our attempt to print it in markdown fails.</p>
 <code class="sourceCode R"><span><span class="va">hl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hail_init.html">hail_init</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">mt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_1kg.html">get_1kg</a></span><span class="op">(</span><span class="va">hl</span><span class="op">)</span></span>
 <span><span class="va">mt</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;hail.matrixtable.MatrixTable object at 0x7fc85bf1d820&gt;</span></span></code></pre>
+<pre><code><span><span class="co">## &lt;hail.matrixtable.MatrixTable object at 0x7fa07fadb760&gt;</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mt</span><span class="op">$</span><span class="fu">rows</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">show</span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span><span class="op">)</span> <span class="co"># limited info</span></span></code></pre></div>
 <pre><code><span><span class="co">## NULL</span></span></code></pre>
@@ -257,7 +257,7 @@ instance, usiny python code reaching to R via <code>r.</code>.</p>
 <span><span class="co">##     }</span></span>
 <span><span class="co">## --------------------------------------------------------</span></span>
 <span><span class="co">## Source:</span></span>
-<span><span class="co">##     &lt;hail.matrixtable.MatrixTable object at 0x7fc85913c6a0&gt;</span></span>
+<span><span class="co">##     &lt;hail.matrixtable.MatrixTable object at 0x7fa07cce89d0&gt;</span></span>
 <span><span class="co">## Index:</span></span>
 <span><span class="co">##     ['column']</span></span>
 <span><span class="co">## --------------------------------------------------------</span></span></code></pre>
@@ -305,18 +305,18 @@ data structures.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint  <span class="co"># python chunk!</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>snp_counts <span class="op">=</span> r.mt.aggregate_rows(r.hl.agg.counter(r.hl.Struct(ref<span class="op">=</span>r.mt.alleles[<span class="dv">0</span>], alt<span class="op">=</span>r.mt.alleles[<span class="dv">1</span>])))</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>pprint(snp_counts)</span></code></pre></div>
-<pre><code><span><span class="co">## {Struct(ref='G', alt='T'): 480,</span></span>
-<span><span class="co">##  Struct(ref='T', alt='A'): 79,</span></span>
-<span><span class="co">##  Struct(ref='T', alt='C'): 1879,</span></span>
-<span><span class="co">##  Struct(ref='T', alt='G'): 468,</span></span>
-<span><span class="co">##  Struct(ref='C', alt='A'): 496,</span></span>
+<pre><code><span><span class="co">## {Struct(ref='C', alt='A'): 496,</span></span>
 <span><span class="co">##  Struct(ref='A', alt='T'): 76,</span></span>
 <span><span class="co">##  Struct(ref='C', alt='G'): 150,</span></span>
-<span><span class="co">##  Struct(ref='G', alt='C'): 112,</span></span>
 <span><span class="co">##  Struct(ref='A', alt='C'): 454,</span></span>
-<span><span class="co">##  Struct(ref='A', alt='G'): 1944,</span></span>
 <span><span class="co">##  Struct(ref='C', alt='T'): 2436,</span></span>
-<span><span class="co">##  Struct(ref='G', alt='A'): 2387}</span></span></code></pre>
+<span><span class="co">##  Struct(ref='A', alt='G'): 1944,</span></span>
+<span><span class="co">##  Struct(ref='G', alt='C'): 112,</span></span>
+<span><span class="co">##  Struct(ref='G', alt='A'): 2387,</span></span>
+<span><span class="co">##  Struct(ref='G', alt='T'): 480,</span></span>
+<span><span class="co">##  Struct(ref='T', alt='A'): 79,</span></span>
+<span><span class="co">##  Struct(ref='T', alt='C'): 1879,</span></span>
+<span><span class="co">##  Struct(ref='T', alt='G'): 468}</span></span></code></pre>
 <div class="section level3">
 <h3 id="a-histogram-of-read-depths">A histogram of read depths<a class="anchor" aria-label="anchor" href="#a-histogram-of-read-depths"></a>
 </h3>
@@ -415,7 +415,7 @@ interface to ggplot2</a>.</p>
 <span><span class="co">##     }</span></span>
 <span><span class="co">## --------------------------------------------------------</span></span>
 <span><span class="co">## Source:</span></span>
-<span><span class="co">##     &lt;hail.matrixtable.MatrixTable object at 0x7fc858f009d0&gt;</span></span>
+<span><span class="co">##     &lt;hail.matrixtable.MatrixTable object at 0x7fa07cb17d60&gt;</span></span>
 <span><span class="co">## Index:</span></span>
 <span><span class="co">##     ['column']</span></span>
 <span><span class="co">## --------------------------------------------------------</span></span></code></pre>
@@ -530,7 +530,7 @@ summaries are obtained using the <code>variant_qc</code> function.</p>
 <span><span class="co">##     }</span></span>
 <span><span class="co">## --------------------------------------------------------</span></span>
 <span><span class="co">## Source:</span></span>
-<span><span class="co">##     &lt;hail.matrixtable.MatrixTable object at 0x7fc858e98b80&gt;</span></span>
+<span><span class="co">##     &lt;hail.matrixtable.MatrixTable object at 0x7fa07caa4bb0&gt;</span></span>
 <span><span class="co">## Index:</span></span>
 <span><span class="co">##     ['row']</span></span>
 <span><span class="co">## --------------------------------------------------------</span></span></code></pre>
@@ -562,9 +562,9 @@ display in this document but the details are not ready-to-hand.</p>
 <span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># r.pl = r.hl.plot.manhattan(r.gwas.p_value)</span></span>
 <span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="co"># import bokeh</span></span>
 <span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="co"># bokeh.plotting.show(r.pl)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 2023-03-08 03:16:15.212 Hail: INFO: linear_regression_rows: running on 250 samples for 1 response variable y,</span></span>
+<pre><code><span><span class="co">## 2023-03-18 17:47:49.203 Hail: INFO: linear_regression_rows: running on 250 samples for 1 response variable y,</span></span>
 <span><span class="co">##     with input variable x, and 1 additional covariate...</span></span>
-<span><span class="co">## 2023-03-08 03:16:17.443 Hail: INFO: wrote table with 7844 rows in 2 partitions to /tmp/persist_tablev6MHGQU1nq</span></span>
+<span><span class="co">## 2023-03-18 17:47:51.650 Hail: INFO: wrote table with 7844 rows in 2 partitions to /tmp/persist_table0PAR69S3U9</span></span>
 <span><span class="co">##     Total size: 520.43 KiB</span></span>
 <span><span class="co">##     * Rows: 520.42 KiB</span></span>
 <span><span class="co">##     * Globals: 11.00 B</span></span>
@@ -608,9 +608,9 @@ interactive and extensible display.</p>
 docs</a> for details.</p>
 <p>We are avoiding a tuple assignment in the tutorial document.</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>r.pcastuff <span class="op">=</span> r.hl.hwe_normalized_pca(r.mt.GT)</span></code></pre></div>
-<pre><code><span><span class="co">## 2023-03-08 03:16:22.005 Hail: INFO: hwe_normalize: found 7836 variants after filtering out monomorphic sites.</span></span>
-<span><span class="co">## 2023-03-08 03:16:24.833 Hail: INFO: pca: running PCA with 10 components...</span></span>
-<span><span class="co">## 2023-03-08 03:16:31.018 Hail: INFO: wrote table with 0 rows in 0 partitions to /tmp/persist_tablevhEsJUbIv4</span></span>
+<pre><code><span><span class="co">## 2023-03-18 17:47:56.693 Hail: INFO: hwe_normalize: found 7836 variants after filtering out monomorphic sites.</span></span>
+<span><span class="co">## 2023-03-18 17:47:59.986 Hail: INFO: pca: running PCA with 10 components...</span></span>
+<span><span class="co">## 2023-03-18 17:48:07.178 Hail: INFO: wrote table with 0 rows in 0 partitions to /tmp/persist_tableJkpSaviqcJ</span></span>
 <span><span class="co">##     Total size: 21.29 KiB</span></span>
 <span><span class="co">##     * Rows: 0.00 B</span></span>
 <span><span class="co">##     * Globals: 21.29 KiB</span></span>
@@ -634,9 +634,9 @@ origin and gender.</p>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>r.mt.GT.n_alt_alleles(),</span>
 <span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>    covariates<span class="op">=</span>[<span class="fl">1.0</span>,r.mt.pheno.isFemale,r.mt.scores[<span class="dv">0</span>],</span>
 <span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>        r.mt.scores[<span class="dv">1</span>], r.mt.scores[<span class="dv">2</span>]])</span></code></pre></div>
-<pre><code><span><span class="co">## 2023-03-08 03:16:37.012 Hail: INFO: linear_regression_rows: running on 250 samples for 1 response variable y,</span></span>
+<pre><code><span><span class="co">## 2023-03-18 17:48:14.036 Hail: INFO: linear_regression_rows: running on 250 samples for 1 response variable y,</span></span>
 <span><span class="co">##     with input variable x, and 5 additional covariates...</span></span>
-<span><span class="co">## 2023-03-08 03:16:39.013 Hail: INFO: wrote table with 7844 rows in 2 partitions to /tmp/persist_tablewn8nKBQfOO</span></span>
+<span><span class="co">## 2023-03-18 17:48:15.507 Hail: INFO: wrote table with 7844 rows in 2 partitions to /tmp/persist_tablePwC3UJ12wv</span></span>
 <span><span class="co">##     Total size: 519.18 KiB</span></span>
 <span><span class="co">##     * Rows: 519.17 KiB</span></span>
 <span><span class="co">##     * Globals: 11.00 B</span></span>

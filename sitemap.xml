@@ -22,10 +22,40 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/as.data.frame.default.html</loc>
+  </url>
+  <url>
+    <loc>/reference/as.data.frame.hail.table.Table.html</loc>
+  </url>
+  <url>
+    <loc>/reference/as.data.frame.html</loc>
+  </url>
+  <url>
     <loc>/reference/bare_hail.html</loc>
   </url>
   <url>
+    <loc>/reference/colnames.default.html</loc>
+  </url>
+  <url>
+    <loc>/reference/colnames.hail.table.Table.html</loc>
+  </url>
+  <url>
+    <loc>/reference/colnames.html</loc>
+  </url>
+  <url>
+    <loc>/reference/filter.hail.table.Table.html</loc>
+  </url>
+  <url>
+    <loc>/reference/filter.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_1kg.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_key.hail.table.Table.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_key.html</loc>
   </url>
   <url>
     <loc>/reference/get_ukbb_sumstat_10kloci_mt.html</loc>
@@ -68,6 +98,15 @@
   </url>
   <url>
     <loc>/reference/rg_update.html</loc>
+  </url>
+  <url>
+    <loc>/reference/rownames.default.html</loc>
+  </url>
+  <url>
+    <loc>/reference/rownames.hail.table.Table.html</loc>
+  </url>
+  <url>
+    <loc>/reference/rownames.html</loc>
   </url>
   <url>
     <loc>/reference/top2df.html</loc>
