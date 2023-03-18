@@ -1,38 +1,66 @@
-#' S3 support
-#' @export
-filter = function (x, filter, method = c("convolution", "recursive"), 
-    sides = 2L, circular = FALSE, init = NULL, ..., hl = NULL, 
-    placeholder = NULL, drop_placeholder = NULL) UseMethod("filter")
 
-#' S3 support
-#' @export
-filter.default = function(...) stats::filter(...)
+#> dplyr::filter
+#function (.data, ..., .by = NULL, .preserve = FALSE) 
+#{
+#    check_by_typo(...)
+#    by <- enquo(.by)
+#    if (!quo_is_null(by) && !is_false(.preserve)) {
+#        abort("Can't supply both `.by` and `.preserve`.")
+#    }
+#    UseMethod("filter")
+#}
 
-#' acquire column names of a Hail Table
-#' @return character()
-#' @note writes one line of table to disk to retrieve field names
-#' @param x instance of hail.table.Table
-#' @param filter an entity that is already a component of the table `x`
-#' @param hl instance of Hail module, should have idempotent attribute set
-#' that is an instance of `hail.expr.expressions.typed_expressions.BooleanExpression`
-#' that evaluates to bool, or a logical vector that has length equal to `x$count()`
-#' @param placeholder character(1) defaults to "tmpf"
-#' @param drop_placeholder logical(1), defaults to FALSE; if TRUE will try to
-#' drop field used as placeholder
-#' @note Will use field name given by `placeholder` to join filter if filter is a logical R vector
-#' FIXME: uses disk because I don't know how to create a BooleanExpression except by importing.
+#' s3 support
+#' @param .data instance of hail.table.Table
+#' @param \dots should include named components `filter` which is a logical vector
+#' with same number of rows as `.data`, `hl`, a reference to a hail environment (Module),
+#' and `placeholder` an arbitrary character(1)
+#' @param .by not used
+#' @param .preserve not used
 #' @examples
 #' hl = hail_init()
 #' annopath <- path_1kg_annotations()
 #' tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
 #' pick = rep(FALSE, 3500)
 #' pick[1:10] = TRUE
-#' ft = filter(tab, pick)
+#' ft = filter(tab, filter=pick, hl=hl)
 #' ft$count()
 #' ft$head(2L)$collect()
 #' @export
-filter.hail.table.Table = function(x, filter, hl = hail_init(), 
-  placeholder="tmpf", drop_placeholder=FALSE, ...) {
+filter = function(.data, ..., .by=NULL, .preserve=FALSE) UseMethod("filter")
+
+
+#' filter rows of a hail Table
+#' @importFrom dplyr filter
+#' @importFrom methods is
+#' @return character()
+#' @note writes one line of table to disk to retrieve field names
+#' @param .data instance of hail.table.Table
+#' @param \dots should include named components `filter` which is a logical vector
+#' with same number of rows as `.data`, `hl`, a reference to a hail environment (Module),
+#' and `placeholder` an arbitrary character(1)
+#' @param .by not used
+#' @param .preserve not used
+#' @note FIXME: uses disk because I don't know how to create a BooleanExpression except by importing.
+#' @examples
+#' hl = hail_init()
+#' annopath <- path_1kg_annotations()
+#' tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+#' pick = rep(FALSE, 3500)
+#' pick[1:10] = TRUE
+#' ft = filter(tab, filter=pick, hl=hl)
+#' ft$count()
+#' ft$head(2L)$collect()
+#' @export
+filter.hail.table.Table = function(.data, ..., .by = NULL, .preserve = FALSE) {
+   input = list(...)
+   nms = names(input)
+   stopifnot(all(c("filter", "hl") %in% nms))
+   hl = input$hl
+   filter = input$filter
+   placeholder = "tmpf"
+   if (!is.null(input$placeholder)) placeholder = input$placeholder
+   x = .data
  if (!inherits(filter, "hail.expr.expressions.typed_expressions.BooleanExpression")) {
 # must build such
    stopifnot(is(filter, "logical"))
@@ -51,7 +79,6 @@ filter.hail.table.Table = function(x, filter, hl = hail_init(),
    filter = x$tmpf
    }
  fil = x$filter(filter)
- if (drop_placeholder) fil = fil$drop(placeholder)
  fil
 }
 

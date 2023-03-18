@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.14</span>
       </span>
     </div>
 
@@ -42,7 +42,7 @@
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/vjcitn/BiocHail/">
+  <a href="https://github.com/vjcitn/BiocHail/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -57,7 +57,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>interface to 1kg import</h1>
-    <small class="dont-index">Source: <a href="https://github.com/vjcitn/BiocHail/blob/HEAD/R/get_1kg.R"><code>R/get_1kg.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/vjcitn/BiocHail/blob/HEAD/R/get_1kg.R" class="external-link"><code>R/get_1kg.R</code></a></small>
     <div class="hidden name"><code>get_1kg.Rd</code></div>
     </div>
 
@@ -114,7 +114,7 @@ a previously written zip file, either from a cache, or, if no file found in cach
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">hl</span> <span class="op">&lt;-</span> <span class="fu"><a href="hail_init.html">hail_init</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mt</span> <span class="op">&lt;-</span> <span class="fu">get_1kg</span><span class="op">(</span><span class="va">hl</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mt</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;hail.matrixtable.MatrixTable object at 0x7f356941d880&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;hail.matrixtable.MatrixTable object at 0x7f95df818b50&gt;</span>
 <span class="r-in"><span><span class="va">mt</span><span class="op">$</span><span class="fu">rows</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">show</span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span> <span class="co"># must use integer</span></span></span>
 <span class="r-in"><span><span class="va">annopath</span> <span class="op">=</span> <span class="fu"><a href="path_1kg_annotations.html">path_1kg_annotations</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">tab</span> <span class="op">=</span> <span class="va">hl</span><span class="op">$</span><span class="fu">import_table</span><span class="op">(</span><span class="va">annopath</span>, impute<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="fu">key_by</span><span class="op">(</span><span class="st">"Sample"</span><span class="op">)</span></span></span>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.14</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/vjcitn/BiocHail/">
+  <a href="https://github.com/vjcitn/BiocHail/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -84,9 +84,9 @@
       <h1 data-toc-skip>02 Working with larger VCF: T2T by chromosome</h1>
                         <h4 data-toc-skip class="author">Vincent J. Carey, stvjc at channing.harvard.edu</h4>
             
-            <h4 data-toc-skip class="date">March 04, 2023</h4>
+            <h4 data-toc-skip class="date">March 18, 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/vjcitn/BiocHail/blob/HEAD/vignettes/large_t2t.Rmd"><code>vignettes/large_t2t.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/vjcitn/BiocHail/blob/HEAD/vignettes/large_t2t.Rmd" class="external-link"><code>vignettes/large_t2t.Rmd</code></a></small>
       <div class="hidden name"><code>large_t2t.Rmd</code></div>
 
     </div>
@@ -118,7 +118,7 @@ LOGGING: writing to /home/rstudio/hail-20221213-1558-0.2.105-acd89e80c345.log
 <p>This operation seems to take a long time even with 64 cores. We could not get exact timing owing to some connectivity problems.</p>
 <p>Here we’ll work with the genotype data for T2T chr17. We assume that the MatrixTable is located at the path given by the environment variable <code>HAIL_T2T_CHR17</code>. This MatrixTable is available in the Open Storage Network at osn:/bir190004-bucket01/Bioc1KGt2t/t17.zip. This is a 45 GB file. It should be unzipped at the location pointed to by <code>HAIL_T2T_CHR17</code>. Instructions for using rclone to acquire the zip file are given in the appendix.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vjcitn/BiocHail">BiocHail</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vjcitn/BiocHail" class="external-link">BiocHail</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hail_init.html">hail_init</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># NB the following two commands are now encapsulated in the rg_update function</span></span>

@@ -1,9 +1,13 @@
 
 #' S3 support
+#' @param x array-like entity
+#' @param do.NULL logical
+#' @param prefix character
 #' @export
 rownames = function(x, do.NULL = TRUE, prefix="row") UseMethod("rownames")
 
 #' S3 support
+#' @param \dots any args
 #' @export
 rownames.default = function(...) base::rownames(...)
 
@@ -11,6 +15,7 @@ rownames.default = function(...) base::rownames(...)
 #' @return character()
 #' @note writes one line of table to disk to retrieve field names
 #' @param x instance of hail.table.Table
+#' @param \dots not used
 #' @examples
 #' hl = hail_init()
 #' annopath <- path_1kg_annotations()

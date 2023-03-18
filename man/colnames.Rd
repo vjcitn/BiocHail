@@ -6,6 +6,13 @@
 \usage{
 colnames(x, do.NULL = TRUE, prefix = "col")
 }
+\arguments{
+\item{x}{array instance}
+
+\item{do.NULL}{logical}
+
+\item{prefix}{character(1)}
+}
 \description{
 S3 support
 }
