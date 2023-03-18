@@ -8,11 +8,7 @@
 data.frame
 }
 \usage{
-<<<<<<< HEAD
-data('kg_3202')
-=======
 data("kg_3202")
->>>>>>> 49d1b74... adding colnames and get_key operations for hail.table.Table
 }
 \description{
 data.frame with metadata about 3202 samples genotyped against T2T reference
