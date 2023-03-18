@@ -2,41 +2,30 @@
 % Please edit documentation in R/table_filter.R
 \name{filter.hail.table.Table}
 \alias{filter.hail.table.Table}
-\title{acquire column names of a Hail Table}
+\title{filter rows of a hail Table}
 \usage{
-\method{filter}{hail.table.Table}(
-  x,
-  filter,
-  hl = hail_init(),
-  placeholder = "tmpf",
-  drop_placeholder = FALSE,
-  ...
-)
+\method{filter}{hail.table.Table}(.data, ..., .by = NULL, .preserve = FALSE)
 }
 \arguments{
-\item{x}{instance of hail.table.Table}
+\item{.data}{instance of hail.table.Table}
 
-\item{filter}{an entity that is already a component of the table `x`}
+\item{\dots}{should include named components `filter` which is a logical vector
+with same number of rows as `.data`, `hl`, a reference to a hail environment (Module),
+and `placeholder` an arbitrary character(1)}
 
-\item{hl}{instance of Hail module, should have idempotent attribute set
-that is an instance of `hail.expr.expressions.typed_expressions.BooleanExpression`
-that evaluates to bool, or a logical vector that has length equal to `x$count()`}
+\item{.by}{not used}
 
-\item{placeholder}{character(1) defaults to "tmpf"}
-
-\item{drop_placeholder}{logical(1), defaults to FALSE; if TRUE will try to
-drop field used as placeholder}
+\item{.preserve}{not used}
 }
 \value{
 character()
 }
 \description{
-acquire column names of a Hail Table
+filter rows of a hail Table
 }
 \note{
 writes one line of table to disk to retrieve field names
 
-Will use field name given by `placeholder` to join filter if filter is a logical R vector
 FIXME: uses disk because I don't know how to create a BooleanExpression except by importing.
 }
 \examples{
@@ -45,7 +34,7 @@ annopath <- path_1kg_annotations()
 tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
 pick = rep(FALSE, 3500)
 pick[1:10] = TRUE
-ft = filter(tab, pick)
+ft = filter(tab, filter=pick, hl=hl)
 ft$count()
 ft$head(2L)$collect()
 }

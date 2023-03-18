@@ -6,6 +6,15 @@
 \usage{
 as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 }
+\arguments{
+\item{x}{entity coercible to data.frame}
+
+\item{row.names}{character or NULL}
+
+\item{optional}{logical}
+
+\item{\dots}{any args}
+}
 \description{
 S3 support
 }

@@ -1,8 +1,16 @@
 #' S3 support
+#' @param x entity coercible to data.frame
+#' @param row.names character or NULL
+#' @param optional logical
+#' @param \dots any args
 #' @export
 as.data.frame = function (x, row.names = NULL, optional = FALSE, ...) UseMethod("as.data.frame")
 
 #' S3 support
+#' @param x entity coercible to data.frame
+#' @param row.names character or NULL
+#' @param optional logical
+#' @param \dots any args
 #' @export
 as.data.frame.default = base::as.data.frame
 

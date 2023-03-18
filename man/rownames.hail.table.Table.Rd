@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{instance of hail.table.Table}
+
+\item{\dots}{not used}
 }
 \value{
 character()

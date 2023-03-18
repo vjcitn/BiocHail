@@ -2,21 +2,31 @@
 % Please edit documentation in R/table_filter.R
 \name{filter}
 \alias{filter}
-\title{S3 support}
+\title{s3 support}
 \usage{
-filter(
-  x,
-  filter,
-  method = c("convolution", "recursive"),
-  sides = 2L,
-  circular = FALSE,
-  init = NULL,
-  ...,
-  hl = NULL,
-  placeholder = NULL,
-  drop_placeholder = NULL
-)
+filter(.data, ..., .by = NULL, .preserve = FALSE)
+}
+\arguments{
+\item{.data}{instance of hail.table.Table}
+
+\item{\dots}{should include named components `filter` which is a logical vector
+with same number of rows as `.data`, `hl`, a reference to a hail environment (Module),
+and `placeholder` an arbitrary character(1)}
+
+\item{.by}{not used}
+
+\item{.preserve}{not used}
 }
 \description{
-S3 support
+s3 support
+}
+\examples{
+hl = hail_init()
+annopath <- path_1kg_annotations()
+tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+pick = rep(FALSE, 3500)
+pick[1:10] = TRUE
+ft = filter(tab, filter=pick, hl=hl)
+ft$count()
+ft$head(2L)$collect()
 }

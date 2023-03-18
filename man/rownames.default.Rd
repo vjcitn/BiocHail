@@ -6,6 +6,9 @@
 \usage{
 \method{rownames}{default}(...)
 }
+\arguments{
+\item{\dots}{any args}
+}
 \description{
 S3 support
 }
