@@ -113,7 +113,7 @@ r.tab.show(width=100)
 ## Adding the sample annotation to the MatrixTable; aggregation
 
 We combine the `tab` defined above, with the MatrixTable instance,
-usiny python code reaching to R via `r.`.
+using python code reaching to R via `r.`.
 ```{python ch4, eval=TRUE}
 r.mt = r.mt.annotate_cols(pheno = r.tab[r.mt.s])   # python chunk! 
 r.mt.col.describe()
