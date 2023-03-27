@@ -23,3 +23,7 @@ a python list; the function is used for its side effect
 \description{
 update the reference genome for a hail instance
 }
+\examples{
+hl = hail_init()
+rg_update(hl)
+}

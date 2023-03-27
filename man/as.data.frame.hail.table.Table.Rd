@@ -15,6 +15,9 @@
 
 \item{\dots}{not used}
 }
+\value{
+data.frame
+}
 \description{
 convert hail.table.Table to R data frame
 }

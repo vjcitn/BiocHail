@@ -8,7 +8,7 @@ pheno_data_sec_2df(
   m,
   section = 1,
   toget = c("n_cases", "n_controls", "heritability", "pop"),
-  verbose = TRUE
+  verbose = FALSE
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ pheno_data_sec_2df(
 
 \item{toget}{character() vector of field names to retrieve}
 
-\item{verbose}{logical(1) if TRUE (default) will message that there are multiple
+\item{verbose}{logical(1) if TRUE (NOT default) will message that there are multiple
 `pheno_data` components returned}
 }
 \value{

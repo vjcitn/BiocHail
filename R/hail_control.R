@@ -23,6 +23,8 @@ hail_init_simple = function() {
 #' stop hail
 #' @param hl a hail object produced by hail_init()
 #' @return result of stop() method for Hail module
+#' @examples
+#' hail_stop
 #' @export
 hail_stop = function(hl) hl$stop()
 

@@ -3,6 +3,9 @@
 #' @note The genotypes are from a 1% sample of loci on chr17
 #' @docType data
 #' @usage data("pcs_38k")
+#' @examples
+#' data(pcs_38k)
+#' dim(pcs_38k)
 #' @format data.frame
 "pcs_38k"
 

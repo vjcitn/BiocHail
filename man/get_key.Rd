@@ -9,6 +9,9 @@ get_key(x)
 \arguments{
 \item{x}{anything}
 }
+\value{
+typically a list
+}
 \description{
 S3 generic for get_key
 }
