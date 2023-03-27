@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.16</span>
       </span>
     </div>
 
@@ -88,6 +88,12 @@
 <dd><p>not used</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>data.frame</p>
+    </div>
     <div id="note">
     <h2>Note</h2>
     <p>only use on small table because collect is used</p>
@@ -96,6 +102,9 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">hl</span> <span class="op">=</span> <span class="fu"><a href="hail_init.html">hail_init</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + '/home/stvjc/.cache/R/basilisk/1.11.3/0/bin/conda' 'create' '--yes' '--prefix' '/home/stvjc/.cache/R/basilisk/1.11.3/BiocHail/0.99.16/bsklenv' 'python=3.8.13' '--quiet' '-c' 'conda-forge'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + '/home/stvjc/.cache/R/basilisk/1.11.3/0/bin/conda' 'install' '--yes' '--prefix' '/home/stvjc/.cache/R/basilisk/1.11.3/BiocHail/0.99.16/bsklenv' 'python=3.8.13'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + '/home/stvjc/.cache/R/basilisk/1.11.3/0/bin/conda' 'install' '--yes' '--prefix' '/home/stvjc/.cache/R/basilisk/1.11.3/BiocHail/0.99.16/bsklenv' '-c' 'conda-forge' 'python=3.8.13' 'pandas=1.3.5'</span>
 <span class="r-in"><span><span class="va">annopath</span> <span class="op">&lt;-</span> <span class="fu"><a href="path_1kg_annotations.html">path_1kg_annotations</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="va">hl</span><span class="op">$</span><span class="fu">import_table</span><span class="op">(</span><span class="va">annopath</span>, impute<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="fu">key_by</span><span class="op">(</span><span class="st">"Sample"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">tab</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">3L</span><span class="op">)</span><span class="op">)</span></span></span>
