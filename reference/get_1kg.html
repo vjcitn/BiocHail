@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.16</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@ a previously written zip file, either from a cache, or, if no file found in cach
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">hl</span> <span class="op">&lt;-</span> <span class="fu"><a href="hail_init.html">hail_init</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mt</span> <span class="op">&lt;-</span> <span class="fu">get_1kg</span><span class="op">(</span><span class="va">hl</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mt</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;hail.matrixtable.MatrixTable object at 0x7f459d0841f0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;hail.matrixtable.MatrixTable object at 0x7fb6200a3a30&gt;</span>
 <span class="r-in"><span><span class="va">mt</span><span class="op">$</span><span class="fu">rows</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">show</span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span> <span class="co"># must use integer</span></span></span>
 <span class="r-in"><span><span class="va">annopath</span> <span class="op">=</span> <span class="fu"><a href="path_1kg_annotations.html">path_1kg_annotations</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">tab</span> <span class="op">=</span> <span class="va">hl</span><span class="op">$</span><span class="fu">import_table</span><span class="op">(</span><span class="va">annopath</span>, impute<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="fu">key_by</span><span class="op">(</span><span class="st">"Sample"</span><span class="op">)</span></span></span>

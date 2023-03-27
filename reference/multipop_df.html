@@ -20,7 +20,7 @@ allowing for info on multiple populations in the pheno_data component"><!-- math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.16</span>
       </span>
     </div>
 
@@ -102,19 +102,45 @@ allowing for info on multiple populations in the pheno_data component</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"HAIL_UKBB_SUMSTAT_10K_PATH"</span><span class="op">)</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">hl</span> <span class="op">=</span> <span class="fu"><a href="hail_init.html">hail_init</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">ss</span> <span class="op">=</span> <span class="fu"><a href="get_ukbb_sumstat_10kloci_mt.html">get_ukbb_sumstat_10kloci_mt</a></span><span class="op">(</span><span class="va">hl</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">sscol</span> <span class="op">=</span> <span class="va">ss</span><span class="op">$</span><span class="fu">cols</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">collect</span><span class="op">(</span><span class="op">)</span> <span class="co"># may take a bit of time</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">sscol</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">multipop_df</span><span class="op">(</span><span class="va">sscol</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># to get an overview of all phenotype-cohort combinations in a searchable table</span></span></span>
-<span class="r-in"><span><span class="va">mmm</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">sscol</span>, <span class="va">multipop_df</span> <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mymy</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">mmm</span><span class="op">)</span> <span class="co"># over 16k rows</span></span></span>
-<span class="r-in"><span><span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">datatable</a></span><span class="op">(</span><span class="va">mymy</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># following are too time-consuming but can be of interest</span></span></span>
+<span class="r-in"><span><span class="co">#if (nchar(Sys.getenv("HAIL_UKBB_SUMSTAT_10K_PATH"))&gt;0) {</span></span></span>
+<span class="r-in"><span><span class="co">#  hl = hail_init()</span></span></span>
+<span class="r-in"><span><span class="co">#  ss = get_ukbb_sumstat_10kloci_mt(hl)</span></span></span>
+<span class="r-in"><span><span class="co">#  sscol = ss$cols()$collect() # may take a bit of time</span></span></span>
+<span class="r-in"><span><span class="co">#  print(length(sscol))</span></span></span>
+<span class="r-in"><span><span class="co">#  multipop_df(sscol[[1]])</span></span></span>
+<span class="r-in"><span><span class="co">#}</span></span></span>
+<span class="r-in"><span><span class="co">#\donttest{</span></span></span>
+<span class="r-in"><span><span class="co">#if (nchar(Sys.getenv("HAIL_UKBB_SUMSTAT_10K_PATH"))&gt;0) {</span></span></span>
+<span class="r-in"><span><span class="co"># # to get an overview of all phenotype-cohort combinations in a searchable table</span></span></span>
+<span class="r-in"><span><span class="co"># mmm = lapply(sscol, multipop_df )</span></span></span>
+<span class="r-in"><span><span class="co"># mymy = do.call(rbind, mmm) # over 16k rows</span></span></span>
+<span class="r-in"><span><span class="co"># DT::datatable(mymy)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#}</span></span></span>
+<span class="r-in"><span><span class="co"># this runs quickly and is demonstrative</span></span></span>
+<span class="r-in"><span><span class="va">hl</span> <span class="op">=</span> <span class="fu"><a href="hail_init.html">hail_init</a></span><span class="op">(</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="va">litzip</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"myss2.zip"</span>, package<span class="op">=</span><span class="st">"BiocHail"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">td</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="va">litzip</span>, exdir<span class="op">=</span><span class="va">td</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ntab</span> <span class="op">=</span> <span class="va">hl</span><span class="op">$</span><span class="fu">read_matrix_table</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">td</span>, <span class="st">"/myss2.mt"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ntab</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">nt2</span> <span class="op">=</span> <span class="va">ntab</span><span class="op">$</span><span class="va">col</span><span class="op">$</span><span class="fu">collect</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">multipop_df</span><span class="op">(</span><span class="va">nt2</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># must select one element</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   trait_type phenocode description modifier coding_description coding n_cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 biomarkers     30600     Albumin     irnt                 NA           5759</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 biomarkers     30600     Albumin     irnt                 NA            856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 biomarkers     30600     Albumin     irnt                 NA           7694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 biomarkers     30600     Albumin     irnt                 NA           2340</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 biomarkers     30600     Albumin     irnt                 NA         367192</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 biomarkers     30600     Albumin     irnt                 NA           1364</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n_controls heritability pop</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         NA   0.25412190 AFR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         NA   0.11268439 AMR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         NA   0.24110706 CSA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         NA   0.06126386 EAS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         NA   0.06449071 EUR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6         NA   0.20458513 MID</span>
 </code></pre></div>
     </div>
   </div>

@@ -34,13 +34,7 @@
     <loc>/reference/bare_hail.html</loc>
   </url>
   <url>
-    <loc>/reference/colnames.default.html</loc>
-  </url>
-  <url>
-    <loc>/reference/colnames.hail.table.Table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/colnames.html</loc>
+    <loc>/reference/colnames-hail.table.Table-method.html</loc>
   </url>
   <url>
     <loc>/reference/filter.hail.table.Table.html</loc>
@@ -100,13 +94,7 @@
     <loc>/reference/rg_update.html</loc>
   </url>
   <url>
-    <loc>/reference/rownames.default.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rownames.hail.table.Table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rownames.html</loc>
+    <loc>/reference/rownames-hail.table.Table-method.html</loc>
   </url>
   <url>
     <loc>/reference/top2df.html</loc>
