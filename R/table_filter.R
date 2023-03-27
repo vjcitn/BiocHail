@@ -1,14 +1,4 @@
 
-#> dplyr::filter
-#function (.data, ..., .by = NULL, .preserve = FALSE) 
-#{
-#    check_by_typo(...)
-#    by <- enquo(.by)
-#    if (!quo_is_null(by) && !is_false(.preserve)) {
-#        abort("Can't supply both `.by` and `.preserve`.")
-#    }
-#    UseMethod("filter")
-#}
 
 #' s3 support
 #' @param .data instance of hail.table.Table
@@ -17,6 +7,7 @@
 #' and `placeholder` an arbitrary character(1)
 #' @param .by not used
 #' @param .preserve not used
+#' @return filtered hail.table.Table reference
 #' @examples
 #' hl = hail_init()
 #' annopath <- path_1kg_annotations()
@@ -33,7 +24,7 @@ filter = function(.data, ..., .by=NULL, .preserve=FALSE) UseMethod("filter")
 #' filter rows of a hail Table
 #' @importFrom dplyr filter
 #' @importFrom methods is
-#' @return character()
+#' @return filtered hail.table.Table reference
 #' @note writes one line of table to disk to retrieve field names
 #' @param .data instance of hail.table.Table
 #' @param \dots should include named components `filter` which is a logical vector

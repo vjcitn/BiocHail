@@ -18,7 +18,7 @@ and `placeholder` an arbitrary character(1)}
 \item{.preserve}{not used}
 }
 \value{
-character()
+filtered hail.table.Table reference
 }
 \description{
 filter rows of a hail Table

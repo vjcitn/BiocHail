@@ -4,7 +4,7 @@
 \alias{as.data.frame.default}
 \title{S3 support}
 \usage{
-as.data.frame.default(x, row.names = NULL, optional = FALSE, ...)
+\method{as.data.frame}{default}(x, row.names = NULL, optional = FALSE, ...)
 }
 \arguments{
 \item{x}{entity coercible to data.frame}
@@ -14,6 +14,9 @@ as.data.frame.default(x, row.names = NULL, optional = FALSE, ...)
 \item{optional}{logical}
 
 \item{\dots}{any args}
+}
+\value{
+data.frame
 }
 \description{
 S3 support

@@ -15,7 +15,7 @@ Description: Use hail via basilisk when appropriate, or via reticulate.
 License: Artistic-2.0
 Encoding: UTF-8
 Depends: R (>= 4.2), graphics, stats, utils
-Imports: reticulate, basilisk, BiocFileCache, methods, dplyr
+Imports: reticulate, basilisk, BiocFileCache, methods, dplyr, BiocGenerics
 Suggests: knitr, testthat, BiocStyle, ggplot2, DT
 VignetteBuilder: knitr
 biocViews: Infrastructure

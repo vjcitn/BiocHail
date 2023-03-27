@@ -27,17 +27,29 @@ pheno_data component harvesting from columns of summary stats MatrixTable
 allowing for info on multiple populations in the pheno_data component
 }
 \examples{
-if (nchar(Sys.getenv("HAIL_UKBB_SUMSTAT_10K_PATH"))>0) {
-  hl = hail_init()
-  ss = get_ukbb_sumstat_10kloci_mt(hl)
-  sscol = ss$cols()$collect() # may take a bit of time
-  print(length(sscol))
-  multipop_df(sscol[[1]])
-}
-\dontrun{
-# to get an overview of all phenotype-cohort combinations in a searchable table
-mmm = lapply(sscol, multipop_df )
-mymy = do.call(rbind, mmm) # over 16k rows
-DT::datatable(mymy)
-}
+# following are too time-consuming but can be of interest
+#if (nchar(Sys.getenv("HAIL_UKBB_SUMSTAT_10K_PATH"))>0) {
+#  hl = hail_init()
+#  ss = get_ukbb_sumstat_10kloci_mt(hl)
+#  sscol = ss$cols()$collect() # may take a bit of time
+#  print(length(sscol))
+#  multipop_df(sscol[[1]])
+#}
+#\donttest{
+#if (nchar(Sys.getenv("HAIL_UKBB_SUMSTAT_10K_PATH"))>0) {
+# # to get an overview of all phenotype-cohort combinations in a searchable table
+# mmm = lapply(sscol, multipop_df )
+# mymy = do.call(rbind, mmm) # over 16k rows
+# DT::datatable(mymy)
+# }
+#}
+# this runs quickly and is demonstrative
+hl = hail_init() 
+litzip = system.file("extdata", "myss2.zip", package="BiocHail")
+td = tempdir()
+unzip(litzip, exdir=td)
+ntab = hl$read_matrix_table(paste0(td, "/myss2.mt"))
+ntab$describe()
+nt2 = ntab$col$collect()
+multipop_df(nt2[[1]]) # must select one element
 }

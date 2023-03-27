@@ -1,41 +1,39 @@
-#' S3 support
-#' @param x array instance
-#' @param do.NULL logical
-#' @param prefix character(1)
-#' @export
-colnames = function(x, do.NULL = TRUE, prefix="col") UseMethod("colnames")
+setOldClass("hail.table.Table")
 
-#' S3 support
-#' @param \dots any args
-#' @export
-colnames.default = function(...) base::colnames(...)
-
-#' acquire column names of a Hail Table
-#' @return character()
-#' @note writes one line of table to disk to retrieve field names
-#' @param x instance of hail.table.Table
-#' @param \dots not used
+#' extract field names from hail.table.Table
+#' @importFrom BiocGenerics colnames as.data.frame
+#' @param x hail.table.Table instance
+#' @param do.NULL ignored
+#' @param prefix ignored
+#' @return character vector
 #' @examples
 #' hl = hail_init()
 #' annopath <- path_1kg_annotations()
 #' tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
 #' colnames(tab)
 #' @export
-colnames.hail.table.Table = function(x, ...) {
+setMethod("colnames", "hail.table.Table", 
+   function(x, do.NULL=TRUE, prefix="col"){
  tf = tempfile()
  on.exit(unlink(tf))
- zz = reticulate::py_capture_output(x$head(1L)$export(tf))
+ zz = reticulate::py_capture_output(x$head(1L)$export(tf))  # unpleasant, trying to find a better way
  names(read.delim(tf))
-}
+})
 
 #' S3 generic for get_key
 #' @param x anything
+#' @return typically a list
 #' @export
 get_key = function(x) UseMethod("get_key")
 
 #' S3 method for get_key
 #' @param x instance of hail.table.Table
 #' @return a list with elements names (names of keys) and key_df (data.frame of key values, with column names)
+#' @examples
+#' hl = hail_init()
+#' annopath <- path_1kg_annotations()
+#' tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+#' get_key(tab)
 #' @export
 get_key.hail.table.Table = function(x) {
  tf = paste0(tempfile(), ".csv")

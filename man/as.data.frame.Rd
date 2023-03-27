@@ -15,6 +15,9 @@ as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
 \item{\dots}{any args}
 }
+\value{
+data.frame
+}
 \description{
 S3 support
 }

@@ -1,8 +1,10 @@
+
 #' S3 support
 #' @param x entity coercible to data.frame
 #' @param row.names character or NULL
 #' @param optional logical
 #' @param \dots any args
+#' @return data.frame
 #' @export
 as.data.frame = function (x, row.names = NULL, optional = FALSE, ...) UseMethod("as.data.frame")
 
@@ -11,10 +13,13 @@ as.data.frame = function (x, row.names = NULL, optional = FALSE, ...) UseMethod(
 #' @param row.names character or NULL
 #' @param optional logical
 #' @param \dots any args
-#' @export
+#' @return data.frame
+#' @method as.data.frame default
 as.data.frame.default = base::as.data.frame
 
 mkrow = function(str, cn) lapply(cn, function(x) str$get(x))
+
+setOldClass("hail.table.Table")
 
 #' convert hail.table.Table to R data frame
 #' @note only use on small table because collect is used
@@ -22,6 +27,7 @@ mkrow = function(str, cn) lapply(cn, function(x) str$get(x))
 #' @param row.names not used
 #' @param optional not used
 #' @param \dots not used
+#' @return data.frame
 #' @examples
 #' hl = hail_init()
 #' annopath <- path_1kg_annotations()
