@@ -53,6 +53,7 @@ get_1kg = function(hl, retrieve_import_write=FALSE, path_1kg_zip=osn_1kg_path(),
 }
 
 #' generate path to installed annotations file
+#' @note .txt file retrieved from extraction on `https://storage.googleapis.com/hail-1kg/tutorial_data.tar`
 #' @return character(1) path to annotations
 #' @examples
 #' path_1kg_annotations()
