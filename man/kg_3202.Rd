@@ -10,6 +10,9 @@ data.frame
 \usage{
 data("kg_3202")
 }
+\value{
+data.frame
+}
 \description{
 data.frame with metadata about 3202 samples genotyped against T2T reference
 }
