@@ -38,8 +38,8 @@ unzipped image to a persistent location.  If this has been done and the environm
 the MatrixTable content found there.
 }
 \examples{
-hl = hail_init()
-ss = get_ukbb_sumstat_10kloci_mt(hl)
+hl <- hail_init()
+ss <- get_ukbb_sumstat_10kloci_mt(hl)
 # consider saving the unzipped image and recaching
 ss$count()
 }

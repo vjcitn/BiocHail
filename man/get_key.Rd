@@ -16,8 +16,8 @@ typically a list
 S3 generic for get_key
 }
 \examples{
-hl = hail_init()
+hl <- hail_init()
 annopath <- path_1kg_annotations()
-tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+tab <- hl$import_table(annopath, impute = TRUE)$key_by("Sample")
 get_key(tab)
 }
