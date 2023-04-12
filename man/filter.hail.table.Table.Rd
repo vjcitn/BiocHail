@@ -33,7 +33,7 @@ hl = hail_init()
 annopath <- path_1kg_annotations()
 tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
 pick = rep(FALSE, 3500)
-pick[1:10] = TRUE
+pick[seq_len(10)] = TRUE
 ft = filter(tab, filter=pick, hl=hl)
 ft$count()
 ft$head(2L)$collect()

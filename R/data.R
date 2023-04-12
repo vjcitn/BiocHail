@@ -16,6 +16,9 @@
 #' @docType data
 #' @usage data("pcs_191k")
 #' @return data.frame
+#' @examples
+#' data(pcs_191k)
+#' dim(pcs_191k)
 #' @format data.frame
 "pcs_191k"
 
@@ -24,5 +27,8 @@
 #' @docType data
 #' @usage data("kg_3202")
 #' @return data.frame
+#' @examples
+#' data(kg_3202)
+#' dim(kg_3202)
 #' @format data.frame
 "kg_3202"

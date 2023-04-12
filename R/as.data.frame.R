@@ -5,6 +5,11 @@
 #' @param optional logical
 #' @param \dots any args
 #' @return data.frame
+#' @examples
+#' hl = hail_init()
+#' annopath <- path_1kg_annotations()
+#' tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+#' as.data.frame(tab$head(3L))
 #' @export
 as.data.frame = function (x, row.names = NULL, optional = FALSE, ...) UseMethod("as.data.frame")
 
@@ -14,6 +19,11 @@ as.data.frame = function (x, row.names = NULL, optional = FALSE, ...) UseMethod(
 #' @param optional logical
 #' @param \dots any args
 #' @return data.frame
+#' @examples
+#' hl = hail_init()
+#' annopath <- path_1kg_annotations()
+#' tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+#' as.data.frame(tab$head(3L))
 #' @method as.data.frame default
 as.data.frame.default = base::as.data.frame
 
@@ -39,7 +49,7 @@ as.data.frame.hail.table.Table = function(x, row.names=NULL, optional=FALSE, ...
   cn = colnames(x)
   tmpl = lapply(cx, function(z) {
      tmp <- data.frame(mkrow(z, cn))
-     names(tmp) = paste0("x", 1:ncol(tmp))
+     names(tmp) = paste0("x", seq_len(ncol(tmp)))
      tmp} )
   tmpdf = do.call(rbind, tmpl)
   names(tmpdf) = cn

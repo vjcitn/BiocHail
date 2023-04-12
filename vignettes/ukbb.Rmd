@@ -27,6 +27,9 @@ issues in the terra spark cluster.)
 library(BiocHail)
 ```
 
+If the above command indicates that BiocHail is not available,
+see the Installation section near the end of this document.
+
 ## Initialization and description
 
 ### Standalone
@@ -145,3 +148,21 @@ recorded?
 
 - List the genes that are near the loci collected in the 10k random sample 
 - (Hard) What is the most significant finding (position, phenotype, population) in the 10k subset?
+
+# Installing `BiocHail`
+
+`BiocHail` should be installed as follows:
+
+```{r, eval = FALSE}
+if (!require("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install("BiocHail")
+```
+
+
+# SessionInfo {-}
+
+```{r sessionInfo}
+sessionInfo()
+```
+

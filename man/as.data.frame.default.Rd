@@ -21,3 +21,9 @@ data.frame
 \description{
 S3 support
 }
+\examples{
+hl = hail_init()
+annopath <- path_1kg_annotations()
+tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+as.data.frame(tab$head(3L))
+}
