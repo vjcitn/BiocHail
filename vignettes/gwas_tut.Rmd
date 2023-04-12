@@ -35,6 +35,24 @@ If an R chunk computes `x`, a python chunk can refer
 to it as `r.x`.  If a python chunk computes `r.x`,
 an R chunk can refer to this value as `x`.
 
+# Installing `BiocHail`
+
+`BiocHail` should be installed as follows:
+
+```{r, eval = FALSE}
+if (!require("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install("BiocHail")
+```
+
+As of 1.0.0, a JDK for Java version `<=` 11.0 is necessary
+to use the version of Hail that is installed with the package.
+This package should be usable on MacOS with suitable java
+support.  If Java version `>=` 8.x is used, warnings from
+Apache Spark may be observed.  To the best of our knowledge
+the conditions to which the warnings pertain do not affect program performance.
+
+
 # Acquire a slice of the 1000 genomes genotypes and annotations
 
 In this section we import the 1000 genomes VCF slice
@@ -371,3 +389,11 @@ Additional vignettes will address
 - Simulating variant collections using Balding-Nichols
 - Simulating variant collections using Pritchard-Stephens-Donnelly
 - Connecting genotypes with phenotype data in FHIR
+
+
+# SessionInfo {-}
+
+```{r sessionInfo}
+sessionInfo()
+```
+

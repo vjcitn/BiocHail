@@ -61,6 +61,10 @@ are given in the appendix.
 ```{r doini,message=FALSE}
 library(BiocHail)
 ```
+
+(If the above command indicates that BiocHail is not available,
+see the Installation section near the end of this document.)
+
 ```{r do17, eval=TRUE}
 hl <- hail_init()
 # NB the following two commands are now encapsulated in the rg_update function
@@ -149,3 +153,28 @@ docker run -v $RC_DATADIR:/data -v $RC_CONFDIR:/config/rclone -t rclone/rclone:l
 ```
 This file should be unzipped in a folder to which the environment variable `HAIL_T2T_CHR17` will
 point.
+
+# Installing `BiocHail`
+
+`BiocHail` should be installed as follows:
+
+```{r, eval = FALSE}
+if (!require("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install("BiocHail")
+```
+
+As of 1.0.0, a JDK for Java version `<=` 11.0 is necessary
+to use the version of Hail that is installed with the package.
+This package should be usable on MacOS with suitable java
+support.  If Java version `>=` 8.x is used, warnings from
+Apache Spark may be observed.  To the best of our knowledge
+the conditions to which the warnings pertain do not affect program performance.
+
+
+# SessionInfo {-}
+
+```{r sessionInfo}
+sessionInfo()
+```
+

@@ -23,6 +23,11 @@ setMethod("colnames", "hail.table.Table",
 #' S3 generic for get_key
 #' @param x anything
 #' @return typically a list
+#' @examples
+#' hl = hail_init()
+#' annopath <- path_1kg_annotations()
+#' tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+#' get_key(tab)
 #' @export
 get_key = function(x) UseMethod("get_key")
 

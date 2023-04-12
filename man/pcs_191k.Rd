@@ -21,4 +21,8 @@ telomere-to-telomere reference
 \note{
 The genotypes are from a 5% sample of loci on chr17
 }
+\examples{
+data(pcs_191k)
+dim(pcs_191k)
+}
 \keyword{datasets}
