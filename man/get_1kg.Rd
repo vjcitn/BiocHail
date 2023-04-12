@@ -38,8 +38,8 @@ hl <- hail_init()
 mt <- get_1kg(hl)
 mt
 mt$rows()$select()$show(5L) # must use integer
-annopath = path_1kg_annotations()
-tab = hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+annopath <- path_1kg_annotations()
+tab <- hl$import_table(annopath, impute = TRUE)$key_by("Sample")
 tab$describe()
-tab$show(width=100L)
+tab$show(width = 100L)
 }

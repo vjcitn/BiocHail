@@ -25,8 +25,8 @@ convert hail.table.Table to R data frame
 only use on small table because collect is used
 }
 \examples{
-hl = hail_init()
+hl <- hail_init()
 annopath <- path_1kg_annotations()
-tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+tab <- hl$import_table(annopath, impute = TRUE)$key_by("Sample")
 as.data.frame(tab$head(3L))
 }

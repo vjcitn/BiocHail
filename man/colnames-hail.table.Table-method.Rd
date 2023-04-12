@@ -20,8 +20,8 @@ character vector
 extract field names from hail.table.Table
 }
 \examples{
-hl = hail_init()
+hl <- hail_init()
 annopath <- path_1kg_annotations()
-tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
+tab <- hl$import_table(annopath, impute = TRUE)$key_by("Sample")
 colnames(tab)
 }

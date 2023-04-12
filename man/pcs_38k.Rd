@@ -3,7 +3,7 @@
 \docType{data}
 \name{pcs_38k}
 \alias{pcs_38k}
-\title{HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the 
+\title{HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the
 telomere-to-telomere reference}
 \format{
 data.frame
@@ -15,7 +15,7 @@ data("pcs_38k")
 data.frame
 }
 \description{
-HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the 
+HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the
 telomere-to-telomere reference
 }
 \note{

@@ -24,6 +24,6 @@ a python list; the function is used for its side effect
 update the reference genome for a hail instance
 }
 \examples{
-hl = hail_init()
+hl <- hail_init()
 rg_update(hl)
 }
