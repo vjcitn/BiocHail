@@ -59,6 +59,8 @@ In this section we import the 1000 genomes VCF slice
 distributed by the hail project.  `hail_init` uses basilisk,
 which ensures that a specific version of hail and
 its dependencies are available in an isolated virtual environment.
+`bare_hail` is easier to use but does not achieve the level
+of isolation and consistency available with `hail_init`.
 
 ```{r getlib,message=FALSE}
 library(BiocHail)
@@ -72,8 +74,9 @@ the following chunk computes `mt`, a MatrixTable
 representation of 1000 genomes data, but our
 attempt to print it in markdown fails.
 ```{r get1, eval=TRUE}
-hl <- hail_init()
-mt <- get_1kg(hl)
+hl <- bare_hail()
+hl$init(idempotent=TRUE) # hail_init()
+mt <- get_1kg(hl, simple=TRUE)
 mt
 print(mt$rows()$select()$show(5L)) # limited info
 ```

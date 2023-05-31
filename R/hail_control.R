@@ -84,6 +84,7 @@ hail_init = function(quiet=FALSE, min_block_size=0L, branching_factor=50L,
 #' @note `/home/jupyter/.local/share/r-miniconda/envs/r-reticulate/bin/pip3 install...` is 
 #' used to ensure that reticulate's python ecosystem is what we want
 #' @return python reference to hail module
+#' @note `bare_hail()$init(idempotent=TRUE)` should be run
 #' @examples
 #' # assumes terra
 #' if (nchar(Sys.getenv("WORKSPACE_NAMESPACE"))>0) {
@@ -102,5 +103,5 @@ hail_init = function(quiet=FALSE, min_block_size=0L, branching_factor=50L,
 #'   }
 #' @export
 bare_hail = function() {
-  reticulate::import("hail")
+   reticulate::import("hail")
 }
