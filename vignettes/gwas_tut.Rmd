@@ -35,12 +35,32 @@ If an R chunk computes `x`, a python chunk can refer
 to it as `r.x`.  If a python chunk computes `r.x`,
 an R chunk can refer to this value as `x`.
 
+# Installing `BiocHail`
+
+`BiocHail` should be installed as follows:
+
+```{r, eval = FALSE}
+if (!require("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install("BiocHail")
+```
+
+As of 1.0.0, a JDK for Java version `<=` 11.0 is necessary
+to use the version of Hail that is installed with the package.
+This package should be usable on MacOS with suitable java
+support.  If Java version `>=` 8.x is used, warnings from
+Apache Spark may be observed.  To the best of our knowledge
+the conditions to which the warnings pertain do not affect program performance.
+
+
 # Acquire a slice of the 1000 genomes genotypes and annotations
 
 In this section we import the 1000 genomes VCF slice
 distributed by the hail project.  `hail_init` uses basilisk,
 which ensures that a specific version of hail and
 its dependencies are available in an isolated virtual environment.
+`bare_hail` is easier to use but does not achieve the level
+of isolation and consistency available with `hail_init`.
 
 ```{r getlib,message=FALSE}
 library(BiocHail)
@@ -54,8 +74,9 @@ the following chunk computes `mt`, a MatrixTable
 representation of 1000 genomes data, but our
 attempt to print it in markdown fails.
 ```{r get1, eval=TRUE}
-hl <- hail_init()
-mt <- get_1kg(hl)
+hl <- bare_hail()
+hl$init(idempotent=TRUE) # hail_init()
+mt <- get_1kg(hl, simple=TRUE)
 mt
 print(mt$rows()$select()$show(5L)) # limited info
 ```
@@ -113,7 +134,7 @@ r.tab.show(width=100)
 ## Adding the sample annotation to the MatrixTable; aggregation
 
 We combine the `tab` defined above, with the MatrixTable instance,
-usiny python code reaching to R via `r.`.
+using python code reaching to R via `r.`.
 ```{python ch4, eval=TRUE}
 r.mt = r.mt.annotate_cols(pheno = r.tab[r.mt.s])   # python chunk! 
 r.mt.col.describe()
@@ -371,3 +392,11 @@ Additional vignettes will address
 - Simulating variant collections using Balding-Nichols
 - Simulating variant collections using Pritchard-Stephens-Donnelly
 - Connecting genotypes with phenotype data in FHIR
+
+
+# SessionInfo {-}
+
+```{r sessionInfo}
+sessionInfo()
+```
+

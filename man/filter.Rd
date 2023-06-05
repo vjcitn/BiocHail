@@ -17,16 +17,19 @@ and `placeholder` an arbitrary character(1)}
 
 \item{.preserve}{not used}
 }
+\value{
+filtered hail.table.Table reference
+}
 \description{
 s3 support
 }
 \examples{
-hl = hail_init()
+hl <- hail_init()
 annopath <- path_1kg_annotations()
-tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
-pick = rep(FALSE, 3500)
-pick[1:10] = TRUE
-ft = filter(tab, filter=pick, hl=hl)
+tab <- hl$import_table(annopath, impute = TRUE)$key_by("Sample")
+pick <- rep(FALSE, 3500)
+pick[seq_len(10)] <- TRUE
+ft <- filter(tab, filter = pick, hl = hl)
 ft$count()
 ft$head(2L)$collect()
 }

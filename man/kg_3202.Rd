@@ -10,10 +10,17 @@ data.frame
 \usage{
 data("kg_3202")
 }
+\value{
+data.frame
+}
 \description{
 data.frame with metadata about 3202 samples genotyped against T2T reference
 }
 \note{
 Source: index files described at `https://www.internationalgenome.org/data-portal/data-collection/30x-grch38`
+}
+\examples{
+data(kg_3202)
+dim(kg_3202)
 }
 \keyword{datasets}

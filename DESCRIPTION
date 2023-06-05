@@ -1,7 +1,7 @@
 Package: BiocHail
-Date: 2023-03-02
+Date: 2023-03-19
 Title: basilisk and hail
-Version: 0.99.13
+Version: 1.1.2
 Authors@R: 
     c(person(
         "Vincent", "Carey", role = c("aut", "cre"),
@@ -14,11 +14,17 @@ Description: Use hail via basilisk when appropriate, or via reticulate.
 	resources processed by hail.is.
 License: Artistic-2.0
 Encoding: UTF-8
-Depends: R (>= 4.2), graphics, stats, utils
-Imports: reticulate, basilisk, BiocFileCache, methods, dplyr
+Depends: R (>= 4.3.0), graphics, stats, utils
+Imports: reticulate, basilisk, BiocFileCache, methods, dplyr, BiocGenerics
 Suggests: knitr, testthat, BiocStyle, ggplot2, DT
 VignetteBuilder: knitr
 biocViews: Infrastructure
 RoxygenNote: 7.2.3
 URL: https://github.com/vjcitn/BiocHail
 BugReports: https://github.com/vjcitn/BiocHail/issues
+Config/reticulate:
+  list(
+    packages = list(
+      list(package = "hail", version = "0.2.108", pip = TRUE)
+    )
+  )

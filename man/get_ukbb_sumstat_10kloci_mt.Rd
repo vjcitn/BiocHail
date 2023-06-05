@@ -8,7 +8,8 @@ get_ukbb_sumstat_10kloci_mt(
   hl,
   folder = tempdir(),
   cache = BiocFileCache::BiocFileCache(),
-  timeout.ukbb = 3600
+  timeout.ukbb = 3600,
+  simple = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ get_ukbb_sumstat_10kloci_mt(
 \item{cache}{a BiocFileCache-type cache}
 
 \item{timeout.ukbb}{numeric(1) defaults to 3600 for timeout setting in `options()`; option value is reset on exit}
+
+\item{simple}{logical(1) avoids basilisk if TRUE}
 }
 \value{
 "hail.matrixtable.MatrixTable" instance
@@ -38,8 +41,8 @@ unzipped image to a persistent location.  If this has been done and the environm
 the MatrixTable content found there.
 }
 \examples{
-hl = hail_init()
-ss = get_ukbb_sumstat_10kloci_mt(hl)
+hl <- hail_init()
+ss <- get_ukbb_sumstat_10kloci_mt(hl)
 # consider saving the unzipped image and recaching
 ss$count()
 }

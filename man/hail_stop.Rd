@@ -15,3 +15,6 @@ result of stop() method for Hail module
 \description{
 stop hail
 }
+\examples{
+hail_stop
+}

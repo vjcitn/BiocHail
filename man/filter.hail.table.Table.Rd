@@ -18,7 +18,7 @@ and `placeholder` an arbitrary character(1)}
 \item{.preserve}{not used}
 }
 \value{
-character()
+filtered hail.table.Table reference
 }
 \description{
 filter rows of a hail Table
@@ -29,12 +29,12 @@ writes one line of table to disk to retrieve field names
 FIXME: uses disk because I don't know how to create a BooleanExpression except by importing.
 }
 \examples{
-hl = hail_init()
+hl <- hail_init()
 annopath <- path_1kg_annotations()
-tab <- hl$import_table(annopath, impute=TRUE)$key_by("Sample")
-pick = rep(FALSE, 3500)
-pick[1:10] = TRUE
-ft = filter(tab, filter=pick, hl=hl)
+tab <- hl$import_table(annopath, impute = TRUE)$key_by("Sample")
+pick <- rep(FALSE, 3500)
+pick[seq_len(10)] <- TRUE
+ft <- filter(tab, filter = pick, hl = hl)
 ft$count()
 ft$head(2L)$collect()
 }

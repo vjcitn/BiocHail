@@ -12,6 +12,9 @@ character(1) path to annotations
 \description{
 generate path to installed annotations file
 }
+\note{
+.txt file retrieved from extraction on `https://storage.googleapis.com/hail-1kg/tutorial_data.tar`
+}
 \examples{
 path_1kg_annotations()
 }

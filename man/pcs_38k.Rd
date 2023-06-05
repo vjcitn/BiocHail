@@ -3,7 +3,7 @@
 \docType{data}
 \name{pcs_38k}
 \alias{pcs_38k}
-\title{HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the 
+\title{HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the
 telomere-to-telomere reference}
 \format{
 data.frame
@@ -11,11 +11,18 @@ data.frame
 \usage{
 data("pcs_38k")
 }
+\value{
+data.frame
+}
 \description{
-HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the 
+HWE-normalized PCA scores for 3202 thousand-genomes samples genotyped with the
 telomere-to-telomere reference
 }
 \note{
 The genotypes are from a 1% sample of loci on chr17
+}
+\examples{
+data(pcs_38k)
+dim(pcs_38k)
 }
 \keyword{datasets}
