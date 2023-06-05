@@ -8,8 +8,7 @@ get_ukbb_sumstat_10kloci_mt(
   hl,
   folder = tempdir(),
   cache = BiocFileCache::BiocFileCache(),
-  timeout.ukbb = 3600,
-  simple = FALSE
+  timeout.ukbb = 3600
 )
 }
 \arguments{
@@ -20,8 +19,6 @@ get_ukbb_sumstat_10kloci_mt(
 \item{cache}{a BiocFileCache-type cache}
 
 \item{timeout.ukbb}{numeric(1) defaults to 3600 for timeout setting in `options()`; option value is reset on exit}
-
-\item{simple}{logical(1) avoids basilisk if TRUE}
 }
 \value{
 "hail.matrixtable.MatrixTable" instance

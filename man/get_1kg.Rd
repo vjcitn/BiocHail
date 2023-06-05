@@ -9,8 +9,7 @@ get_1kg(
   retrieve_import_write = FALSE,
   path_1kg_zip = osn_1kg_path(),
   folder = tempdir(),
-  cache = BiocFileCache::BiocFileCache(),
-  simple = FALSE
+  cache = BiocFileCache::BiocFileCache()
 )
 }
 \arguments{
@@ -24,8 +23,6 @@ a previously written zip file, either from a cache, or, if no file found in cach
 \item{folder}{character(1) destination of 1kg.mt as retrieved using hl.utils.get_1kg, import_vcf, write}
 
 \item{cache}{a BiocFileCache-type cache}
-
-\item{simple}{logical(1) if TRUE avoid basilisk to work with supplied hail module in `hl`, defaults to FALSE}
 }
 \value{
 "hail.matrixtable.MatrixTable" instance

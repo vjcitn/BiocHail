@@ -38,9 +38,8 @@ We have produced a representation of summary
 statistics for a sample of 9888 loci.  This 5GB resource
 can be retrieved and cached with the following code:
 ```{r getukbb}
-hl = bare_hail() # hail_init() -- avoiding basilisk
-hl$init(idempotent=TRUE)
-ss = get_ukbb_sumstat_10kloci_mt(hl, simple=TRUE) # can take about a minute to unzip 5GB
+hl = hail_init()
+ss = get_ukbb_sumstat_10kloci_mt(hl) # can take about a minute to unzip 5GB
 ss$count()   # but if a persistent MatrixTable is at the location given
              # by env var HAIL_UKBB_SUMSTAT_10K_PATH it goes quickly
 ```
