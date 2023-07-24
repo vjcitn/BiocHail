@@ -28,7 +28,7 @@ as.data.frame.default <- base::as.data.frame
 
 mkrow <- function(str, cn) lapply(cn, function(x) str$get(x))
 
-setOldClass("hail.table.Table")
+methods::setOldClass("hail.table.Table")
 
 #' convert hail.table.Table to R data frame
 #' @note only use on small table because collect is used

@@ -1,4 +1,4 @@
-setOldClass("hail.table.Table")
+methods::setOldClass("hail.table.Table")
 
 #' extract field names from hail.table.Table
 #' @importFrom BiocGenerics colnames as.data.frame
