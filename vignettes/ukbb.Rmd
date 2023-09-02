@@ -23,7 +23,7 @@ has been installed where reticulate can find it.
 (We don't use basilisk as of 12/24/2022 because of
 issues in the terra spark cluster.)
 
-```{r setup,message=FALSE}
+```{r setup,message=FALSE, eval=FALSE}
 library(BiocHail)
 ```
 
@@ -37,14 +37,14 @@ see the Installation section near the end of this document.
 We have produced a representation of summary
 statistics for a sample of 9888 loci.  This 5GB resource
 can be retrieved and cached with the following code:
-```{r getukbb}
+```{r getukbb, eval=FALSE}
 hl = hail_init()
 ss = get_ukbb_sumstat_10kloci_mt(hl) # can take about a minute to unzip 5GB
 ss$count()   # but if a persistent MatrixTable is at the location given
              # by env var HAIL_UKBB_SUMSTAT_10K_PATH it goes quickly
 ```
 To get a description of available content, we need a python chunk:
-```{python lkdesc}
+```{python lkdesc, eval=FALSE}
 r.ss.describe()
 ```
 
@@ -69,7 +69,7 @@ r.hl.read_matrix_table('gs://ukb-diverse-pops-public/sumstats_release/results_fu
 
 We'll collect the column metadata to start to understand details
 of annotation of phenotypes.
-```{r lkss}
+```{r lkss, eval=FALSE}
 sscol = ss$cols()$collect() # OK because we are just working over column metadata
 ss1 = sscol[[1]]
 names(ss1)
@@ -80,12 +80,12 @@ ss1$get("description")
 We've introduced a function that extracts selected fields for a given
 phenotype, that accommodates availability of results for specific populations.
 
-```{r lkmul}
+```{r lkmul, eval=FALSE}
 multipop_df(ss1)
 ```
 This can be iterated over all the elements of `sscol` to produce
 a comprehensive searchable table.  Here's a small illustration:
-```{r dodt, message=FALSE}
+```{r dodt, message=FALSE, eval=FALSE}
 library(DT)
 ndf = do.call(rbind, lapply(sscol[1:10], multipop_df))
 datatable(ndf)
@@ -96,13 +96,13 @@ datatable(ndf)
 We'll trim the material to be worked with by sampling both rows and columns.
 (2023.01.08: In future revisions we will be able to control the seed for random sampling.)
 
-```{r dotrim}
+```{r dotrim, eval=FALSE}
 sss = ss$sample_rows(.01)$sample_cols(.01)
 sss$count()
 ```
 
 Row metadata are simple to collect:
-```{r getrm}
+```{r getrm, eval=FALSE}
 rss = sss$rows()$collect()
 rss1 = rss[[1]]
 names(rss1)
@@ -117,7 +117,7 @@ The summary statistics themselves reside in entries of the MatrixTable.  This
 can be expensive to collect and so filtering methods beyond random sampling
 must be mastered.  But here is a basic view.
 
-```{r getent}
+```{r getent, eval=FALSE}
 sse = sss$entries()$collect()
 length(sse)
 names(sse[[1]])
@@ -125,7 +125,7 @@ sse1 = sse[[1]]
 ```
 
 The `summary_stats` component has the association p-values -- log10 transformed?
-```{r lkss11}
+```{r lkss11, eval=FALSE}
 length(sse1$summary_stats)
 names(sse1$summary_stats[[1]])
 sse1$summary_stats[[1]]$Pvalue
