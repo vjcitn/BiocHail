@@ -1,123 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/gwas_tut.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/large_t2t.html</loc>
-  </url>
-  <url>
-    <loc>/articles/ukbb.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as.data.frame.default.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as.data.frame.hail.table.Table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as.data.frame.html</loc>
-  </url>
-  <url>
-    <loc>/reference/bare_hail.html</loc>
-  </url>
-  <url>
-    <loc>/reference/colnames-hail.table.Table-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/colnames.default.html</loc>
-  </url>
-  <url>
-    <loc>/reference/colnames.hail.table.Table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/colnames.html</loc>
-  </url>
-  <url>
-    <loc>/reference/filter.hail.table.Table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/filter.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_1kg.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_key.hail.table.Table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_key.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_ukbb_sumstat_10kloci_mt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/hail_init.html</loc>
-  </url>
-  <url>
-    <loc>/reference/hail_init_simple.html</loc>
-  </url>
-  <url>
-    <loc>/reference/hail_stop.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kg_3202.html</loc>
-  </url>
-  <url>
-    <loc>/reference/multipop_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/osn_1kg_path.html</loc>
-  </url>
-  <url>
-    <loc>/reference/osn_ukbb_sumst10k_path.html</loc>
-  </url>
-  <url>
-    <loc>/reference/path_1kg_annotations.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pcs_191k.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pcs_38k.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pheno_data_sec_2df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rg_update.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rownames-hail.table.Table-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rownames.default.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rownames.hail.table.Table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rownames.html</loc>
-  </url>
-  <url>
-    <loc>/reference/top2df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ukbb_init.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://github.com/vjcitn/BiocHail/404.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/articles/gwas_tut.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/articles/index.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/articles/large_t2t.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/articles/ukbb.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/authors.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/index.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/as.data.frame.default.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/as.data.frame.hail.table.Table.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/as.data.frame.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/bare_hail.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/colnames-hail.table.Table-method.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/colnames.default.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/colnames.hail.table.Table.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/colnames.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/filter.hail.table.Table.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/filter.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/get_1kg.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/get_key.hail.table.Table.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/get_key.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/get_ukbb_sumstat_10kloci_mt.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/hail_init.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/hail_init_simple.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/hail_stop.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/index.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/kg_3202.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/multipop_df.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/osn_1kg_path.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/osn_ukbb_sumst10k_path.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/path_1kg_annotations.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/pcs_191k.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/pcs_38k.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/pheno_data_sec_2df.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/rg_update.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/rownames-hail.table.Table-method.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/rownames.default.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/rownames.hail.table.Table.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/rownames.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/top2df.html</loc></url>
+<url><loc>https://github.com/vjcitn/BiocHail/reference/ukbb_init.html</loc></url>
 </urlset>
+

@@ -66,8 +66,7 @@ library(BiocHail)
 see the Installation section near the end of this document.)
 
 ```{r do17, eval=TRUE}
-hl <- bare_hail()
-hl$init(idempotent=TRUE) # hail_init()
+hl <- hail_init()
 # NB the following two commands are now encapsulated in the rg_update function
 nn <- hl$get_reference('GRCh38')
 nn <- nn$read(system.file("json/t2tAnVIL.json", package="BiocHail"))

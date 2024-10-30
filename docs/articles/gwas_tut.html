@@ -4,91 +4,66 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>01 BiocHail -- GWAS tutorial from hail.is • BiocHail</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="01 BiocHail -- GWAS tutorial from hail.is">
-<meta property="og:description" content="BiocHail">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="01 BiocHail -- GWAS tutorial from hail.is">
 </head>
-<body data-spy="scroll" data-target="#toc">
-    
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">BiocHail</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.16</span>
-      </span>
-    </div>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/gwas_tut.html">01 BiocHail -- GWAS tutorial from hail.is</a>
-    </li>
-    <li>
-      <a href="../articles/large_t2t.html">02 Working with larger VCF: T2T by chromosome</a>
-    </li>
-    <li>
-      <a href="../articles/ukbb.html">03 Working with UK Biobank summary statistics</a>
-    </li>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
+    <a class="navbar-brand me-2" href="../index.html">BiocHail</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.0</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/gwas_tut.html">01 BiocHail -- GWAS tutorial from hail.is</a></li>
+    <li><a class="dropdown-item" href="../articles/large_t2t.html">02 Working with larger VCF: T2T by chromosome</a></li>
+    <li><a class="dropdown-item" href="../articles/ukbb.html">03 Working with UK Biobank summary statistics</a></li>
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/vjcitn/BiocHail/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="nav-link" href="https://github.com/vjcitn/BiocHail/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>01 BiocHail – GWAS tutorial from hail.is</h1>
+
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+
+      <h1>01 BiocHail -- GWAS tutorial from hail.is</h1>
                         <h4 data-toc-skip class="author">Vincent J. Carey, stvjc at channing.harvard.edu</h4>
             
-            <h4 data-toc-skip class="date">April 03, 2023</h4>
+            <h4 data-toc-skip class="date">October 30, 2024</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/vjcitn/BiocHail/blob/HEAD/vignettes/gwas_tut.Rmd" class="external-link"><code>vignettes/gwas_tut.Rmd</code></a></small>
-      <div class="hidden name"><code>gwas_tut.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/vjcitn/BiocHail/blob/HEAD/vignettes/gwas_tut.Rmd"><code>vignettes/gwas_tut.Rmd</code></a></small>
+      <div class="d-none name"><code>gwas_tut.Rmd</code></div>
     </div>
 
     
@@ -101,186 +76,83 @@
 <p>Most of the computations are done via reticulate calls to python; the access to the hail environment is through basilisk. We also take advantage of R markdown’s capacity to execute python code directly. If an R chunk computes <code>x</code>, a python chunk can refer to it as <code>r.x</code>. If a python chunk computes <code>r.x</code>, an R chunk can refer to this value as <code>x</code>.</p>
 </div>
 <div class="section level2">
+<h2 id="installing-biochail">Installing <code>BiocHail</code><a class="anchor" aria-label="anchor" href="#installing-biochail"></a>
+</h2>
+<p><code>BiocHail</code> should be installed as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.github.io/BiocManager/" class="external-link">"BiocManager"</a></span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"BiocHail"</span><span class="op">)</span></span></code></pre></div>
+<p>As of 1.0.0, a JDK for Java version <code>&lt;=</code> 11.0 is necessary to use the version of Hail that is installed with the package. This package should be usable on MacOS with suitable java support. If Java version <code>&gt;=</code> 8.x is used, warnings from Apache Spark may be observed. To the best of our knowledge the conditions to which the warnings pertain do not affect program performance.</p>
+</div>
+<div class="section level2">
 <h2 id="acquire-a-slice-of-the-1000-genomes-genotypes-and-annotations">Acquire a slice of the 1000 genomes genotypes and annotations<a class="anchor" aria-label="anchor" href="#acquire-a-slice-of-the-1000-genomes-genotypes-and-annotations"></a>
 </h2>
-<p>In this section we import the 1000 genomes VCF slice distributed by the hail project. <code>hail_init</code> uses basilisk, which ensures that a specific version of hail and its dependencies are available in an isolated virtual environment.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vjcitn/BiocHail" class="external-link">BiocHail</a></span><span class="op">)</span></span>
+<p>In this section we import the 1000 genomes VCF slice distributed by the hail project. <code>hail_init</code> uses basilisk, which ensures that a specific version of hail and its dependencies are available in an isolated virtual environment. <code>bare_hail</code> is easier to use but does not achieve the level of isolation and consistency available with <code>hail_init</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vjcitn/BiocHail">BiocHail</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="initialization-data-acquisition-rendering">Initialization, data acquisition, rendering<a class="anchor" aria-label="anchor" href="#initialization-data-acquisition-rendering"></a>
 </h3>
 <p>Here is a curiosity of R-hail interaction. Note that the following chunk computes <code>mt</code>, a MatrixTable representation of 1000 genomes data, but our attempt to print it in markdown fails.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hail_init.html">hail_init</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">mt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_1kg.html">get_1kg</a></span><span class="op">(</span><span class="va">hl</span><span class="op">)</span></span>
-<span><span class="va">mt</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;hail.matrixtable.MatrixTable object at 0x7f1758975670&gt;</span></span></code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mt</span><span class="op">$</span><span class="fu">rows</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">show</span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span><span class="op">)</span> <span class="co"># limited info</span></span></code></pre></div>
-<pre><code><span><span class="co">## NULL</span></span></code></pre>
+<span><span class="va">mt</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mt</span><span class="op">$</span><span class="fu">rows</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">show</span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span><span class="op">)</span> <span class="co"># limited info</span></span></code></pre></div>
 <p>We can use the python syntax in a <code>python</code> R markdown chunk to see what we want. We use prefix <code>r.</code> to find references defined in our R session (compiling the vignette).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1">r.mt.rows().select().show(<span class="dv">5</span>) <span class="co"># python chunk!</span></a></code></pre></div>
-<pre><code><span><span class="co">## +---------------+------------+</span></span>
-<span><span class="co">## | locus         | alleles    |</span></span>
-<span><span class="co">## +---------------+------------+</span></span>
-<span><span class="co">## | locus&lt;GRCh37&gt; | array&lt;str&gt; |</span></span>
-<span><span class="co">## +---------------+------------+</span></span>
-<span><span class="co">## | 1:904165      | ["G","A"]  |</span></span>
-<span><span class="co">## | 1:909917      | ["G","A"]  |</span></span>
-<span><span class="co">## | 1:986963      | ["C","T"]  |</span></span>
-<span><span class="co">## | 1:1563691     | ["T","G"]  |</span></span>
-<span><span class="co">## | 1:1707740     | ["T","G"]  |</span></span>
-<span><span class="co">## +---------------+------------+</span></span>
-<span><span class="co">## showing top 5 rows</span></span></code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>r.mt.rows().select().show(<span class="dv">5</span>) <span class="co"># python chunk!</span></span></code></pre></div>
 <p>The sample IDs:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1">r.mt.s.show(<span class="dv">5</span>)  <span class="co"># python chunk!</span></a></code></pre></div>
-<pre><code><span><span class="co">## +-----------+</span></span>
-<span><span class="co">## | s         |</span></span>
-<span><span class="co">## +-----------+</span></span>
-<span><span class="co">## | str       |</span></span>
-<span><span class="co">## +-----------+</span></span>
-<span><span class="co">## | "HG00096" |</span></span>
-<span><span class="co">## | "HG00099" |</span></span>
-<span><span class="co">## | "HG00105" |</span></span>
-<span><span class="co">## | "HG00118" |</span></span>
-<span><span class="co">## | "HG00129" |</span></span>
-<span><span class="co">## +-----------+</span></span>
-<span><span class="co">## showing top 5 rows</span></span></code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>r.mt.s.show(<span class="dv">5</span>)  <span class="co"># python chunk!</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="helper-functions">Helper functions<a class="anchor" aria-label="anchor" href="#helper-functions"></a>
 </h3>
 <p>Some methods return data immediately useful in R.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mt</span><span class="op">$</span><span class="fu">count</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [[1]]</span></span>
-<span><span class="co">## [1] 10961</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[2]]</span></span>
-<span><span class="co">## [1] 284</span></span></code></pre>
 <p>We can thus define a function <code>dim</code> to behave with hail MatrixTable instances in a familiar way, along with some others.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dim.hail.matrixtable.MatrixTable</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> </span>
 <span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="fu">count</span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">tmp</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> </span>
 <span><span class="op">}</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">mt</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 10961   284</span></span></code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ncol.hail.matrixtable.MatrixTable</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">mt</span><span class="op">)</span></span>
+<span><span class="va">ncol.hail.matrixtable.MatrixTable</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> </span>
 <span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="op">}</span></span>
 <span><span class="va">nrow.hail.matrixtable.MatrixTable</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> </span>
 <span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mt</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 10961</span></span></code></pre>
 <p>These can be useful on their own, or when calling python methods.</p>
 </div>
 <div class="section level3">
 <h3 id="acquiring-column-fields">Acquiring <code>column fields</code><a class="anchor" aria-label="anchor" href="#acquiring-column-fields"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">annopath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/path_1kg_annotations.html">path_1kg_annotations</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="va">hl</span><span class="op">$</span><span class="fu">import_table</span><span class="op">(</span><span class="va">annopath</span>, impute<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="fu">key_by</span><span class="op">(</span><span class="st">"Sample"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" title="1">r.tab.describe()<span class="co"># python chunk!</span></a></code></pre></div>
-<pre><code><span><span class="co">## ----------------------------------------</span></span>
-<span><span class="co">## Global fields:</span></span>
-<span><span class="co">##     None</span></span>
-<span><span class="co">## ----------------------------------------</span></span>
-<span><span class="co">## Row fields:</span></span>
-<span><span class="co">##     'Sample': str </span></span>
-<span><span class="co">##     'Population': str </span></span>
-<span><span class="co">##     'SuperPopulation': str </span></span>
-<span><span class="co">##     'isFemale': bool </span></span>
-<span><span class="co">##     'PurpleHair': bool </span></span>
-<span><span class="co">##     'CaffeineConsumption': int32 </span></span>
-<span><span class="co">## ----------------------------------------</span></span>
-<span><span class="co">## Key: ['Sample']</span></span>
-<span><span class="co">## ----------------------------------------</span></span></code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb19-1" title="1">r.tab.show(width<span class="op">=</span><span class="dv">100</span>)</a></code></pre></div>
-<pre><code><span><span class="co">## +-----------+------------+-----------------+----------+------------+---------------------+</span></span>
-<span><span class="co">## | Sample    | Population | SuperPopulation | isFemale | PurpleHair | CaffeineConsumption |</span></span>
-<span><span class="co">## +-----------+------------+-----------------+----------+------------+---------------------+</span></span>
-<span><span class="co">## | str       | str        | str             |     bool |       bool |               int32 |</span></span>
-<span><span class="co">## +-----------+------------+-----------------+----------+------------+---------------------+</span></span>
-<span><span class="co">## | "HG00096" | "GBR"      | "EUR"           |    False |      False |                   4 |</span></span>
-<span><span class="co">## | "HG00097" | "GBR"      | "EUR"           |     True |       True |                   4 |</span></span>
-<span><span class="co">## | "HG00098" | "GBR"      | "EUR"           |    False |      False |                   5 |</span></span>
-<span><span class="co">## | "HG00099" | "GBR"      | "EUR"           |     True |      False |                   4 |</span></span>
-<span><span class="co">## | "HG00100" | "GBR"      | "EUR"           |     True |      False |                   5 |</span></span>
-<span><span class="co">## | "HG00101" | "GBR"      | "EUR"           |    False |       True |                   1 |</span></span>
-<span><span class="co">## | "HG00102" | "GBR"      | "EUR"           |     True |       True |                   6 |</span></span>
-<span><span class="co">## | "HG00103" | "GBR"      | "EUR"           |    False |       True |                   5 |</span></span>
-<span><span class="co">## | "HG00104" | "GBR"      | "EUR"           |     True |      False |                   5 |</span></span>
-<span><span class="co">## | "HG00105" | "GBR"      | "EUR"           |    False |      False |                   4 |</span></span>
-<span><span class="co">## | "HG00106" | "GBR"      | "EUR"           |     True |      False |                   7 |</span></span>
-<span><span class="co">## | "HG00107" | "GBR"      | "EUR"           |    False |       True |                   4 |</span></span>
-<span><span class="co">## | "HG00108" | "GBR"      | "EUR"           |    False |      False |                   2 |</span></span>
-<span><span class="co">## | "HG00109" | "GBR"      | "EUR"           |    False |       True |                   3 |</span></span>
-<span><span class="co">## | "HG00110" | "GBR"      | "EUR"           |     True |       True |                   3 |</span></span>
-<span><span class="co">## | "HG00111" | "GBR"      | "EUR"           |     True |       True |                   2 |</span></span>
-<span><span class="co">## | "HG00112" | "GBR"      | "EUR"           |    False |      False |                   2 |</span></span>
-<span><span class="co">## | "HG00113" | "GBR"      | "EUR"           |    False |      False |                   5 |</span></span>
-<span><span class="co">## +-----------+------------+-----------------+----------+------------+---------------------+</span></span>
-<span><span class="co">## showing top 18 rows</span></span></code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>r.tab.describe()<span class="co"># python chunk!</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>r.tab.show(width<span class="op">=</span><span class="dv">100</span>)</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="adding-the-sample-annotation-to-the-matrixtable-aggregation">Adding the sample annotation to the MatrixTable; aggregation<a class="anchor" aria-label="anchor" href="#adding-the-sample-annotation-to-the-matrixtable-aggregation"></a>
 </h3>
 <p>We combine the <code>tab</code> defined above, with the MatrixTable instance, using python code reaching to R via <code>r.</code>.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb21-1" title="1">r.mt <span class="op">=</span> r.mt.annotate_cols(pheno <span class="op">=</span> r.tab[r.mt.s])   <span class="co"># python chunk! </span></a>
-<a class="sourceLine" id="cb21-2" title="2">r.mt.col.describe()</a></code></pre></div>
-<pre><code><span><span class="co">## --------------------------------------------------------</span></span>
-<span><span class="co">## Type:</span></span>
-<span><span class="co">##         struct {</span></span>
-<span><span class="co">##         s: str, </span></span>
-<span><span class="co">##         pheno: struct {</span></span>
-<span><span class="co">##             Population: str, </span></span>
-<span><span class="co">##             SuperPopulation: str, </span></span>
-<span><span class="co">##             isFemale: bool, </span></span>
-<span><span class="co">##             PurpleHair: bool, </span></span>
-<span><span class="co">##             CaffeineConsumption: int32</span></span>
-<span><span class="co">##         }</span></span>
-<span><span class="co">##     }</span></span>
-<span><span class="co">## --------------------------------------------------------</span></span>
-<span><span class="co">## Source:</span></span>
-<span><span class="co">##     &lt;hail.matrixtable.MatrixTable object at 0x7f17584ef7f0&gt;</span></span>
-<span><span class="co">## Index:</span></span>
-<span><span class="co">##     ['column']</span></span>
-<span><span class="co">## --------------------------------------------------------</span></span></code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>r.mt <span class="op">=</span> r.mt.annotate_cols(pheno <span class="op">=</span> r.tab[r.mt.s])   <span class="co"># python chunk! </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>r.mt.col.describe()</span></code></pre></div>
 <p>Aggregation methods can be used to obtain contingency tables or descriptive statistics.</p>
 <p>First, we get the frequencies of superpopulation membership:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mt</span><span class="op">$</span><span class="fu">aggregate_cols</span><span class="op">(</span><span class="va">hl</span><span class="op">$</span><span class="va">agg</span><span class="op">$</span><span class="fu">counter</span><span class="op">(</span><span class="va">mt</span><span class="op">$</span><span class="va">pheno</span><span class="op">$</span><span class="va">SuperPopulation</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## $AFR</span></span>
-<span><span class="co">## [1] 76</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $AMR</span></span>
-<span><span class="co">## [1] 34</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $EAS</span></span>
-<span><span class="co">## [1] 72</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $EUR</span></span>
-<span><span class="co">## [1] 47</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $SAS</span></span>
-<span><span class="co">## [1] 55</span></span></code></pre>
 <p>Then statistics on caffeine consumption:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uu</span> <span class="op">&lt;-</span> <span class="va">mt</span><span class="op">$</span><span class="fu">aggregate_cols</span><span class="op">(</span><span class="va">hl</span><span class="op">$</span><span class="va">agg</span><span class="op">$</span><span class="fu">stats</span><span class="op">(</span><span class="va">mt</span><span class="op">$</span><span class="va">pheno</span><span class="op">$</span><span class="va">CaffeineConsumption</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">uu</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1] "annotate" "drop"     "get"      "items"    "keys"     "max"     </span></span>
-<span><span class="co">##  [7] "mean"     "min"      "n"        "select"   "stdev"    "sum"     </span></span>
-<span><span class="co">## [13] "values"</span></span></code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uu</span><span class="op">$</span><span class="va">mean</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 4.415493</span></span></code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uu</span><span class="op">$</span><span class="va">stdev</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 1.577763</span></span></code></pre>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">uu</span><span class="op">)</span></span>
+<span><span class="va">uu</span><span class="op">$</span><span class="va">mean</span></span>
+<span><span class="va">uu</span><span class="op">$</span><span class="va">stdev</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -288,123 +160,40 @@
 </h2>
 <p>The significance of the aggregation functions is that the computations are performed by Spark, on potentially huge distributed data structures.</p>
 <p>Now we aggregate over rows (SNPs). We’ll use python directly:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb31-1" title="1"><span class="im">from</span> pprint <span class="im">import</span> pprint  <span class="co"># python chunk!</span></a>
-<a class="sourceLine" id="cb31-2" title="2">snp_counts <span class="op">=</span> r.mt.aggregate_rows(r.hl.agg.counter(r.hl.Struct(ref<span class="op">=</span>r.mt.alleles[<span class="dv">0</span>], alt<span class="op">=</span>r.mt.alleles[<span class="dv">1</span>])))</a>
-<a class="sourceLine" id="cb31-3" title="3">pprint(snp_counts)</a></code></pre></div>
-<pre><code><span><span class="co">## {Struct(ref='T', alt='G'): 468,</span></span>
-<span><span class="co">##  Struct(ref='C', alt='T'): 2436,</span></span>
-<span><span class="co">##  Struct(ref='A', alt='G'): 1944,</span></span>
-<span><span class="co">##  Struct(ref='G', alt='A'): 2387,</span></span>
-<span><span class="co">##  Struct(ref='G', alt='C'): 112,</span></span>
-<span><span class="co">##  Struct(ref='G', alt='T'): 480,</span></span>
-<span><span class="co">##  Struct(ref='T', alt='A'): 79,</span></span>
-<span><span class="co">##  Struct(ref='T', alt='C'): 1879,</span></span>
-<span><span class="co">##  Struct(ref='C', alt='A'): 496,</span></span>
-<span><span class="co">##  Struct(ref='A', alt='T'): 76,</span></span>
-<span><span class="co">##  Struct(ref='C', alt='G'): 150,</span></span>
-<span><span class="co">##  Struct(ref='A', alt='C'): 454}</span></span></code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint  <span class="co"># python chunk!</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>snp_counts <span class="op">=</span> r.mt.aggregate_rows(r.hl.agg.counter(r.hl.Struct(ref<span class="op">=</span>r.mt.alleles[<span class="dv">0</span>], alt<span class="op">=</span>r.mt.alleles[<span class="dv">1</span>])))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>pprint(snp_counts)</span></code></pre></div>
 <div class="section level3">
 <h3 id="a-histogram-of-read-depths">A histogram of read depths<a class="anchor" aria-label="anchor" href="#a-histogram-of-read-depths"></a>
 </h3>
 <p>Hail uses the concept of ‘entries’ for matrix elements, and each ‘entry’ is a ‘struct’ with potentially many fields.</p>
 <p>Here we’ll use R to compute a histogram of sequencing depths over all samples and variants.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_hist</span> <span class="op">&lt;-</span> <span class="va">mt</span><span class="op">$</span><span class="fu">aggregate_entries</span><span class="op">(</span></span>
 <span>     <span class="va">hl</span><span class="op">$</span><span class="va">expr</span><span class="op">$</span><span class="va">aggregators</span><span class="op">$</span><span class="fu">hist</span><span class="op">(</span><span class="va">mt</span><span class="op">$</span><span class="va">DP</span>, <span class="fl">0L</span>, <span class="fl">30L</span>, <span class="fl">30L</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">p_hist</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1] "annotate"  "bin_edges" "bin_freq"  "drop"      "get"       "items"    </span></span>
-<span><span class="co">##  [7] "keys"      "n_larger"  "n_smaller" "select"    "values"</span></span></code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">p_hist</span><span class="op">$</span><span class="va">bin_edges</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 31</span></span></code></pre>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">p_hist</span><span class="op">$</span><span class="va">bin_freq</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 30</span></span></code></pre>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">midpts</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">+</span><span class="va">x</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">p_hist</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">p_hist</span><span class="op">$</span><span class="va">bin_edges</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">p_hist</span><span class="op">$</span><span class="va">bin_freq</span><span class="op">)</span></span>
+<span><span class="va">midpts</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">+</span><span class="va">x</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">dpdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu">midpts</span><span class="op">(</span><span class="va">p_hist</span><span class="op">$</span><span class="va">bin_edges</span><span class="op">)</span>, y<span class="op">=</span><span class="va">p_hist</span><span class="op">$</span><span class="va">bin_freq</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dpdf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span>,y<span class="op">=</span><span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"DP"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Frequency"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="gwas_tut_files/figure-html/dohist-1.png" width="700"></p>
 <p>An exercise: produce a function <code>mt_hist</code> that produces a histogram of measures from any of the relevant VCF components of a MatrixTable instance.</p>
 <p>Note also all the aggregators available:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">hl</span><span class="op">$</span><span class="va">expr</span><span class="op">$</span><span class="va">aggregators</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1] "aggregators"         "all"                 "any"                </span></span>
-<span><span class="co">##  [4] "approx_cdf"          "approx_median"       "approx_quantiles"   </span></span>
-<span><span class="co">##  [7] "array_agg"           "array_sum"           "call_stats"         </span></span>
-<span><span class="co">## [10] "collect"             "collect_as_set"      "corr"               </span></span>
-<span><span class="co">## [13] "count"               "count_where"         "counter"            </span></span>
-<span><span class="co">## [16] "downsample"          "explode"             "filter"             </span></span>
-<span><span class="co">## [19] "fold"                "fraction"            "group_by"           </span></span>
-<span><span class="co">## [22] "hardy_weinberg_test" "hist"                "inbreeding"         </span></span>
-<span><span class="co">## [25] "info_score"          "linreg"              "max"                </span></span>
-<span><span class="co">## [28] "mean"                "min"                 "ndarray_sum"        </span></span>
-<span><span class="co">## [31] "product"             "stats"               "sum"                </span></span>
-<span><span class="co">## [34] "take"</span></span></code></pre>
 <p>We’d also note that hail has a <a href="https://hail.is/docs/0.2/tutorials/09-ggplot.html" class="external-link">direct interface to ggplot2</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="quality-summaries">Quality summaries<a class="anchor" aria-label="anchor" href="#quality-summaries"></a>
 </h3>
 <p>A high-level function adds quality metrics to the MatrixTable.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mt</span> <span class="op">&lt;-</span> <span class="va">hl</span><span class="op">$</span><span class="fu">sample_qc</span><span class="op">(</span><span class="va">mt</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb43-1" title="1">r.mt.col.describe()  <span class="co"># python!</span></a></code></pre></div>
-<pre><code><span><span class="co">## --------------------------------------------------------</span></span>
-<span><span class="co">## Type:</span></span>
-<span><span class="co">##         struct {</span></span>
-<span><span class="co">##         s: str, </span></span>
-<span><span class="co">##         pheno: struct {</span></span>
-<span><span class="co">##             Population: str, </span></span>
-<span><span class="co">##             SuperPopulation: str, </span></span>
-<span><span class="co">##             isFemale: bool, </span></span>
-<span><span class="co">##             PurpleHair: bool, </span></span>
-<span><span class="co">##             CaffeineConsumption: int32</span></span>
-<span><span class="co">##         }, </span></span>
-<span><span class="co">##         sample_qc: struct {</span></span>
-<span><span class="co">##             dp_stats: struct {</span></span>
-<span><span class="co">##                 mean: float64, </span></span>
-<span><span class="co">##                 stdev: float64, </span></span>
-<span><span class="co">##                 min: float64, </span></span>
-<span><span class="co">##                 max: float64</span></span>
-<span><span class="co">##             }, </span></span>
-<span><span class="co">##             gq_stats: struct {</span></span>
-<span><span class="co">##                 mean: float64, </span></span>
-<span><span class="co">##                 stdev: float64, </span></span>
-<span><span class="co">##                 min: float64, </span></span>
-<span><span class="co">##                 max: float64</span></span>
-<span><span class="co">##             }, </span></span>
-<span><span class="co">##             call_rate: float64, </span></span>
-<span><span class="co">##             n_called: int64, </span></span>
-<span><span class="co">##             n_not_called: int64, </span></span>
-<span><span class="co">##             n_filtered: int64, </span></span>
-<span><span class="co">##             n_hom_ref: int64, </span></span>
-<span><span class="co">##             n_het: int64, </span></span>
-<span><span class="co">##             n_hom_var: int64, </span></span>
-<span><span class="co">##             n_non_ref: int64, </span></span>
-<span><span class="co">##             n_singleton: int64, </span></span>
-<span><span class="co">##             n_snp: int64, </span></span>
-<span><span class="co">##             n_insertion: int64, </span></span>
-<span><span class="co">##             n_deletion: int64, </span></span>
-<span><span class="co">##             n_transition: int64, </span></span>
-<span><span class="co">##             n_transversion: int64, </span></span>
-<span><span class="co">##             n_star: int64, </span></span>
-<span><span class="co">##             r_ti_tv: float64, </span></span>
-<span><span class="co">##             r_het_hom_var: float64, </span></span>
-<span><span class="co">##             r_insertion_deletion: float64</span></span>
-<span><span class="co">##         }</span></span>
-<span><span class="co">##     }</span></span>
-<span><span class="co">## --------------------------------------------------------</span></span>
-<span><span class="co">## Source:</span></span>
-<span><span class="co">##     &lt;hail.matrixtable.MatrixTable object at 0x7f173f509f70&gt;</span></span>
-<span><span class="co">## Index:</span></span>
-<span><span class="co">##     ['column']</span></span>
-<span><span class="co">## --------------------------------------------------------</span></span></code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>r.mt.col.describe()  <span class="co"># python!</span></span></code></pre></div>
 <p>The call rate histogram is given by:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">callrate</span> <span class="op">&lt;-</span> <span class="va">mt</span><span class="op">$</span><span class="va">sample_qc</span><span class="op">$</span><span class="va">call_rate</span><span class="op">$</span><span class="fu">collect</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">callrate</span><span class="op">)</span></span></code></pre></div>
-<p><img src="gwas_tut_files/figure-html/lkcr-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="filtering">Filtering<a class="anchor" aria-label="anchor" href="#filtering"></a>
@@ -413,10 +202,9 @@
 <h4 id="sample-quality">Sample quality<a class="anchor" aria-label="anchor" href="#sample-quality"></a>
 </h4>
 <p>We’ll use the python code given for filtering, in which per-sample mean read depth and call rate are must exceed (arbitrarily chosen) thresholds.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb46-1" title="1"><span class="co"># python chunk!</span></a>
-<a class="sourceLine" id="cb46-2" title="2">r.mt <span class="op">=</span> r.mt.filter_cols((r.mt.sample_qc.dp_stats.mean <span class="op">&gt;=</span> <span class="dv">4</span>) <span class="op">&amp;</span> (r.mt.sample_qc.call_rate <span class="op">&gt;=</span> <span class="fl">0.97</span>))</a>
-<a class="sourceLine" id="cb46-3" title="3"><span class="bu">print</span>(<span class="st">'After filter, </span><span class="sc">%d</span><span class="st">/284 samples remain.'</span> <span class="op">%</span> r.mt.count_cols())</a></code></pre></div>
-<pre><code><span><span class="co">## After filter, 250/284 samples remain.</span></span></code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python chunk!</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>r.mt <span class="op">=</span> r.mt.filter_cols((r.mt.sample_qc.dp_stats.mean <span class="op">&gt;=</span> <span class="dv">4</span>) <span class="op">&amp;</span> (r.mt.sample_qc.call_rate <span class="op">&gt;=</span> <span class="fl">0.97</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'After filter, </span><span class="sc">%d</span><span class="st">/284 samples remain.'</span> <span class="op">%</span> r.mt.count_cols())</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="genotype-quality">Genotype quality<a class="anchor" aria-label="anchor" href="#genotype-quality"></a>
@@ -426,90 +214,26 @@
 <li>relative purity of reads underlying homozygous reference or alt calls</li>
 <li>good balance of ref/alt counts for het calls</li>
 </ul>
-<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb48-1" title="1">ab <span class="op">=</span> r.mt.AD[<span class="dv">1</span>] <span class="op">/</span> r.hl.<span class="bu">sum</span>(r.mt.AD)</a>
-<a class="sourceLine" id="cb48-2" title="2"></a>
-<a class="sourceLine" id="cb48-3" title="3">filter_condition_ab <span class="op">=</span> ((r.mt.GT.is_hom_ref() <span class="op">&amp;</span> (ab <span class="op">&lt;=</span> <span class="fl">0.1</span>)) <span class="op">|</span></a>
-<a class="sourceLine" id="cb48-4" title="4">                        (r.mt.GT.is_het() <span class="op">&amp;</span> (ab <span class="op">&gt;=</span> <span class="fl">0.25</span>) <span class="op">&amp;</span> (ab <span class="op">&lt;=</span> <span class="fl">0.75</span>)) <span class="op">|</span></a>
-<a class="sourceLine" id="cb48-5" title="5">                        (r.mt.GT.is_hom_var() <span class="op">&amp;</span> (ab <span class="op">&gt;=</span> <span class="fl">0.9</span>)))</a>
-<a class="sourceLine" id="cb48-6" title="6"></a>
-<a class="sourceLine" id="cb48-7" title="7">fraction_filtered <span class="op">=</span> r.mt.aggregate_entries(r.hl.agg.fraction(<span class="op">~</span>filter_condition_ab))</a>
-<a class="sourceLine" id="cb48-8" title="8"><span class="bu">print</span>(<span class="ss">f'Filtering </span><span class="sc">{</span>fraction_filtered <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">% entries out of downstream analysis.'</span>)</a></code></pre></div>
-<pre><code><span><span class="co">## Filtering 3.60% entries out of downstream analysis.</span></span></code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb50-1" title="1">r.mt <span class="op">=</span> r.mt.filter_entries(filter_condition_ab)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ab <span class="op">=</span> r.mt.AD[<span class="dv">1</span>] <span class="op">/</span> r.hl.<span class="bu">sum</span>(r.mt.AD)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>filter_condition_ab <span class="op">=</span> ((r.mt.GT.is_hom_ref() <span class="op">&amp;</span> (ab <span class="op">&lt;=</span> <span class="fl">0.1</span>)) <span class="op">|</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                        (r.mt.GT.is_het() <span class="op">&amp;</span> (ab <span class="op">&gt;=</span> <span class="fl">0.25</span>) <span class="op">&amp;</span> (ab <span class="op">&lt;=</span> <span class="fl">0.75</span>)) <span class="op">|</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                        (r.mt.GT.is_hom_var() <span class="op">&amp;</span> (ab <span class="op">&gt;=</span> <span class="fl">0.9</span>)))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>fraction_filtered <span class="op">=</span> r.mt.aggregate_entries(r.hl.agg.fraction(<span class="op">~</span>filter_condition_ab))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Filtering </span><span class="sc">{</span>fraction_filtered <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">% entries out of downstream analysis.'</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>r.mt <span class="op">=</span> r.mt.filter_entries(filter_condition_ab)</span></code></pre></div>
 <p>Note that filtering <em>entries</em> does not change MatrixTable shape.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">mt</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 10961   250</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="variant-characteristics">Variant characteristics<a class="anchor" aria-label="anchor" href="#variant-characteristics"></a>
 </h4>
 <p>Allele frequencies, Hardy-Weinberg equilibrium test results and other summaries are obtained using the <code>variant_qc</code> function.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mt</span> <span class="op">=</span> <span class="va">hl</span><span class="op">$</span><span class="fu">variant_qc</span><span class="op">(</span><span class="va">mt</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb54-1" title="1">r.mt.row.describe()  <span class="co">#! python</span></a></code></pre></div>
-<pre><code><span><span class="co">## --------------------------------------------------------</span></span>
-<span><span class="co">## Type:</span></span>
-<span><span class="co">##         struct {</span></span>
-<span><span class="co">##         locus: locus&lt;GRCh37&gt;, </span></span>
-<span><span class="co">##         alleles: array&lt;str&gt;, </span></span>
-<span><span class="co">##         rsid: str, </span></span>
-<span><span class="co">##         qual: float64, </span></span>
-<span><span class="co">##         filters: set&lt;str&gt;, </span></span>
-<span><span class="co">##         info: struct {</span></span>
-<span><span class="co">##             AC: array&lt;int32&gt;, </span></span>
-<span><span class="co">##             AF: array&lt;float64&gt;, </span></span>
-<span><span class="co">##             AN: int32, </span></span>
-<span><span class="co">##             BaseQRankSum: float64, </span></span>
-<span><span class="co">##             ClippingRankSum: float64, </span></span>
-<span><span class="co">##             DP: int32, </span></span>
-<span><span class="co">##             DS: bool, </span></span>
-<span><span class="co">##             FS: float64, </span></span>
-<span><span class="co">##             HaplotypeScore: float64, </span></span>
-<span><span class="co">##             InbreedingCoeff: float64, </span></span>
-<span><span class="co">##             MLEAC: array&lt;int32&gt;, </span></span>
-<span><span class="co">##             MLEAF: array&lt;float64&gt;, </span></span>
-<span><span class="co">##             MQ: float64, </span></span>
-<span><span class="co">##             MQ0: int32, </span></span>
-<span><span class="co">##             MQRankSum: float64, </span></span>
-<span><span class="co">##             QD: float64, </span></span>
-<span><span class="co">##             ReadPosRankSum: float64, </span></span>
-<span><span class="co">##             set: str</span></span>
-<span><span class="co">##         }, </span></span>
-<span><span class="co">##         variant_qc: struct {</span></span>
-<span><span class="co">##             dp_stats: struct {</span></span>
-<span><span class="co">##                 mean: float64, </span></span>
-<span><span class="co">##                 stdev: float64, </span></span>
-<span><span class="co">##                 min: float64, </span></span>
-<span><span class="co">##                 max: float64</span></span>
-<span><span class="co">##             }, </span></span>
-<span><span class="co">##             gq_stats: struct {</span></span>
-<span><span class="co">##                 mean: float64, </span></span>
-<span><span class="co">##                 stdev: float64, </span></span>
-<span><span class="co">##                 min: float64, </span></span>
-<span><span class="co">##                 max: float64</span></span>
-<span><span class="co">##             }, </span></span>
-<span><span class="co">##             AC: array&lt;int32&gt;, </span></span>
-<span><span class="co">##             AF: array&lt;float64&gt;, </span></span>
-<span><span class="co">##             AN: int32, </span></span>
-<span><span class="co">##             homozygote_count: array&lt;int32&gt;, </span></span>
-<span><span class="co">##             call_rate: float64, </span></span>
-<span><span class="co">##             n_called: int64, </span></span>
-<span><span class="co">##             n_not_called: int64, </span></span>
-<span><span class="co">##             n_filtered: int64, </span></span>
-<span><span class="co">##             n_het: int64, </span></span>
-<span><span class="co">##             n_non_ref: int64, </span></span>
-<span><span class="co">##             het_freq_hwe: float64, </span></span>
-<span><span class="co">##             p_value_hwe: float64, </span></span>
-<span><span class="co">##             p_value_excess_het: float64</span></span>
-<span><span class="co">##         }</span></span>
-<span><span class="co">##     }</span></span>
-<span><span class="co">## --------------------------------------------------------</span></span>
-<span><span class="co">## Source:</span></span>
-<span><span class="co">##     &lt;hail.matrixtable.MatrixTable object at 0x7f173f50bcd0&gt;</span></span>
-<span><span class="co">## Index:</span></span>
-<span><span class="co">##     ['row']</span></span>
-<span><span class="co">## --------------------------------------------------------</span></span></code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>r.mt.row.describe()  <span class="co">#! python</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -517,72 +241,53 @@
 <h2 id="gwas-execution">GWAS execution<a class="anchor" aria-label="anchor" href="#gwas-execution"></a>
 </h2>
 <p>A built-in procedure for testing for association between the (simulated) caffeine consumption measure and genotype will be used.</p>
-<p>The following commands eliminate variants with minor allele frequency less than 0.01, along with those with small <span class="math inline">\(p\)</span>-values in tests of Hardy-Weinberg equilibrium.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb56-1" title="1">r.mt <span class="op">=</span> r.mt.filter_rows(r.mt.variant_qc.AF[<span class="dv">1</span>] <span class="op">&gt;</span> <span class="fl">0.01</span>)</a>
-<a class="sourceLine" id="cb56-2" title="2">r.mt <span class="op">=</span> r.mt.filter_rows(r.mt.variant_qc.p_value_hwe <span class="op">&gt;</span> <span class="fl">1e-6</span>)</a>
-<a class="sourceLine" id="cb56-3" title="3">r.mt.count()</a></code></pre></div>
-<pre><code><span><span class="co">## (7844, 250)</span></span></code></pre>
+<p>The following commands eliminate variants with minor allele frequency less than 0.01, along with those with small <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-values in tests of Hardy-Weinberg equilibrium.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>r.mt <span class="op">=</span> r.mt.filter_rows(r.mt.variant_qc.AF[<span class="dv">1</span>] <span class="op">&gt;</span> <span class="fl">0.01</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>r.mt <span class="op">=</span> r.mt.filter_rows(r.mt.variant_qc.p_value_hwe <span class="op">&gt;</span> <span class="fl">1e-6</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>r.mt.count()</span></code></pre></div>
 <div class="section level3">
 <h3 id="association-test-for-quantitative-response">Association test for quantitative response<a class="anchor" aria-label="anchor" href="#association-test-for-quantitative-response"></a>
 </h3>
 <p>Now we perform a naive test of association. The Manhattan plot generated by hail can be displayed for interaction using bokeh. We comment this out for now; it should be possible to embed the bokeh display in this document but the details are not ready-to-hand.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb58-1" title="1">r.gwas <span class="op">=</span> r.hl.linear_regression_rows(y<span class="op">=</span>r.mt.pheno.CaffeineConsumption,</a>
-<a class="sourceLine" id="cb58-2" title="2">                                 x<span class="op">=</span>r.mt.GT.n_alt_alleles(),</a>
-<a class="sourceLine" id="cb58-3" title="3">                                 covariates<span class="op">=</span>[<span class="fl">1.0</span>])</a>
-<a class="sourceLine" id="cb58-4" title="4"><span class="co"># r.pl = r.hl.plot.manhattan(r.gwas.p_value)</span></a>
-<a class="sourceLine" id="cb58-5" title="5"><span class="co"># import bokeh</span></a>
-<a class="sourceLine" id="cb58-6" title="6"><span class="co"># bokeh.plotting.show(r.pl)</span></a></code></pre></div>
-<pre><code><span><span class="co">## 2023-04-03 06:47:47.346 Hail: INFO: linear_regression_rows: running on 250 samples for 1 response variable y,</span></span>
-<span><span class="co">##     with input variable x, and 1 additional covariate...</span></span>
-<span><span class="co">## 2023-04-03 06:47:48.893 Hail: INFO: wrote table with 7844 rows in 2 partitions to /tmp/persist_tableZ0E4MSgw11</span></span>
-<span><span class="co">##     Total size: 520.43 KiB</span></span>
-<span><span class="co">##     * Rows: 520.42 KiB</span></span>
-<span><span class="co">##     * Globals: 11.00 B</span></span>
-<span><span class="co">##     * Smallest partition: 3782 rows (250.69 KiB)</span></span>
-<span><span class="co">##     * Largest partition:  4062 rows (269.73 KiB)</span></span></code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>r.gwas <span class="op">=</span> r.hl.linear_regression_rows(y<span class="op">=</span>r.mt.pheno.CaffeineConsumption,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                                 x<span class="op">=</span>r.mt.GT.n_alt_alleles(),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                                 covariates<span class="op">=</span>[<span class="fl">1.0</span>])</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># r.pl = r.hl.plot.manhattan(r.gwas.p_value)</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># import bokeh</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># bokeh.plotting.show(r.pl)</span></span></code></pre></div>
 <p>The “QQ plot” that helps evaluate adequacy of the analysis can be formed using <code>hl.plot.qq</code> for very large applications; here we collect the results for plotting in R.</p>
-<p>First we estimate <span class="math inline">\(\lambda_{GC}\)</span></p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<p>First we estimate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>λ</mi><mrow><mi>G</mi><mi>C</mi></mrow></msub><annotation encoding="application/x-tex">\lambda_{GC}</annotation></semantics></math></p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pv</span> <span class="op">=</span> <span class="va">gwas</span><span class="op">$</span><span class="va">p_value</span><span class="op">$</span><span class="fu">collect</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">x2</span> <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html" class="external-link">qchisq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">pv</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">lam</span> <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x2</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">/</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html" class="external-link">qchisq</a></span><span class="op">(</span><span class="fl">.5</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">lam</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 3.558453</span></span></code></pre>
 <p>And the qqplot:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqplot</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ppoints.html" class="external-link">ppoints</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">pv</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">pv</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">8</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">8</span><span class="op">)</span>,</span>
 <span>  ylab<span class="op">=</span><span class="st">"-log10 p"</span>, xlab<span class="op">=</span><span class="st">"expected"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="gwas_tut_files/figure-html/doqq-1.png" width="700"></p>
 <p>There is hardly any point to examining a Manhattan plot in this situation. But let’s see how it might be done. We’ll use igvR to get an interactive and extensible display.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">locs</span> <span class="op">&lt;-</span> <span class="va">gwas</span><span class="op">$</span><span class="va">locus</span><span class="op">$</span><span class="fu">collect</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">conts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">locs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">contig</span><span class="op">)</span></span>
 <span><span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">locs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">position</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paul-shannon.github.io/igvR/" class="external-link">igvR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">igvR</span><span class="op">)</span></span>
 <span><span class="va">mytab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>chr<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">conts</span><span class="op">)</span>, pos<span class="op">=</span><span class="va">pos</span>, pval<span class="op">=</span><span class="va">pv</span><span class="op">)</span></span>
-<span><span class="va">gt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-shannon.github.io/igvR/reference/GWASTrack-class.html" class="external-link">GWASTrack</a></span><span class="op">(</span><span class="st">"simp"</span>, <span class="va">mytab</span>, chrom.col<span class="op">=</span><span class="fl">1</span>, pos.col<span class="op">=</span><span class="fl">2</span>, pval.col<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="va">igv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-shannon.github.io/igvR/reference/igvR-class.html" class="external-link">igvR</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://paul-shannon.github.io/igvR/reference/setGenome.html" class="external-link">setGenome</a></span><span class="op">(</span><span class="va">igv</span>, <span class="st">"hg19"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://paul-shannon.github.io/igvR/reference/displayTrack.html" class="external-link">displayTrack</a></span><span class="op">(</span><span class="va">igv</span>, <span class="va">gt</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">gt</span> <span class="op">&lt;-</span> <span class="fu">GWASTrack</span><span class="op">(</span><span class="st">"simp"</span>, <span class="va">mytab</span>, chrom.col<span class="op">=</span><span class="fl">1</span>, pos.col<span class="op">=</span><span class="fl">2</span>, pval.col<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">igv</span> <span class="op">&lt;-</span> <span class="fu">igvR</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">setGenome</span><span class="op">(</span><span class="va">igv</span>, <span class="st">"hg19"</span><span class="op">)</span></span>
+<span><span class="fu">displayTrack</span><span class="op">(</span><span class="va">igv</span>, <span class="va">gt</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="evaluating-population-stratification">Evaluating population stratification<a class="anchor" aria-label="anchor" href="#evaluating-population-stratification"></a>
 </h3>
 <p>An approach to assessing population stratification is provided as <code>hwe_normalized_pca</code>. See the hail <a href="https://hail.is/docs/0.2/methods/genetics.html#hail.methods.hwe_normalized_pca" class="external-link">methods docs</a> for details.</p>
 <p>We are avoiding a tuple assignment in the tutorial document.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb64-1" title="1">r.pcastuff <span class="op">=</span> r.hl.hwe_normalized_pca(r.mt.GT)</a></code></pre></div>
-<pre><code><span><span class="co">## 2023-04-03 06:47:52.459 Hail: INFO: hwe_normalize: found 7836 variants after filtering out monomorphic sites.</span></span>
-<span><span class="co">## 2023-04-03 06:47:54.547 Hail: INFO: pca: running PCA with 10 components...</span></span>
-<span><span class="co">## 2023-04-03 06:47:59.833 Hail: INFO: wrote table with 0 rows in 0 partitions to /tmp/persist_table7gn3VNEHyU</span></span>
-<span><span class="co">##     Total size: 21.29 KiB</span></span>
-<span><span class="co">##     * Rows: 0.00 B</span></span>
-<span><span class="co">##     * Globals: 21.29 KiB</span></span>
-<span><span class="co">##     * Smallest partition: N/A</span></span>
-<span><span class="co">##     * Largest partition:  N/A</span></span></code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb66-1" title="1">r.mt <span class="op">=</span> r.mt.annotate_cols(scores<span class="op">=</span>r.pcastuff[<span class="dv">1</span>][r.mt.s].scores)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>r.pcastuff <span class="op">=</span> r.hl.hwe_normalized_pca(r.mt.GT)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>r.mt <span class="op">=</span> r.mt.annotate_cols(scores<span class="op">=</span>r.pcastuff[<span class="dv">1</span>][r.mt.s].scores)</span></code></pre></div>
 <p>We’ll collect the key information and plot.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="va">pcastuff</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">scores</span><span class="op">$</span><span class="fu">collect</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">pc1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">sc</span>, <span class="st">"["</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">pc2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">sc</span>, <span class="st">"["</span>, <span class="fl">2</span><span class="op">)</span></span>
@@ -590,36 +295,25 @@
 <span><span class="va">myd</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">pc1</span>, <span class="va">pc2</span>, pop<span class="op">=</span><span class="va">fac</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">myd</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">pc1</span>, y<span class="op">=</span><span class="va">pc2</span>, colour<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="gwas_tut_files/figure-html/lkpcs-1.png" width="700"></p>
 <p>Now repeat the association test with adjustments for population of origin and gender.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb68-1" title="1">r.gwas2 <span class="op">=</span> r.hl.linear_regression_rows(</a>
-<a class="sourceLine" id="cb68-2" title="2">    y<span class="op">=</span>r.mt.pheno.CaffeineConsumption,</a>
-<a class="sourceLine" id="cb68-3" title="3">    x<span class="op">=</span>r.mt.GT.n_alt_alleles(),</a>
-<a class="sourceLine" id="cb68-4" title="4">    covariates<span class="op">=</span>[<span class="fl">1.0</span>,r.mt.pheno.isFemale,r.mt.scores[<span class="dv">0</span>],</a>
-<a class="sourceLine" id="cb68-5" title="5">        r.mt.scores[<span class="dv">1</span>], r.mt.scores[<span class="dv">2</span>]])</a></code></pre></div>
-<pre><code><span><span class="co">## 2023-04-03 06:48:04.655 Hail: INFO: linear_regression_rows: running on 250 samples for 1 response variable y,</span></span>
-<span><span class="co">##     with input variable x, and 5 additional covariates...</span></span>
-<span><span class="co">## 2023-04-03 06:48:05.576 Hail: INFO: wrote table with 7844 rows in 2 partitions to /tmp/persist_tablephLoyQ6FnD</span></span>
-<span><span class="co">##     Total size: 519.18 KiB</span></span>
-<span><span class="co">##     * Rows: 519.17 KiB</span></span>
-<span><span class="co">##     * Globals: 11.00 B</span></span>
-<span><span class="co">##     * Smallest partition: 3782 rows (250.09 KiB)</span></span>
-<span><span class="co">##     * Largest partition:  4062 rows (269.08 KiB)</span></span></code></pre>
-<p>New value of <span class="math inline">\(\lambda_{GC}\)</span>:</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>r.gwas2 <span class="op">=</span> r.hl.linear_regression_rows(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>r.mt.pheno.CaffeineConsumption,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>r.mt.GT.n_alt_alleles(),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    covariates<span class="op">=</span>[<span class="fl">1.0</span>,r.mt.pheno.isFemale,r.mt.scores[<span class="dv">0</span>],</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        r.mt.scores[<span class="dv">1</span>], r.mt.scores[<span class="dv">2</span>]])</span></code></pre></div>
+<p>New value of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>λ</mi><mrow><mi>G</mi><mi>C</mi></mrow></msub><annotation encoding="application/x-tex">\lambda_{GC}</annotation></semantics></math>:</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pv</span> <span class="op">=</span> <span class="va">gwas2</span><span class="op">$</span><span class="va">p_value</span><span class="op">$</span><span class="fu">collect</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">x2</span> <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html" class="external-link">qchisq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">pv</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">lam</span> <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x2</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">/</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html" class="external-link">qchisq</a></span><span class="op">(</span><span class="fl">.5</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">lam</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 1.08359</span></span></code></pre>
 <p>A manhattan plot for chr8:</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">locs</span> <span class="op">&lt;-</span> <span class="va">gwas2</span><span class="op">$</span><span class="va">locus</span><span class="op">$</span><span class="fu">collect</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">conts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">locs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">contig</span><span class="op">)</span></span>
 <span><span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">locs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">position</span><span class="op">)</span></span>
 <span><span class="va">mytab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>chr<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">conts</span><span class="op">)</span>, pos<span class="op">=</span><span class="va">pos</span>, pval<span class="op">=</span><span class="va">pv</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mytab</span><span class="op">[</span><span class="va">mytab</span><span class="op">$</span><span class="va">chr</span><span class="op">==</span><span class="st">"8"</span>,<span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">pos</span>, y<span class="op">=</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">pval</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="gwas_tut_files/figure-html/doman-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level2">
@@ -644,35 +338,75 @@
 <li>Connecting genotypes with phenotype data in FHIR</li>
 </ul>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
+<div class="section level2">
+<h2 class="unnumbered" id="sessioninfo">SessionInfo<a class="anchor" aria-label="anchor" href="#sessioninfo"></a>
+</h2>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
+<span><span class="co">## Platform: aarch64-apple-darwin20</span></span>
+<span><span class="co">## Running under: macOS Sonoma 14.7</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Matrix products: default</span></span>
+<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib </span></span>
+<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## locale:</span></span>
+<span><span class="co">## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## time zone: America/New_York</span></span>
+<span><span class="co">## tzcode source: internal</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attached base packages:</span></span>
+<span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## other attached packages:</span></span>
+<span><span class="co">## [1] ggplot2_3.5.1    BiocHail_1.7.0   BiocStyle_2.32.1</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## loaded via a namespace (and not attached):</span></span>
+<span><span class="co">##  [1] gtable_0.3.5          dir.expiry_1.12.0     xfun_0.48            </span></span>
+<span><span class="co">##  [4] bslib_0.8.0           htmlwidgets_1.6.4     lattice_0.22-6       </span></span>
+<span><span class="co">##  [7] vctrs_0.6.5           tools_4.4.1           generics_0.1.3       </span></span>
+<span><span class="co">## [10] curl_5.2.3            parallel_4.4.1        tibble_3.2.1         </span></span>
+<span><span class="co">## [13] fansi_1.0.6           RSQLite_2.3.7         blob_1.2.4           </span></span>
+<span><span class="co">## [16] pkgconfig_2.0.3       Matrix_1.7-0          dbplyr_2.5.0         </span></span>
+<span><span class="co">## [19] desc_1.4.3            lifecycle_1.0.4       compiler_4.4.1       </span></span>
+<span><span class="co">## [22] textshaping_0.4.0     munsell_0.5.1         htmltools_0.5.8.1    </span></span>
+<span><span class="co">## [25] sass_0.4.9            yaml_2.3.10           pillar_1.9.0         </span></span>
+<span><span class="co">## [28] pkgdown_2.1.1         jquerylib_0.1.4       cachem_1.1.0         </span></span>
+<span><span class="co">## [31] basilisk_1.16.0       tidyselect_1.2.1      digest_0.6.37        </span></span>
+<span><span class="co">## [34] dplyr_1.1.4           bookdown_0.40         fastmap_1.2.0        </span></span>
+<span><span class="co">## [37] grid_4.4.1            colorspace_2.1-1      cli_3.6.3            </span></span>
+<span><span class="co">## [40] magrittr_2.0.3        utf8_1.2.4            withr_3.0.1          </span></span>
+<span><span class="co">## [43] filelock_1.0.3        scales_1.3.0          bit64_4.5.2          </span></span>
+<span><span class="co">## [46] rmarkdown_2.28        httr_1.4.7            bit_4.5.0            </span></span>
+<span><span class="co">## [49] reticulate_1.39.0     ragg_1.3.3            png_0.1-8            </span></span>
+<span><span class="co">## [52] memoise_2.0.1         evaluate_1.0.1        knitr_1.48           </span></span>
+<span><span class="co">## [55] basilisk.utils_1.16.0 BiocFileCache_2.12.0  rlang_1.1.4          </span></span>
+<span><span class="co">## [58] Rcpp_1.0.13           glue_1.8.0            DBI_1.2.3            </span></span>
+<span><span class="co">## [61] BiocManager_1.30.25   BiocGenerics_0.50.0   jsonlite_1.8.9       </span></span>
+<span><span class="co">## [64] R6_2.5.1              systemfonts_1.1.0     fs_1.6.4</span></span></code></pre>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
+
+
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Vincent Carey.</p>
+</div>
+
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+</div>
+
+    </footer>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Vincent Carey.</p>
-</div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
-</div>
-
-      </footer>
-</div>
-
-  
-
-
-  
 
   </body>
 </html>
