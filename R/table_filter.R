@@ -21,7 +21,7 @@ filter <- function(.data, ..., .by = NULL, .preserve = FALSE) UseMethod("filter"
 
 #' filter rows of a hail Table
 #' @importFrom dplyr filter
-#' @importFrom methods is
+#' @import methods
 #' @return filtered hail.table.Table reference
 #' @note writes one line of table to disk to retrieve field names
 #' @param .data instance of hail.table.Table

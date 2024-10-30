@@ -5,29 +5,6 @@
 #' @export
 osn_1kg_path <- function() "https://bir190004-bucket01.mghp.osn.xsede.org/BiocHailData/1kg.zip"
 
-basic_1kg_ops_for_mt = function(hl, retrieve_import_write, folder, cache) {
-    if (retrieve_import_write) {
-      hl$utils$get_1kg(folder)
-      hl$import_vcf(paste0(folder, "/1kg.vcf.bgz"))$write(paste0(folder, "/1kg.mt"), overwrite = TRUE)
-    } else {
-      #       zf = system.file("extdata/1kg.zip", package="BiocHail")
-      qout <- bfcquery(cache, "hail_tut_mt_zip")
-      if (nrow(qout) == 0) { # download and populate cache
-        dl <- try(bfcadd(cache,
-          fpath = path_1kg_zip,
-          rname = "hail_tut_mt_zip", rtype = "web", action = "copy",
-          download = TRUE
-        ))
-        if (inherits(dl, "try-error")) stop("no hail_tut_mt in cache and cannot populate with download, try another method.")
-        qout <- bfcquery(cache, "hail_tut_mt")
-        stopifnot(nrow(qout) == 1L)
-      }
-      utils::unzip(cache[[qout$rid]], exdir = folder)
-    }
-    mt <- hl$read_matrix_table(paste0(folder, "/1kg.mt"))
-    mt
-}
-
 #' interface to 1kg import
 #' @import utils
 #' @import BiocFileCache
@@ -50,37 +27,31 @@ basic_1kg_ops_for_mt = function(hl, retrieve_import_write, folder, cache) {
 #' tab$describe()
 #' tab$show(width = 100L)
 #' @export
-get_1kg <- function(hl, retrieve_import_write = FALSE, 
-    path_1kg_zip = osn_1kg_path(), folder = tempdir(), cache = BiocFileCache::BiocFileCache(),
-    simple = FALSE) {
-  if (simple) {
-    return(basic_1kg_ops_for_mt(hl, retrieve_import_write, folder, cache))
-  }
+get_1kg <- function(hl, retrieve_import_write = FALSE, path_1kg_zip = osn_1kg_path(), folder = tempdir(), cache = BiocFileCache::BiocFileCache()) {
   proc <- basilisk::basiliskStart(bsklenv, testload = "hail") # avoid package-specific import
   on.exit(basilisk::basiliskStop(proc))
-  basilisk::basiliskRun(proc, function(hl, folder, cache) {
-#    if (retrieve_import_write) {
-#      hl$utils$get_1kg(folder)
-#      hl$import_vcf(paste0(folder, "/1kg.vcf.bgz"))$write(paste0(folder, "/1kg.mt"), overwrite = TRUE)
-#    } else {
-#      #       zf = system.file("extdata/1kg.zip", package="BiocHail")
-#      qout <- bfcquery(cache, "hail_tut_mt_zip")
-#      if (nrow(qout) == 0) { # download and populate cache
-#        dl <- try(bfcadd(cache,
-#          fpath = path_1kg_zip,
-#          rname = "hail_tut_mt_zip", rtype = "web", action = "copy",
-#          download = TRUE
-#        ))
-#        if (inherits(dl, "try-error")) stop("no hail_tut_mt in cache and cannot populate with download, try another method.")
-#        qout <- bfcquery(cache, "hail_tut_mt")
-#        stopifnot(nrow(qout) == 1L)
-#      }
-#      utils::unzip(cache[[qout$rid]], exdir = folder)
-#    }
-#    mt <- hl$read_matrix_table(paste0(folder, "/1kg.mt"))
-#    mt
-  basic_1kg_ops_for_mt(hl, retrieve_import_write, folder, cache)
-  }, hl = hl, folder = folder, cache=cache)
+  basilisk::basiliskRun(proc, function(hl, folder) {
+    if (retrieve_import_write) {
+      hl$utils$get_1kg(folder)
+      hl$import_vcf(paste0(folder, "/1kg.vcf.bgz"))$write(paste0(folder, "/1kg.mt"), overwrite = TRUE)
+    } else {
+      #       zf = system.file("extdata/1kg.zip", package="BiocHail")
+      qout <- bfcquery(cache, "hail_tut_mt_zip")
+      if (nrow(qout) == 0) { # download and populate cache
+        dl <- try(bfcadd(cache,
+          fpath = path_1kg_zip,
+          rname = "hail_tut_mt_zip", rtype = "web", action = "copy",
+          download = TRUE
+        ))
+        if (inherits(dl, "try-error")) stop("no hail_tut_mt in cache and cannot populate with download, try another method.")
+        qout <- bfcquery(cache, "hail_tut_mt")
+        stopifnot(nrow(qout) == 1L)
+      }
+      utils::unzip(cache[[qout$rid]], exdir = folder)
+    }
+    mt <- hl$read_matrix_table(paste0(folder, "/1kg.mt"))
+    mt
+  }, hl = hl, folder = folder)
 }
 
 #' generate path to installed annotations file
