@@ -4,7 +4,7 @@ context("hail_init code works")
 
 test_that("hail_init succeeds and is idempotent", {
    hl = hail_init()
-   expect_true(substr(hl$version(),1,7)=="0.2.108")
+   expect_true(substr(hl$version(),1,7)=="0.2.133")
    hl = hail_init()
-   expect_true(substr(hl$version(),1,7)=="0.2.108")
+   expect_true(substr(hl$version(),1,7)=="0.2.133")
 })
