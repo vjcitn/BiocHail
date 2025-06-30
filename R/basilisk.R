@@ -1,7 +1,9 @@
 
 
 #https://github.com/hail-is/hail/blob/main/ci/pinned-requirements.txt 62ef
-from_pinned = c("certifi==2025.4.26",
+from_pinned = c("hail==0.2.135", 
+"ukbb_pan_ancestry==0.0.2",   # top 2 here are not in pinned-requirements
+"certifi==2025.4.26",
 "cffi==1.17.1",
 "charset-normalizer==3.4.2",
 "click==8.1.8",
