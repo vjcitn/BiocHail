@@ -15,8 +15,6 @@ bare interface to hail using reticulate
 \note{
 `/home/jupyter/.local/share/r-miniconda/envs/r-reticulate/bin/pip3 install...` is 
 used to ensure that reticulate's python ecosystem is what we want
-
-`bare_hail()$init(idempotent=TRUE)` should be run
 }
 \examples{
 # assumes terra
