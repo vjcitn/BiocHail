@@ -36,6 +36,7 @@ get_ukbb_sumstat_10kloci_mt <- function(hl, folder = tempdir(), cache = BiocFile
     #
     lklocal <- Sys.getenv("HAIL_UKBB_SUMSTAT_10K_PATH")
     if (nchar(lklocal) > 0) {
+      stopifnot(basename(lklocal)=="ukbb_sumstat_10k_loci.mt") # the cached zip must have been uncached here
       #
       # prepare for long download
       #
