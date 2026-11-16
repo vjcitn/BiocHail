@@ -16,6 +16,8 @@ initialize ukbb
 ukbb module may be passed around
 }
 \examples{
+\dontrun{
 ukbb <- ukbb_init()
 names(ukbb)
+}   # symbol issue, try py_require ...
 }

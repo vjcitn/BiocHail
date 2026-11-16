@@ -24,6 +24,8 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...) UseMethod(
 #' tab <- hl$import_table(annopath, impute = TRUE)$key_by("Sample")
 #' as.data.frame(tab$head(3L))
 #' @method as.data.frame default
+#' @keywords internal
+#' @exportS3Method
 as.data.frame.default <- base::as.data.frame
 
 mkrow <- function(str, cn) lapply(cn, function(x) str$get(x))

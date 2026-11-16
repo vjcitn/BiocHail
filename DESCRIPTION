@@ -1,7 +1,7 @@
 Package: BiocHail
-Date: 2025-06-30
+Date: 2026-11-16
 Title: basilisk and hail
-Version: 1.13.1
+Version: 1.13.2
 Authors@R: 
     c(person(
         "Vincent", "Carey", role = c("aut", "cre"),
@@ -19,7 +19,7 @@ Imports: reticulate, basilisk, BiocFileCache, methods, dplyr, BiocGenerics
 Suggests: knitr, testthat, BiocStyle, ggplot2, DT
 VignetteBuilder: knitr
 biocViews: Infrastructure
-RoxygenNote: 7.3.2
 URL: https://github.com/vjcitn/BiocHail
 BugReports: https://github.com/vjcitn/BiocHail/issues
-Config/Bioconductor/UnsupportedPlatforms: windows, macosx
+Config/Bioconductor/UnsupportedPlatforms: windows
+Config/roxygen2/version: 8.1.1
